@@ -4,12 +4,21 @@ package com.genesiis.campus.entity;
  * 20170426 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The Class  AdvertiserFacilitator.java has been created.
  * 20170427 DN c88-admin-manage-advertiser-add-new-advertiser-dn. created the methods processAdvertiser(),createNewAdvertiser()
  * 				getAdvertiserClientFedData() and add doc comments and in line comments to the class.
+ * 				The method  setResponseCridentials(IDataHelper ) is implemented.
  */
+import com.genesiis.campus.util.ConnectionManager;
+import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.util.JasonInflator;
+import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,7 +33,7 @@ import java.util.Map;
 public class AdvertiserFacilitator {
 	
 	
-	private static org.jboss.logging.Logger log = Logger.getLogger(AdvertiserFacilitator.class.getName());	
+	private static Logger log = Logger.getLogger(AdvertiserFacilitator.class.getName());	
 	private IDataHelper helper;
 	
 	/** The success code. 
@@ -65,64 +74,151 @@ public class AdvertiserFacilitator {
 	public  Collection<Collection<String>> processAdvertiser() throws Exception{		
 		Operation operation= Operation.getOperation(helper.getCommandCode());
 		Collection<Collection<String>> processedWrapper = new ArrayList<Collection<String>>();
-		switch(operation){
-		case CREATE_NEW_ADVERTISER :			
-			try{
-				// validate incoming data is correct
+		try{
+			switch(operation){
+			case CREATE_NEW_ADVERTISER :
+					// validate incoming data is correct
+				int executionStatus=0;
+					if(isClientInputAccordanceWithValidation())					
+						 executionStatus=createNewAdvertiser();
+					
+					if(executionStatus>0){
+						setSuccessCode(1);
+						message =message + SystemMessage.UPDATE_SUCCESSFUL.message();						
+					} else {
+						setSuccessCode(0);
+						message =message + SystemMessage.UPDATE_UNSUCCESSFUL.message();
+					}
 				
-				//get the data
-				createNewAdvertiser();
-			} catch (SQLException sqle){
-				log.error("processAdvertiser() SQLException: "+sqle.toString());
-				throw sqle;
-			} catch (Exception exp) {
-				log.error(""+exp.toString());
-				throw exp;
-			} finally{
-				
-			}
-			
-			break;
-			default:
 				break;
-		} 
-		
+			default:
+					break;
+			} 
+		} catch (SQLException sqle){
+			log.error("processAdvertiser() SQLException: "+sqle.toString());
+			throw sqle;
+		} catch (Exception exp) {
+			log.error(""+exp.toString());
+			throw exp;
+		} finally{
+			setResponseCridentials(helper);
+			operation=null;
+		}
+		return processedWrapper;
 	}
 	
 	
 	/**
 	 * Creates the new advertiser.
-	 *
-	 * @return the int
+	 * method adds a new advertiser to the data base<br> 
+	 * If the action is successful then an int id returned.<br>
+	 * @return the int : If the record is added to the repository <br>
+	 * 	1 will be returned else 0 will be returned
 	 * @throws SQLException the SQL exception
 	 * @throws Exception the exception
 	 */
 	private int createNewAdvertiser() throws SQLException,Exception{
 		//call request parameters and set the values
-		Map<String,String> advertiserCredentialMappings = this.getAdvertiserClientFedData() ;
-		//call the data base call to insert the record
-		
+		Map<String,String[]> advertiserCredentialMappings = helper.getParameterMap() ;
+		this.setMessage(""); // clears any message brought forward
+		//call the data base to insert the record
 		int status = new GeneralPurposeDAO(){
+			
 			public int update(Object object) throws SQLException, Exception {
+				@SuppressWarnings("unchecked")
+				Map<String,String[]> advertiserCredentialMappings = (Map<String,String[]>) object;
 				
+				Connection conn=null;
+				PreparedStatement prepare = null;				
+				String ACTIVE = Integer.toString(ApplicationStatus.INACTIVE.getStatusValue());
+				String modOrCreateBy =(String) helper.getSession(true).getAttribute("currentSessionUsername");
+				int executionStatus = 0;
 				
-				return 0;
+				String sqlInsertAdvertiser = "INSERT INTO [CAMPUS].[ADVERTISER] ";
+						sqlInsertAdvertiser = sqlInsertAdvertiser+"([NAME],[EMAIL],[LANDPHONECOUNTRYCODE],[LANDPHONEAREACODE] ,[LANDPHONENUM],[MOBILEPHONECOUNTRYCODE]";
+						sqlInsertAdvertiser = sqlInsertAdvertiser+",[MOBILEPHONENETWORKCODE],[MOBILEPHONENUM],[DESCRIPTION],[ADDRESS1],[ADDRESS2] ,[ADDRESS3]";
+						sqlInsertAdvertiser = sqlInsertAdvertiser+",[TOWN],[ISACTIVE],[COURSEPROVIDER] ,[CRTON],[CRTBY],[MODON] ,[MODBY])";
+						sqlInsertAdvertiser = sqlInsertAdvertiser +"VALUES";
+						sqlInsertAdvertiser =sqlInsertAdvertiser +"(?,?,?,?,?,?,?,?,?,?,?,?)";
+						sqlInsertAdvertiser =sqlInsertAdvertiser +"(?,?,?,getDate(),?,getDate(),? );";
+				try{
+					conn = ConnectionManager.getConnection();		
+					prepare = conn.prepareStatement(sqlInsertAdvertiser);
+					prepare.setString(1, advertiserCredentialMappings.get("advertiserName")[0]);
+					prepare.setString(2, advertiserCredentialMappings.get("advertiserEmail")[0]);
+					prepare.setString(3, advertiserCredentialMappings.get("landCountryCode")[0]);
+					prepare.setString(4, advertiserCredentialMappings.get("landAreaCode")[0]);
+					prepare.setString(5, advertiserCredentialMappings.get("landPhoneNumber")[0]);				
+					prepare.setString(6, advertiserCredentialMappings.get("mobileCountryCode")[0]);
+					prepare.setString(7, advertiserCredentialMappings.get("mobileAreaCode")[0]);
+					prepare.setString(8, advertiserCredentialMappings.get("mobilePhoneNumber")[0]);	
+					prepare.setString(9, advertiserCredentialMappings.get("advertiserDescription")[0]);
+					prepare.setString(10, advertiserCredentialMappings.get("address1")[0]);
+					prepare.setString(11, advertiserCredentialMappings.get("address2")[0]);
+					prepare.setString(12, advertiserCredentialMappings.get("address3")[0]);				
+					prepare.setString(13, advertiserCredentialMappings.get("townCode")[0]);
+					
+					if(advertiserCredentialMappings.get("AdvertiserStatus")[0]=="1")					
+						ACTIVE=Integer.toString(ApplicationStatus.ACTIVE.getStatusValue());				
+					prepare.setString(14, ACTIVE);
+					
+					prepare.setString(15, advertiserCredentialMappings.get("courseProviderCode")[0]);
+					
+					if(modOrCreateBy==null)
+						modOrCreateBy= "";
+					
+					prepare.setString(17, modOrCreateBy);//CRTBY
+					prepare.setString(19,modOrCreateBy);//MODBY
+					executionStatus= prepare.executeUpdate();				
+						
+				} catch (SQLException sqle) {
+					log.error("update(Object) : SQLException "+ sqle.toString());
+					throw sqle;
+				} catch (Exception exp) {
+					log.error("update(Object) :Exception "+exp.toString());
+					throw exp;					
+				} finally{
+					DaoHelper.closeConnection(conn);
+					DaoHelper.closeStatement(prepare);
+					modOrCreateBy=null;
+					ACTIVE = null;
+					advertiserCredentialMappings=null;
+					sqlInsertAdvertiser=null;
+				}
+				return executionStatus;
 			}
 		}.update(advertiserCredentialMappings);
 		
-		return 0;
+		return status;
+	}
+		
+	/**
+	 * Method sets the response credentials, It sets the successfulness or the failure code,
+	 * and the message to be dispatched to the view to the response as attributes.
+	 * @author dushantha DN
+	 * setResponseCridentials sets the request attributes
+	 * @param helper the new response cridentials
+	 */
+	private void setResponseCridentials(IDataHelper helper){
+		helper.setAttribute("successCode", getSuccessCode());
+		helper.setAttribute("message", message);
 	}
 	
 	/**
-	 * Gets the advertiser client fed data.
-	 * @return the advertiser client fed data
+	 * isClientInputAccordanceWithValidation() validates if the input fields are 
+	 * having values and those are according to the business logic.
+	 * @author dushantha DN
+	 * @return boolean
+	 * @throws Exception
 	 */
-	private Map<String,String> getAdvertiserClientFedData(){
-		
-		return null;
-		
-	}
 
+	private boolean isClientInputAccordanceWithValidation() throws Exception {
+		boolean isvalidationSuccess = false;	
+		
+		
+		return isvalidationSuccess;
+	}
+	
 	/**
 	 * Gets the helper.
 	 * @return the helper
