@@ -1,10 +1,12 @@
 /*
 * 20170421 JH c135-public-display-tutor-profile-MP-jh CAM-135-select-tutor-public-profile-details-dml.sql created
 * 20170424 JH c135-public-display-tutor-profile-MP-jh changed town and country code data type from INT to VARCHAR, added select query to return result set
+* 20170427 JH c135-public-display-tutor-profile-MP-jh file renamed as CAM-135-select-tutor-profile-details-stored-procedure-dml and
+* 				added column order when select data from the tables to avoid column data type mismatch when inserting data to the middle table ( here TutorResult table)
 */
 
 
-USE [xeno]
+USE [xeno-4]
 GO
 
 /****** Object:  StoredProcedure [CAMPUS].[select-tutor-public-profile-details] ******/
@@ -62,6 +64,7 @@ BEGIN
 	VIBERNUMBER VARCHAR(20),
 	WHATSAPPNUMBER VARCHAR(20),
 	ISAPPROVED INT,
+	TUTORSTATUS INT, 
 	ADDRESS1 VARCHAR(50),
 	ADDRESS2 VARCHAR(50),
 	ADDRESS3 VARCHAR(50),
@@ -71,7 +74,6 @@ BEGIN
 	CRTBY VARCHAR(20),
 	MODON DATE,
 	MODBY VARCHAR(20),
-	TUTORSTATUS INT, 
 	TOWN VARCHAR(255),
 	COUNTRY VARCHAR(255),
 	QUALIFICATIONCODE INT,
@@ -99,7 +101,11 @@ BEGIN
 
 	INSERT INTO @TutorResult
 
-	SELECT t.*, tw.NAME AS TOWN, c.NAME AS COUNTRY, q.*, ex.*, md.*, emp.* FROM [xeno-4].[CAMPUS].[TUTOR] t
+	SELECT t.CODE, t.USERNAME, t.PASSWORD, t.FIRSTNAME, t.MIDDLENAME, t.LASTNAME, t.GENDER, t.EMAIL, t.LANDPHONECOUNTRYCODE, t.LANDPHONEAREACODE, t.LANDPHONENUMBER, t.MOBILEPHONECOUNTRYCODE, t.MOBILEPHONENETWORKCODE, 
+	t.MOBILEPHONENUMBER, t.DESCRIPTION, t.EXPERIENCE, t.WEBLINK, t.FACEBOOKURL, t.TWITTERURL, t.MYSPACEURL, t.LINKEDINURL, t.INSTAGRAMURL, t.VIBERNUMBER, t.WHATSAPPNUMBER, t.ISAPPROVED,
+	t.TUTORSTATUS, t.ADDRESS1, t.ADDRESS2, t.ADDRESS3, t.TOWN, t.USERTYPE, t.CRTON, t.CRTBY, t.MODON, t.MODBY, tw.NAME AS TOWN, c.NAME AS COUNTRY, q.QUALIFICATIONCODE, q.QUALIFICATION, q.QDESCRIPTION, q.QLEVEL,
+	ex.TUTOREX, ex.ORGANIZATION, ex.INDUSTRY, ex.JOBCATEGORY, ex.COMMENCEDON, ex.COMPLETIONON, md.MODULENAME, md.MODULECODE, md.MTUTOR, md.PROGRAMNAME, emp.CPCODE, emp.COURSEPROVIDRE, emp.EMPTUTOR
+	FROM [xeno-4].[CAMPUS].[TUTOR] t
 	INNER JOIN [CAMPUS].[TOWN] tw 
 	ON t.TOWN = tw.CODE
 	INNER JOIN [CAMPUS].[COUNTRY2] c
