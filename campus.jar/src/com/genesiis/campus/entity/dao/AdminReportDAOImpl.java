@@ -4,15 +4,18 @@ package com.genesiis.campus.entity.dao;
 //20170111 DJ c52-report-banner-statistics-MP-dj Implemented getBannerStatisticReport() method.
 //20170111 DJ c52-report-banner-statistics-MP-dj Implemented getRegisteredStudentReport() method.
 //20170131 DJ c53-report-registered-students Changed the return type to List <StudentSearchResultDTO> in  getRegisteredStudentReport(StudentSearchDTO searchDTO)
+//20170131 DJ c53-report-registered-students Changed the return type to List <StudentSearchResultDTO> in  getRegisteredStudentReport(StudentSearchDTO searchDTO)
+//20170425 DJ c54-report-course-stats-MP-dj implement:getProgrammeStatsReport() 
+//20170425 DJ c54-report-course-stats-MP-dj changed the return type of getProgrammeStatsReport() to list of collection.
+//20170427 DJ c54-report-course-stats-MP-dj add header comments on getProgrammeStatsReport().
 
 import com.genesiis.campus.entity.AdminReportICrud;
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
+import com.genesiis.campus.entity.model.CourseStatSearchDTO;
 import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.entity.model.StudentSearchResultDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
-import com.genesiis.campus.validation.ApplicationStatus;
-import com.genesiis.campus.validation.UtilityHelper;
 
 import org.apache.log4j.Logger;
 
@@ -20,11 +23,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 public class AdminReportDAOImpl implements AdminReportICrud{
@@ -236,5 +236,70 @@ public class AdminReportDAOImpl implements AdminReportICrud{
 			DaoHelper.cleanup(conn, stmt, resultSet);
 		}
 		return registeredStudentList;
+	}
+
+	/**
+	 * Method to generate programme stat report.Programme table joins with programmestat table.
+	 * @param searchDTO CourseStatSearchDTO
+	 * @author dumani DJ
+	 * @return Collection of strings
+	 */	
+	
+	@Override
+	public  Collection<Collection<String>> getProgrammeStatsReport(
+			CourseStatSearchDTO searchDTO) throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet resultSet = null;		
+		
+		Collection<Collection<String>> courseStatList = new ArrayList<Collection<String>>();
+		try {
+			conn = ConnectionManager.getConnection();
+			final StringBuilder sb = new StringBuilder("SELECT COUNT(PROG.CODE) INQUIRECOUNT,  PROG.CODE AS PROGCODE, PROG.NAME AS PROGNAME, PROSTAT.CALLERPAGE AS CALLERPAGE "); 
+			sb.append(" FROM CAMPUS.PROGRAMME PROG INNER JOIN CAMPUS.PROGRAMMESTAT PROSTAT ON PROG.CODE=PROSTAT.PROGRAMME WHERE 1=1 ");
+			if(searchDTO.getProviderCode() >0){
+				sb.append(" AND PROG.COURSEPROVIDER = ");
+				sb.append(searchDTO.getProviderCode());
+			}
+			if(searchDTO.getProgrammeCode() >0){
+				sb.append(" AND PROG.CODE=  ");
+				sb.append(searchDTO.getProgrammeCode());
+			}			
+			if ((searchDTO.getFromDate() != null && searchDTO.getFromDate()	.getTime() > 0)	&& (searchDTO.getToDate() != null && searchDTO.getToDate().getTime() > 0)) {
+				sb.append("AND PROSTAT.VIEWDATE BETWEEN ' ");
+				sb.append(new java.sql.Date(searchDTO.getFromDate().getTime()));
+				sb.append(" ' AND ' ");
+				sb.append(new java.sql.Date(searchDTO.getToDate().getTime()));
+				sb.append(" '  ");
+			} else if (searchDTO.getFromDate() != null && searchDTO.getFromDate().getTime() > 0) {
+				sb.append("AND PROSTAT.VIEWDATE >= ' ");
+				sb.append(new java.sql.Date(searchDTO.getFromDate().getTime()));
+				sb.append("'");
+			} else if (searchDTO.getToDate() != null	&& searchDTO.getToDate().getTime() > 0) {
+				sb.append("AND PROSTAT.VIEWDATE <= ' ");
+				sb.append(new java.sql.Date(searchDTO.getToDate().getTime()));
+				sb.append("'");			
+			}
+			sb.append(" group by  PROG.CODE,PROG.NAME, PROSTAT.CALLERPAGE ");
+			
+			stmt=conn.prepareStatement(sb.toString());
+			resultSet=stmt.executeQuery();			
+			while (resultSet.next()) {
+				final ArrayList<String> singleCourseStatList = new ArrayList<String>();					
+				singleCourseStatList.add(resultSet.getString("PROGNAME"));
+				singleCourseStatList.add(resultSet.getString("CALLERPAGE"));
+				singleCourseStatList.add(resultSet.getString("INQUIRECOUNT"));
+				courseStatList.add(singleCourseStatList);					
+			}
+		} catch (SQLException sqlException) {
+			log.info("getProgrammeStatsReport() sqlException" + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("getProgrammeStatsReport() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, resultSet);
+		}	
+		return courseStatList;
 	}
 }

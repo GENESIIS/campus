@@ -24,9 +24,9 @@ p    {color: blue;}
 	<div>
 		<h1>Report Generation</h1><p>Please Select the report type</p>
 	</div>		
-	<hr>
+	<hr>	
 	<div>		
-		<a href="dist/partials/reportRegisteredStudents.jsp"><u>Registered Students </u></a>
+		<a href="dist/partials/reportCourseStats.jsp"><u>Course stats </u></a>
 	</div>
     <hr>
 	<!-- Footer -->
