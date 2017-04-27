@@ -4,7 +4,8 @@ package com.genesiis.campus.entity;
  * 20170426 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The Class  AdvertiserFacilitator.java has been created.
  * 20170427 DN c88-admin-manage-advertiser-add-new-advertiser-dn. created the methods processAdvertiser(),createNewAdvertiser()
  * 				getAdvertiserClientFedData() and add doc comments and in line comments to the class.
- * 				The method  setResponseCridentials(IDataHelper ) is implemented.
+ * 				The method  setResponseCridentials(IDataHelper) is implemented.
+ * 				The error :jdbc.SQLServerException: The index 19 is out of range has been corrected in createNewAdvertiser() method.
  */
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -139,8 +140,8 @@ public class AdvertiserFacilitator {
 						sqlInsertAdvertiser = sqlInsertAdvertiser+",[MOBILEPHONENETWORKCODE],[MOBILEPHONENUM],[DESCRIPTION],[ADDRESS1],[ADDRESS2] ,[ADDRESS3]";
 						sqlInsertAdvertiser = sqlInsertAdvertiser+",[TOWN],[ISACTIVE],[COURSEPROVIDER] ,[CRTON],[CRTBY],[MODON] ,[MODBY])";
 						sqlInsertAdvertiser = sqlInsertAdvertiser +"VALUES";
-						sqlInsertAdvertiser =sqlInsertAdvertiser +"(?,?,?,?,?,?,?,?,?,?,?,?)";
-						sqlInsertAdvertiser =sqlInsertAdvertiser +"(?,?,?,getDate(),?,getDate(),? );";
+						sqlInsertAdvertiser =sqlInsertAdvertiser +"(?,?,?,?,?,?,?,?,?,?,?,?,";
+						sqlInsertAdvertiser =sqlInsertAdvertiser +" ?,?,?,getDate(),?,getDate(),? );";
 				try{
 					conn = ConnectionManager.getConnection();		
 					prepare = conn.prepareStatement(sqlInsertAdvertiser);
@@ -158,7 +159,7 @@ public class AdvertiserFacilitator {
 					prepare.setString(12, advertiserCredentialMappings.get("address3")[0]);				
 					prepare.setString(13, advertiserCredentialMappings.get("townCode")[0]);
 					
-					if(advertiserCredentialMappings.get("AdvertiserStatus")[0]=="1")					
+					if(advertiserCredentialMappings.get("AdvertiserStatus")[0].equals("1"))					
 						ACTIVE=Integer.toString(ApplicationStatus.ACTIVE.getStatusValue());				
 					prepare.setString(14, ACTIVE);
 					
@@ -167,8 +168,8 @@ public class AdvertiserFacilitator {
 					if(modOrCreateBy==null)
 						modOrCreateBy= "";
 					
-					prepare.setString(17, modOrCreateBy);//CRTBY
-					prepare.setString(19,modOrCreateBy);//MODBY
+					prepare.setString(16, modOrCreateBy);//CRTBY
+					prepare.setString(17,modOrCreateBy);//MODBY
 					executionStatus= prepare.executeUpdate();				
 						
 				} catch (SQLException sqle) {
@@ -197,7 +198,7 @@ public class AdvertiserFacilitator {
 	 * and the message to be dispatched to the view to the response as attributes.
 	 * @author dushantha DN
 	 * setResponseCridentials sets the request attributes
-	 * @param helper the new response cridentials
+	 * @param helper the new response credentials
 	 */
 	private void setResponseCridentials(IDataHelper helper){
 		helper.setAttribute("successCode", getSuccessCode());
@@ -213,7 +214,7 @@ public class AdvertiserFacilitator {
 	 */
 
 	private boolean isClientInputAccordanceWithValidation() throws Exception {
-		boolean isvalidationSuccess = false;	
+		boolean isvalidationSuccess = true;	
 		
 		
 		return isvalidationSuccess;
