@@ -6,6 +6,7 @@
  * 20170425 CW c159-courseprovider-accept-tutor-request-cw finalize the populateTuterData function after adding check boxes & hidden items
  * 20170425 CW c159-courseprovider-accept-tutor-request-cw add confirmationStatus into the table & fillListItems method
  * 20170426 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill employmentCode WIP
+ * 20170427 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill employmentCode 
  */
 
 $(document).ready(function() {
@@ -67,26 +68,25 @@ function populateTuterData(response){
 }
 
 function fillListItems(maxIndex, response){
-	for(i = 0; i <= maxIndex; i++){
+	for(i = 1; i <= maxIndex + 1; i++){
 		
-		listId = "confirmationStatus" + "i";
+		listId = "confirmationStatus" + i;
 		var status = $("#" + listId);
 		status.find('option').remove();
-	}
-	
-	
-	
-	
-	var categories = $("#townDetails");
-	categories.find('option').remove();
-	
-	$.each(response.applicationStatusMap, function (index, value) {
 		
-	})
-	
-	
-	var test  = new com.genesiis.campus.validation.ApplicationStatus.ACTIVE();
-	log(test.testEnum.TEST_VALUE)
+		$('<option>').val("0").text("--- Select Status ---").appendTo(status);
+		
+		$.each(response.applicationStatusMap, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = index;
+			var y = data[0].toString();
+			
+			//if(z == selected){
+				$('<option>').val(x).text(y).appendTo(status);
+			//}
+		});		
+	}
 }
 
 /*
