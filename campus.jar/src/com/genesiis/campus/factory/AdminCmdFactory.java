@@ -99,6 +99,9 @@ public class AdminCmdFactory implements ICmdFactory{
 		case GET_ADVERTISER_CREDENTIALS:
 			command = map.get(o);
 			break;
+		case CREATE_NEW_ADVERTISER:
+			command = map.get(o);
+			break;	
 		default:
 			break;
 		}
