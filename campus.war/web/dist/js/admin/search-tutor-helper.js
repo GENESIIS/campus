@@ -5,6 +5,7 @@
  * 20170321 JH c134-admin-list-new-tutor-requests remove code used to select table record details and added new event to select tutor code
  * 				on click, show error messages on AJAX call error 
  * 20170425 JH c134-admin-list-new-tutor-requests added styles for approval status and tutor status when they are null or not defined
+ * 20170427 JH c134-admin-list-new-tutor-requests added tooltips for approval status
  */
 
 window.tutorList = null;
@@ -112,22 +113,30 @@ function tutorDataTable(){
 							 */
 							if (value[11] == statusValues["ACTIVE"]) {
 								
-								value11 = ' <span class="glyphicon glyphicon-ok" style="color:green;">'
+								value11 = '<a href="#" data-toggle="tooltip" title="ACTIVE">';
+								value11 += '<span class="glyphicon glyphicon-ok" style="color:green;"></a>';
 								value11 += '<label class="hide-value">' + statusValues["ACTIVE"]+'</label></span>';
 							
 							} 
 							else if (value[11] == statusValues["INACTIVE"]) {
 								
-								value11 = ' <span class="glyphicon glyphicon-remove" style="color:red;">'
+								value11 = '<a href="#" data-toggle="tooltip" title="INACTIVE">';
+								value11 += '<span class="glyphicon glyphicon-remove" style="color:red;"></a>';
 								value11 += '<label class="hide-value">'	+ statusValues["INACTIVE"]+'</label></span>';
+								
 								 
 							}
 							else if (value[11] == statusValues["PENDING"]) {
-								value11 = ' <span class="glyphicon glyphicon-asterisk" style="color:blue;">'
-								value11 += '<label class="hide-value">' + statusValues["PENDING"]+'</label></span>'
+								
+								value11 = '<a href="#" data-toggle="tooltip" title="PENDING">';
+								value11 += ' <span class="glyphicon glyphicon-asterisk" style="color:blue;"></a>';
+								value11 += '<label class="hide-value">' + statusValues["PENDING"]+'</label></span>';
+
 							}else{
-								value11 = ' <span class="glyphicon question-sign" style="color:reds;">'
-								value11 += '<label class="hide-value"> NULL </label></span>'
+								value11 += '<a href="#" data-toggle="tooltip" title="Null or Empty value">Hover over me';
+								value11 = ' <span class="glyphicon question-sign" style="color:reds;"></a>';
+								value11 += '<label class="hide-value"> NULL </label></span>';
+
 							}
 							
 							var value17 = null; 
@@ -166,6 +175,8 @@ t.row.add(
 			
 		});
 	}
+	/* scripts related to tool tip */
+    $('[data-toggle="tooltip"]').tooltip(); 
 	
 }
 
@@ -173,6 +184,10 @@ t.row.add(
  * To select the tutor code on table row selection
  */
 $(document).ready(function() {
+	
+	/* scripts related to tool tip */
+    $('[data-toggle="tooltip"]').tooltip(); 
+
     var table = $('#tutors-table').DataTable();
      
     $('#tutors-table tbody').on('click', 'tr', function () {
