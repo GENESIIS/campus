@@ -41,6 +41,7 @@ package com.genesiis.campus.entity;
 //20170424 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method to get the gender correctly
 //20170425 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method query to decode VARIFICATIONSTATUS
 //20170425 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method & changed VARIFICATIONSTATUS into CONFIRMATIONSTATUS
+//20170427 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method & add INITIATEDBY to the query
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -449,7 +450,8 @@ public class TutorDAO implements ICrud {
 		queryBuilder.append("T.EMAIL, T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
 		queryBuilder.append("T.MOBILEPHONECOUNTRYCODE + T.MOBILEPHONENETWORKCODE + T.MOBILEPHONENUMBER MOBILENUMBER, ");
 		queryBuilder.append("EMP.CODE EMPCODE, EMP.COURSEPROVIDER CPCODE, ");
-		queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN 0 then 'Inactive' WHEN 1 then 'Active' WHEN 2 then 'Pending' WHEN 4 then 'Expired' WHEN -1 then 'Undefined' END CONFIRMSTATUS ");
+		queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN 0 then 'Inactive' WHEN 1 then 'Active' WHEN 2 then 'Pending' WHEN 4 then 'Expired' WHEN -1 then 'Undefined' END CONFIRMSTATUS, ");
+		queryBuilder.append("EMP.INITIATEDBY INITIATEDBY ");
 		queryBuilder.append("FROM CAMPUS.TUTOR T ");
 		queryBuilder.append("INNER JOIN CAMPUS.EMPLOYMENT EMP ON T.CODE = EMP.TUTOR ");
 		queryBuilder.append("WHERE EMP.COURSEPROVIDER =  ? ORDER BY T.CODE DESC");
@@ -473,6 +475,7 @@ public class TutorDAO implements ICrud {
 				singleEmploymentTutorsList.add(rs.getString("EMPCODE"));
 				singleEmploymentTutorsList.add(rs.getString("CONFIRMSTATUS"));
 				singleEmploymentTutorsList.add(rs.getString("CPCODE"));
+				singleEmploymentTutorsList.add(rs.getString("INITIATEDBY"));
 
 				allEmploymentTutorsList.add(singleEmploymentTutorsList);
 			}		
