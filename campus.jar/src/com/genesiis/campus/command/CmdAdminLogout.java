@@ -1,6 +1,6 @@
 package com.genesiis.campus.command;
 //20170426 AS c155-admin-logout-function-as CmdAdminLogout class created
-
+//20170427 AS CAM-155-admin-logout-function-as- userTypeString, userLoginHistoryCode to session attribute removed 
 import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentLoginDAO;
@@ -10,7 +10,6 @@ import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
 
 import org.apache.log4j.Logger;
-
 import com.google.gson.Gson;
 
 import java.sql.SQLException;
@@ -34,20 +33,23 @@ public class CmdAdminLogout implements ICommand{
 			String currentSessionUser = (String) curentSession
 					.getAttribute("currentSessionUsername");
 			if (currentSessionUser != null) {
+				
+			int	loginHistoryID = (Integer) curentSession.getAttribute("userLoginHistoryCode");
+				String gsonData = helper.getParameter("jsonData");
+				adminData = getAdmindetails(gsonData);
+				adminData.setLoginHistoryCode(loginHistoryID);
+				adminData.setUsername(currentSessionUser);
+				adminData.setLoginHistoryModBy(currentSessionUser);
+				int status = AdminLoginDAO.logoutDataUpdate(adminData);
+				
 				curentSession.removeAttribute("user");
 				curentSession.removeAttribute("userCode");
 				curentSession.removeAttribute("currentUserData");
+				curentSession.removeAttribute("currentSessionUsername");
+				curentSession.removeAttribute("userTypeString");
+				curentSession.removeAttribute("userLoginHistoryCode");
 				curentSession.invalidate();
-
-				String gsonData = helper.getParameter("jsonData");
-				adminData = getAdmindetails(gsonData);
 				
-				Date loginTime = new Date();
-
-				java.util.Date utilDate = new java.util.Date();
-				java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
-				
-				int status = AdminLoginDAO.logoutDataUpdate(adminData);
 
 				if (status > 0) {
 					message = SystemMessage.LOGOUTSUCCESSFULL.message();
