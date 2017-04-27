@@ -6,6 +6,7 @@ package com.genesiis.campus.validation;
 //20170403 CW c157-add-tutor-employment-details-cw copied the ApplicationStatus from c51-report-courses-by-course-provider-MP-dj issue
 //20170425 CW c159-courseprovider-accept-tutor-request-cw command DELETED added
 //20170426 CW c159-courseprovider-accept-tutor-request-cw add getApplicationStatus method
+//20170427 CW c159-courseprovider-accept-tutor-request-cw command DELETED modified into DELETE
 
 /**
 * ApplicationStatus enum created to manage all the status values
@@ -19,7 +20,7 @@ public enum ApplicationStatus {
 	ACTIVE(1),	
 	PENDING(2),
 	EXPIRED(3),
-	DELETED(4);	
+	DELETE(4);	
 	
 	private final int statusValue;
 
@@ -56,8 +57,8 @@ public enum ApplicationStatus {
 			if (statusValue.equalsIgnoreCase("EXPIRED")) {
 				applicationStatus = EXPIRED.getStatusValue();
 			}
-			if (statusValue.equalsIgnoreCase("DELETED")) {
-				applicationStatus = DELETED.getStatusValue();
+			if (statusValue.equalsIgnoreCase("DELETE")) {
+				applicationStatus = DELETE.getStatusValue();
 			}
 		}
 		
@@ -86,8 +87,8 @@ public enum ApplicationStatus {
 		if(statusValue==EXPIRED.statusValue ){
 			applicationStatus = "Expired";
 		}
-		if(statusValue==DELETED.statusValue ){
-			applicationStatus = "Deleted";
+		if(statusValue==DELETE.statusValue ){
+			applicationStatus = "Delete";
 		}
 		
 		return applicationStatus;
