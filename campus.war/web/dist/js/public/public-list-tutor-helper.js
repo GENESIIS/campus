@@ -59,7 +59,16 @@ function listPublicTutors(){
 	});
 }
 
+//String encode to Hash code
+function hashEncode(data) {
+	// Define the string
+	var string = data;
 
+	// Encode the String
+	var encodedString = btoa(string);
+
+	return encodedString;
+}
 
 /**
  * used to select a specific record of a tutor and pass the tutor
@@ -70,9 +79,10 @@ function listPublicTutors(){
  */
 function selectTutorRecord(code){
 
+	 var tutorCode = hashEncode(code);
 	  var url = '/dist/partials/public/display-tutor-profile.jsp';
 	  var form = $('<form action="' + url + '" method="post">' +
-			  	'<input type="hidden" name="tutorCode" value="' + code+ '" />' +
+			  	'<input type="hidden" name="tutorCode" value="' + tutorCode+ '" />' +
 			  	'<input type="hidden" name="CCO" value="DISPLAY_PUBLIC_TUTOR_PROFILE" />' +
 	  			'</form>');
 	  			$('body').append(form);

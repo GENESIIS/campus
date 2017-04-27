@@ -4,10 +4,11 @@
  */
 
 window.onload = function() {
-	
+	alert($('#tutorCode').val());
 };
 
 function loadTutor(code){
+	
 	
 	$.ajax({
 		url : '/PublicController',
