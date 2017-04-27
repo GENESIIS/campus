@@ -9,6 +9,9 @@
  * 20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The method getAdvertiserDetailsLinkedToTheCourseProvider(adminControllerUrl,courseProviderCode) 
  * 				is implemented.
  * 20170426 DN c88-admin-manage-advertiser-add-new-advertiser-dn.the click event for advertiser record creation has been coded
+ * 20170427 DN c88-admin-manage-advertiser-add-new-advertiser-dn.Changed the name of the method call to prevent default action on the event 
+ * 				to preventDefault where the control is transfered to the server once the onclick of the createAdvertiser element 
+ * 				The method displayLabelMessage(messagePopUpId,labelid,cssColour,message) created.
  */
 
 
@@ -528,7 +531,7 @@ function populatePageWithAdvertisersCredential(arrayOfArray){
 	$('#mobilePhoneNumber').val(courseProviderArray[8]);
 	$('#address1').val(courseProviderArray[10]);
 	$('#address2').val(courseProviderArray[11]);
-	$('#address3').val($('#address1').val(courseProviderArray[12]));
+	$('#address3').val(courseProviderArray[12]);
 	if(courseProviderArray[13]===0){
 		$('#statusInactive').attr('checked',true);
 	}
@@ -540,7 +543,7 @@ function populatePageWithAdvertisersCredential(arrayOfArray){
  * is selected.
  */
 $(document).on("click",'#createAdvertiser',function(event){
-	event.preventdefault();
+	event.preventDefault();
 	
 		$.ajax({
 			type:"POST",
@@ -568,10 +571,9 @@ $(document).on("click",'#createAdvertiser',function(event){
 			success: function(response){
 				var cssColour='red';
 				if(response['successCode']==1){
-				//call the function that arrange the data in right place..
 					cssColour='green';
 			}
-			displayLabelMessage('bannerUploadPopUp','bannerDisplayLabel',cssColour,response['message']);
+			displayLabelMessage('messagePopUp','displayLabel',cssColour,response['message']);
 			
 		},
 		error: function(allBanners,error,errorThrown){
@@ -583,3 +585,17 @@ $(document).on("click",'#createAdvertiser',function(event){
 
 	
 });
+
+/**
+ * displayLabelMessage(): displays an user define message text in the a modal window,<br>
+ * This message either can be an error or success message.<br>
+ * @author dushantha DN
+ * @param messagePopUpId the id of the modal popUp where the label is embedded.
+ * @param cssColour required color theme for the message to be displayed
+ * @param message the required message to be displayed
+ */
+function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
+	$('#'+messagePopUpId).modal('show'); // display the modal window
+	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
+	
+}
