@@ -6,7 +6,8 @@
  * 20170213 DJ c138-add-basic-programme-MP-dj  remove error message of input fields on focusout.
  * 20170213 DJ c138-add-basic-programme-MP-dj  Implemented clearErrorMessage() common method.
  * 20170214 DJ c138-add-basic-programme-MP-dj  Implemented validateFormData() to validate input data.
- */
+ * 20170427 DJ c145-add-enhanced-programme-MP-dj  Redirects to semester detail view after successfully completed course detail adding
+ *  */
 
 $(document).ready(function() {	
 	
@@ -254,6 +255,8 @@ function addProgrammeDetails(){
 			success : function(response) {					
 					if (response.successMessage === "success") {
 						alert("Added Programme details dispay will be implemented by another issue.In order to test added data please check the database");
+						//populateSemesterAddView(response);
+						 window.location.href = 'addSemesterDetails.jsp';
 					}else{
 						displayBackEndValidations(response);
 					}				
@@ -264,6 +267,26 @@ function addProgrammeDetails(){
 		});	
 		
 	}	
+}
+
+
+function populateSemesterAddView(response){
+	
+/*	$.ajax({
+		url : '../../AdminController',
+		type: 'POST',
+		data : {
+			CCO : 'LIST_PROGRAMME_ADD_VIEW'			
+		},
+		dataType : "json",
+		success : function(response) {			
+			populateProgrammeAddView(response);
+		},
+		error : function(jqXHR, exception) {			
+			errorCodeGeneration(jqXHR, exception);
+		}
+	});	
+	*/
 }
 
 /*

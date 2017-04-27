@@ -5,6 +5,8 @@ package com.genesiis.campus.entity.dao;
 import com.genesiis.campus.entity.DistrictICrud;
 import com.genesiis.campus.util.ConnectionManager;
 
+import org.apache.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,6 +22,8 @@ import java.util.Collection;
  */
 public class DistrictDAOImpl  implements DistrictICrud{
 
+	static Logger log = Logger.getLogger(DistrictDAOImpl.class.getName());
+	
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
