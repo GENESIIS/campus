@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 //20170425 CW c159-courseprovider-accept-tutor-request-cw add applicationStatusMap
 //20170425 CW c159-courseprovider-accept-tutor-request-cw add applicationStatusMap errors fixing
 //20170426 CW c159-courseprovider-accept-tutor-request-cw unit testing & applicationStatusMap data filling error fixing
+//20170427 CW c159-courseprovider-accept-tutor-request-cw modified the values sending into applicationStatusMap
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -55,8 +56,8 @@ public class CmdListTutorsForCourseProviders implements ICommand  {
 				HashMap<Integer, String> applicationStatusMap = new HashMap<Integer, String>();
 				
 				for (ApplicationStatus statusValues : ApplicationStatus.values()) {
-					System.out.println(statusValues);
-					applicationStatusMap.put(ApplicationStatus.getApplicationStatus(statusValues.toString()), statusValues.toString());
+					int statusValueInt = ApplicationStatus.getApplicationStatus(statusValues.toString());
+					applicationStatusMap.put(statusValueInt, ApplicationStatus.getApplicationStatus(statusValueInt));
 				}
 
 				helper.setAttribute("applicationStatusMap", applicationStatusMap);
