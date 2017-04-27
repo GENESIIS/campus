@@ -115,14 +115,14 @@ function tutorDataTable(){
 								
 								value11 = '<a href="#" data-toggle="tooltip" title="ACTIVE">';
 								value11 += '<span class="glyphicon glyphicon-ok" style="color:green;"></a>';
-								value11 += '<label class="hide-value">' + statusValues["ACTIVE"]+'</label></span>';
+								value11 += '<label class="hide-value">ACTIVE</label></span>';
 							
 							} 
 							else if (value[11] == statusValues["INACTIVE"]) {
 								
 								value11 = '<a href="#" data-toggle="tooltip" title="INACTIVE">';
 								value11 += '<span class="glyphicon glyphicon-remove" style="color:red;"></a>';
-								value11 += '<label class="hide-value">'	+ statusValues["INACTIVE"]+'</label></span>';
+								value11 += '<label class="hide-value">INACTIVE</label></span>';
 								
 								 
 							}
@@ -130,11 +130,11 @@ function tutorDataTable(){
 								
 								value11 = '<a href="#" data-toggle="tooltip" title="PENDING">';
 								value11 += ' <span class="glyphicon glyphicon-asterisk" style="color:blue;"></a>';
-								value11 += '<label class="hide-value">' + statusValues["PENDING"]+'</label></span>';
+								value11 += '<label class="hide-value">PENDING</label></span>';
 
 							}else{
-								value11 += '<a href="#" data-toggle="tooltip" title="Null or Empty value">Hover over me';
-								value11 = ' <span class="glyphicon question-sign" style="color:reds;"></a>';
+								value11 = '<a href="#" data-toggle="tooltip" title="Null or Empty value">';
+								value11 += ' <span class="glyphicon glyphicon-question-sign" style="color:red;"></a>';
 								value11 += '<label class="hide-value"> NULL </label></span>';
 
 							}
