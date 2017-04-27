@@ -2,8 +2,8 @@ package com.genesiis.campus.entity.dao;
 
 //20170421 DJ c54-report-course-stats-MP-dj Init:ProgrammeDAOImpl.java
 //20170421 DJ c54-report-course-stats-MP-dj Implement method getLightProgrammes()
+//20170427 DJ c54-report-course-stats-MP-dj organized imports.
 
-import com.genesiis.campus.command.CmdReportCourseStats;
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
 import com.genesiis.campus.util.ConnectionManager;

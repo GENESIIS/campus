@@ -4,10 +4,10 @@ package com.genesiis.campus.entity;
 //20170111 DJ c52-report-banner-statistics-MP-dj Declare getBannerStatisticReport().
 //20170421 DJ c54-report-course-stats-MP-dj -Init: method getProgrammeStatsReport().
 //20170425 DJ c54-report-course-stats-MP-dj changed the return type of getProgrammeStatsReport() to list of collection.
+//20170427 DJ c54-report-course-stats-MP-dj organized imports..
 
 import com.genesiis.campus.entity.model.BannerStatSearchDTO;
 import com.genesiis.campus.entity.model.CourseStatSearchDTO;
-import com.genesiis.campus.entity.model.CourseStatSearchResultDTO;
 import com.genesiis.campus.entity.model.StudentSearchDTO;
 import com.genesiis.campus.entity.model.StudentSearchResultDTO;
 

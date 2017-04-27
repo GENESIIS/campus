@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.dao;
 
 //DJ 20170420 c54-report-course-stats-MP-dj Initiated CourseProviderDAOImpl.java , getLightAllCourseProviders and getCourseProviderResultSet methods.
+//DJ 20170427 c54-report-course-stats-MP-dj organized imports.
 
 import com.genesiis.campus.entity.CourseProviderICrud;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;

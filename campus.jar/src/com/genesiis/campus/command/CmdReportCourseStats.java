@@ -12,19 +12,17 @@ package com.genesiis.campus.command;
  *											to create 30 days of date range.
  *20170426 DJ c54-report-course-stats-MP-dj Method:populateDates() -to populate dates to searhDTO.
  *20170426 DJ c54-report-course-stats-MP-dj if no date is not selected configure application to list result for 30 days back.
+ *20170427 DJ c54-report-course-stats-MP-dj organized imports.
   * */
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.dao.AdminReportDAOImpl;
 import com.genesiis.campus.entity.dao.CourseProviderDAOImpl;
-import com.genesiis.campus.entity.dao.DistrictDAOImpl;
 import com.genesiis.campus.entity.dao.ProgrammeDAOImpl;
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 import com.genesiis.campus.entity.model.CourseStatSearchDTO;
-import com.genesiis.campus.entity.model.CourseStatSearchResultDTO;
 import com.genesiis.campus.entity.model.ProgrammeSearchDTO;
-import com.genesiis.campus.entity.model.StudentSearchResultDTO;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
@@ -34,9 +32,6 @@ import com.genesiis.campus.validation.UtilityHelper;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
