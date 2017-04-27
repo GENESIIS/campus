@@ -7,6 +7,7 @@
  * 20170425 CW c159-courseprovider-accept-tutor-request-cw add confirmationStatus into the table & fillListItems method
  * 20170426 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill employmentCode WIP
  * 20170427 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill employmentCode 
+ * 20170427 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill List Item conditionally
  */
 
 $(document).ready(function() {
@@ -56,8 +57,8 @@ function populateTuterData(response){
         + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>' + value[7].toString() + '</td><td>' 
         + '<select name=confirmationStatus'+sequence+' id=confirmationStatus'+sequence+'> <option></option></td>'
 		+ '<input type=hidden name=employmentCode'+sequence+' id=employmentCode'+sequence+' value=' + value[6].toString() + '>'
-		+ '<input type=checkbox id=isRemove'+sequence+' name=isRemove'+sequence+' value=1></td><td>' 
-        + '<input type=checkbox id=isApprove'+sequence+' name=isApprove'+sequence+' value=1></td></tr>';
+/*		+ '<input type=checkbox id=isRemove'+sequence+' name=isRemove'+sequence+' value=1></td><td>' 
+        + '<input type=checkbox id=isApprove'+sequence+' name=isApprove'+sequence+' value=1></td></tr>';*/
         
     });
     
@@ -67,6 +68,52 @@ function populateTuterData(response){
     fillListItems(maxIndex, response); 
 }
 
+function fillListItems(maxIndex, response){
+	$.each(response.result, function (index, resultValue) {
+		
+		var sequence = index + 1;
+		
+		listId = "confirmationStatus" + sequence;
+		var status = $("#" + listId);
+		status.find('option').remove();
+		
+		$('<option>').val("0").text("--- Select Status ---").appendTo(status);
+		
+		$.each(response.applicationStatusMap, function(index, value) {
+			var res = value.toString();
+			var data = res.split(",");
+			var x = index;
+			var y = data[0].toString();
+			
+			var val1 = resultValue[9].toString(); // added for the testing purposes
+			var val2 = resultValue[7].toString(); // added for the testing purposes
+			
+			if(resultValue[9].toString() == "COURSEPROVIDER" && resultValue[7].toString() == "Active" && y == "Delete"){
+				$('<option>').val(x).text(y).appendTo(status);
+			}
+			
+			if(resultValue[9].toString() == "COURSEPROVIDER" && resultValue[7].toString() == "Pending" && y == "InActive"){
+				y = "Remove";
+				$('<option>').val(x).text(y).appendTo(status);
+			}
+
+			if(resultValue[9].toString() == "TUTOR" && resultValue[7].toString() == "Active" && y == "Delete"){
+				$('<option>').val(x).text(y).appendTo(status);
+			}
+
+			if(resultValue[9].toString() == "TUTOR" && resultValue[7].toString() == "Pending" && (y == "InActive" || y == "Active")){
+				if(y == "InActive"){
+					y = "Remove";
+				}else{
+					y = "Approve";
+				}
+				$('<option>').val(x).text(y).appendTo(status);
+			}
+		});		
+	});
+}
+
+/*
 function fillListItems(maxIndex, response){
 	for(i = 1; i <= maxIndex + 1; i++){
 		
@@ -87,7 +134,7 @@ function fillListItems(maxIndex, response){
 			//}
 		});		
 	}
-}
+}*/
 
 /*
 function getTownData(response, selected) {
