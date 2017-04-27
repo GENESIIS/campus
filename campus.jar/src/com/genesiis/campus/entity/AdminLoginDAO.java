@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20170404 AS c23-admin-login-logout-function-as - loginDataUpdate() sql query modified
 //20170424 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified to check from the logging attempts, user already blocked or not.
 //20170425 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified the logic. 
+//20170427 AS CAM-155-admin-logout-function-as- login details add generated PK set to the admin object, logoutDataUpdate() query modification completed 
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
@@ -22,8 +23,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
+
+import javax.ejb.StatefulTimeout;
 
 public class AdminLoginDAO implements ICrud {
 	static Logger log = Logger.getLogger(AdminLoginDAO.class.getName());
@@ -47,7 +53,8 @@ public class AdminLoginDAO implements ICrud {
 		try {
 			Admin adminData = (Admin) object;
 			conn = ConnectionManager.getConnection();
-			ps = conn.prepareStatement(query);
+			ps = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+			
 			ps.setString(1, adminData.getLastLoggedInUserAgent());
 			ps.setString(2, adminData.getLastLoggedInSessionid());
 			ps.setString(3, adminData.getLastLoggedInDate());
@@ -59,9 +66,16 @@ public class AdminLoginDAO implements ICrud {
 			ps.setString(9, UserType.TUTOR.getDefaultValue());
 			ps.setInt(10, ApplicationStatus.ACTIVE.getStatusValue());
 			ps.setString(11, adminData.getUsername());
+			
 			rowInserted = ps.executeUpdate();
-
 			if (rowInserted > 0) {
+				ResultSet rs = ps.getGeneratedKeys();
+				int generatedKey = 0;
+				if (rs.next()) {
+				    generatedKey = rs.getInt(1);
+				}
+
+				adminData.setLoginHistoryCode(generatedKey);
 				rowInserted = 1;
 			} else {
 				rowInserted = 0;
@@ -89,9 +103,19 @@ public class AdminLoginDAO implements ICrud {
 	}
 
 	
+	/**
+	 * logout data updating
+	 * 
+	 * @author anuradha
+	 * @param admin object
+	 * @return int
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	
 	public static int logoutDataUpdate(Object object) throws SQLException, Exception {
 		Connection conn = null;
-		String query = "";
+		String query = "UPDATE CAMPUS.LOGINHISTORY SET LOGGEDOUTTDATE=?, LOGGEDOUTTIME=?, MODON=?, MODBY =?  WHERE CODE=? ";
 		PreparedStatement ps = null;
 
 		int rowInserted = -1;
@@ -99,10 +123,18 @@ public class AdminLoginDAO implements ICrud {
 			Admin admin = (Admin) object;
 			conn = ConnectionManager.getConnection();
 			ps = conn.prepareStatement(query);
-
-			ps.setString(1, admin.getLastLoggedOutDate());
-			ps.setString(2, admin.getLastLoggedOutTime());
-			ps.setInt(3, admin.getCode());
+			
+			Date logoutTime = new Date();
+			java.util.Date utilDate = new java.util.Date();
+			java.sql.Date logoutDate = new java.sql.Date(utilDate.getTime());
+			
+		
+			
+			ps.setDate(1, logoutDate);
+			ps.setString(2, new Timestamp(logoutTime.getTime()).toString());
+			ps.setDate(3, logoutDate);
+			ps.setString(4, admin.getLoginHistoryModBy());
+			ps.setInt(5, admin.getLoginHistoryCode());
 			rowInserted = ps.executeUpdate();
 
 			if (rowInserted > 0) {
