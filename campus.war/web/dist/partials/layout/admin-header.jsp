@@ -45,7 +45,7 @@
 							value="${sessionScope.userCode}" />
 
 						<a class="btn btn-link colr-white" name="CCO"
-							id="CCO" value="SLGOUT" onclick="studentLogout()">Logout</a>
+							id="CCO" value="ALGOUT" onclick="ALogout()">Logout</a>
 
 					</c:if>
 				</div>
