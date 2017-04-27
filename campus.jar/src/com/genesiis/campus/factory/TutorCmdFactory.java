@@ -19,9 +19,10 @@ package com.genesiis.campus.factory;
 //20170329 CW c157-add-tutor-employment-details-cw command REMOVE_SELECTED_EMPLOYMENT added
 //20170420 CW c159-courseprovider-accept-tutor-request-cw command VIEW_TUTORS_FOR_CP added
 //20170425 CW c159-courseprovider-accept-tutor-request-cw command APPROVE_REMOVE_EMPLOYMENT added
+//20170427 CW c159-courseprovider-accept-tutor-request-cw MODIFY APPROVE_REMOVE_EMPLOYMENT command NAME INTO SAVE_EMPLOYMENT_STATUS_CP
 
 import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
-import com.genesiis.campus.command.CmdApproveRejectRemoveTutors;
+import com.genesiis.campus.command.CmdSaveEmploymentStatusCP;
 import com.genesiis.campus.command.CmdCheckEmail;
 import com.genesiis.campus.command.CmdListCourseProvidersForTutors;
 import com.genesiis.campus.command.CmdListTutorsForCourseProviders;
@@ -50,7 +51,7 @@ public class TutorCmdFactory implements ICmdFactory {
 		map.put(Operation.LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS, new CmdViewTutorSelectedEmploymentDetails());
 		map.put(Operation.REMOVE_SELECTED_EMPLOYMENT, new CmdRemoveSelectedEmploymentDetails());		
 		map.put(Operation.VIEW_TUTORS_FOR_CP, new CmdListTutorsForCourseProviders());				
-		map.put(Operation.APPROVE_REMOVE_EMPLOYMENT, new CmdApproveRejectRemoveTutors());			
+		map.put(Operation.SAVE_EMPLOYMENT_STATUS_CP, new CmdSaveEmploymentStatusCP());			
 	}
 	
 	@Override
@@ -101,7 +102,7 @@ public class TutorCmdFactory implements ICmdFactory {
 		case VIEW_TUTORS_FOR_CP:
 			command = map.get(o);
 			break;
-		case APPROVE_REMOVE_EMPLOYMENT:
+		case SAVE_EMPLOYMENT_STATUS_CP:
 			command = map.get(o);
 			break;			
 		default:
