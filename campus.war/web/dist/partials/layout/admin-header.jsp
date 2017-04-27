@@ -1,8 +1,10 @@
 
 <!-- 20170407 AS c23-admin-login-logout-function-as -admin-header.jsp page created to sample.   -->
 <!-- 20170419 AS c154-removed unwanted UI elements and jstl functions   -->  
-<!-- 20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->      
+<!-- 20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->     
+<!-- 20170427 AS CAM-155-admin-logout-function-as- logout button ajax call function modified  -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
+<script src='/dist/js/admin/admin-login.js'></script>
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 
 	<div class="top">
