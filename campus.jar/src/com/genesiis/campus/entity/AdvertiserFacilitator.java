@@ -6,6 +6,7 @@ package com.genesiis.campus.entity;
  * 				getAdvertiserClientFedData() and add doc comments and in line comments to the class.
  * 				The method  setResponseCridentials(IDataHelper) is implemented.
  * 				The error :jdbc.SQLServerException: The index 19 is out of range has been corrected in createNewAdvertiser() method.
+ * 				Removed the preceding '+' sign from the country code of both land line and the mobile in createNewAdvertiser() method.
  */
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -147,10 +148,10 @@ public class AdvertiserFacilitator {
 					prepare = conn.prepareStatement(sqlInsertAdvertiser);
 					prepare.setString(1, advertiserCredentialMappings.get("advertiserName")[0]);
 					prepare.setString(2, advertiserCredentialMappings.get("advertiserEmail")[0]);
-					prepare.setString(3, advertiserCredentialMappings.get("landCountryCode")[0]);
+					prepare.setString(3, advertiserCredentialMappings.get("landCountryCode")[0].split("\\+")[1]);
 					prepare.setString(4, advertiserCredentialMappings.get("landAreaCode")[0]);
 					prepare.setString(5, advertiserCredentialMappings.get("landPhoneNumber")[0]);				
-					prepare.setString(6, advertiserCredentialMappings.get("mobileCountryCode")[0]);
+					prepare.setString(6, advertiserCredentialMappings.get("mobileCountryCode")[0].split("\\+")[1]);
 					prepare.setString(7, advertiserCredentialMappings.get("mobileAreaCode")[0]);
 					prepare.setString(8, advertiserCredentialMappings.get("mobilePhoneNumber")[0]);	
 					prepare.setString(9, advertiserCredentialMappings.get("advertiserDescription")[0]);
