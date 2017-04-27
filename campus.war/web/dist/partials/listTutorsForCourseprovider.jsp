@@ -3,6 +3,7 @@
 <!-- 20170424 c159-courseprovider-accept-tutor-request-cw - remove un wanted scriptlets & add cpCode field -->
 <!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Add Reject/Remove to the table -->
 <!-- 20170425 c159-courseprovider-accept-tutor-request-cw - remove Remove button & Add Save button -->
+<!-- 20170425 c159-courseprovider-accept-tutor-request-cw - Add datatable source paths -->
 
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -14,6 +15,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add Tutor Employment details</title>
+
+	<!--     Data Table CSS -->
+<link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/dist/datatable/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.13/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.13/js/jquery.dataTables.js"></script>
+
 </head>
 <body>
 	<div class="container" align="center">
@@ -58,5 +67,9 @@
 	</div>
 	<script type="text/javascript" src="\dist\bower-components\jquery\jquery.min.js"></script>
 	<script src="/dist/js/courseprovider/tutorList.js"></script>
+	<script src="/dist/datatable/jquery.dataTables.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/datatable/dataTables.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/datatable/dataTables.responsive.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/dist/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
