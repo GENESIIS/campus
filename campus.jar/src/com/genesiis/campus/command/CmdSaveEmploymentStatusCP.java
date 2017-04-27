@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170425 CW c159-courseprovider-accept-tutor-request-cw INIT CmdApproveRejectRemoveTutors.java
 //20170425 CW c159-courseprovider-accept-tutor-request-cw created approveList & rejcetList variables
+//20170427 CW c159-courseprovider-accept-tutor-request-cw refactor the name of the class into CmdSaveEmploymentStatusCP
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -16,9 +17,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class CmdApproveRejectRemoveTutors implements ICommand {
+public class CmdSaveEmploymentStatusCP implements ICommand {
 
-	static Logger log = Logger.getLogger(CmdApproveRejectRemoveTutors.class.getName());
+	static Logger log = Logger.getLogger(CmdSaveEmploymentStatusCP.class.getName());
 	private String message = "";
 
 	@Override
@@ -63,7 +64,7 @@ public class CmdApproveRejectRemoveTutors implements ICommand {
 						}
 					}
 					
-					if(deleteList != ""){
+		/*			if(deleteList != ""){
 						final EmploymentDAO employment = new EmploymentDAO();
 						status = employment.deleteMultiple(deleteList);
 					}else{
@@ -84,7 +85,7 @@ public class CmdApproveRejectRemoveTutors implements ICommand {
 					}
 					
 					view.setCollection(allSelectedFeaturedCourseProviderList);	
-	
+	*/
 				}
 			}
 		} catch (Exception exception) {
