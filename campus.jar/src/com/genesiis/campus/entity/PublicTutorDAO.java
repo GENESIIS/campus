@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20170320 JH c96-public-list-all-tutors fixed missing @Override annotation and method signature changes from IDCrud
 //20170418 JH c135-public-display-tutor-profile findById() method coding wip
 //20170424 JH c135-public-display-tutor-profile return result set data in findById() wip, fixed index out of bound error and fixed error 'too many arguments specified' 
+//20170427 JH c135-public-display-tutor-profile findById() modified: added codes to get tutor CODE from the database
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -43,6 +44,10 @@ public class PublicTutorDAO implements ICrud {
 		return 0;
 	}
 
+	/**
+	 * used to get tutor profile related all details. This call a database stored procedure 
+	 * [CAMPUS].[select-tutor-public-profile-details] to get all the details in a one database call
+	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
 
@@ -66,7 +71,7 @@ public class PublicTutorDAO implements ICrud {
 
 			while (rs.next()) {
 				Collection<String> singleTutorList = new ArrayList<String>();
-
+				singleTutorList.add(rs.getString("TUTORCODE"));
 				singleTutorList.add(rs.getString("USERNAME"));
 				singleTutorList.add(rs.getString("PASSWORD"));
 				singleTutorList.add(rs.getString("FIRSTNAME"));
