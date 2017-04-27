@@ -20,6 +20,7 @@ package com.genesiis.campus.validation;
 //20170421 CW c159-courseprovider-accept-tutor-request-cw modify VIEW_TUTORS_FOR_CP method jsp file path
 //20170423 CW c159-courseprovider-accept-tutor-request-cw modify VIEW_TUTORS_FOR_CP JSP URL value
 //20170425 CW c159-courseprovider-accept-tutor-request-cw added APPROVE_REMOVE_EMPLOYMENT command
+//20170427 CW c159-courseprovider-accept-tutor-request-cw MODIFY APPROVE_REMOVE_EMPLOYMENT command NAME INTO SAVE_EMPLOYMENT_STATUS_CP
 
 /**
  * Operation class facilitate in binding the CCO
@@ -43,7 +44,7 @@ public enum Operation {
 	LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS("LIST_SELECTED_COURSE_PROVIDERS_FOR_TUTORS", ResponseType.JSON, ""),
 	REMOVE_SELECTED_EMPLOYMENT("REMOVE_SELECTED_EMPLOYMENT", ResponseType.JSP, "dist/partials/addTutorEmployment.jsp"),
 	CHECK_EMAIL("CHECK_EMAIL", ResponseType.JSON, "addTutorDetails.jsp"),
-	APPROVE_REMOVE_EMPLOYMENT("APPROVE_REMOVE_EMPLOYMENT", ResponseType.JSP, "dist/partials/listTutorsForCourseprovider.jsp"),
+	SAVE_EMPLOYMENT_STATUS_CP("SAVE_EMPLOYMENT_STATUS_CP", ResponseType.JSP, "dist/partials/listTutorsForCourseprovider.jsp"),
 	VIEW_TUTORS_FOR_CP("VIEW_TUTORS_FOR_CP", ResponseType.JSON, "");
 	
 	private final String commandString;
