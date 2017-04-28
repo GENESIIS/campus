@@ -7,14 +7,22 @@ package com.genesiis.campus.entity;
  * 				The method  setResponseCridentials(IDataHelper) is implemented.
  * 				The error :jdbc.SQLServerException: The index 19 is out of range has been corrected in createNewAdvertiser() method.
  * 				Removed the preceding '+' sign from the country code of both land line and the mobile in createNewAdvertiser() method.
+ * 20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn.The inner class GeneralAdvertiser.java has been created. The method 
+ * 				getAnAdvertiser() implemented and the method createNewAdvertiser() has been refactored.
+ * 				The inner class GeneralAdvertiser.java has been removed favour of com.genesiis.campus.entity.model.BannerAdvertiser.java.
  */
+
+import com.genesiis.campus.entity.model.AdvertiserRole;
+import com.genesiis.campus.entity.model.BannerAdvertiser;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.IDataHelper;
 import com.genesiis.campus.util.JasonInflator;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
+import com.genesiis.campus.validation.PrevalentValidation;
 import com.genesiis.campus.validation.SystemMessage;
+import com.genesiis.campus.validation.Validatory;
 
 import org.apache.log4j.Logger;
 
@@ -27,15 +35,15 @@ import java.util.Collection;
 import java.util.Map;
 
 
-
-
 /**
- * The Class AdvertiserFacilitator.
+ * The Class AdvertiserFacilitator, <br>
+ * contains one public constructor and a method for processing<br> 
+ * of the Advertiser against the data base.
+ * 
  */
 public class AdvertiserFacilitator {
 	
-	
-	private static Logger log = Logger.getLogger(AdvertiserFacilitator.class.getName());	
+	private static Logger log = Logger.getLogger(AdvertiserFacilitator.class.getName());
 	private IDataHelper helper;
 	
 	/** The success code. 
@@ -55,10 +63,11 @@ public class AdvertiserFacilitator {
 	private String message="";
 	
 	/**
+	 * <b>Constructor</b><br>
 	 * Instantiates a new advertiserfacilitater.<br>
-	 *This constructor accept an argument IDataHelper<br>
-	 *to 
-	 * @param helper the IDataHelper
+	 * This constructor accept an argument IDataHelper<br>
+	 *
+	 * @param helper the helper
 	 */
 	public AdvertiserFacilitator(IDataHelper helper){
 		this.helper =helper;
@@ -120,76 +129,101 @@ public class AdvertiserFacilitator {
 	 * @throws Exception the exception
 	 */
 	private int createNewAdvertiser() throws SQLException,Exception{
-		//call request parameters and set the values
-		Map<String,String[]> advertiserCredentialMappings = helper.getParameterMap() ;
-		this.setMessage(""); // clears any message brought forward
-		//call the data base to insert the record
-		int status = new GeneralPurposeDAO(){
+		
+		// clears any message brought forward
+		this.setMessage(""); 
+		int status = 0;
+		try{
 			
-			public int update(Object object) throws SQLException, Exception {
-				@SuppressWarnings("unchecked")
-				Map<String,String[]> advertiserCredentialMappings = (Map<String,String[]>) object;
+			
+			AdvertiserRole advertiser  = this.getAnAdvertiser();
+			if(advertiser == null) throw new IllegalArgumentException("AdvertiserRole is null");
+			/*
+			 * ###########################################################
+			 * Start of adapter class creation and call to the data base
+			 * ###########################################################
+			 */		
+			status = new GeneralPurposeDAO(){
 				
-				Connection conn=null;
-				PreparedStatement prepare = null;				
-				String ACTIVE = Integer.toString(ApplicationStatus.INACTIVE.getStatusValue());
-				String modOrCreateBy =(String) helper.getSession(true).getAttribute("currentSessionUsername");
-				int executionStatus = 0;
-				
-				String sqlInsertAdvertiser = "INSERT INTO [CAMPUS].[ADVERTISER] ";
-						sqlInsertAdvertiser = sqlInsertAdvertiser+"([NAME],[EMAIL],[LANDPHONECOUNTRYCODE],[LANDPHONEAREACODE] ,[LANDPHONENUM],[MOBILEPHONECOUNTRYCODE]";
-						sqlInsertAdvertiser = sqlInsertAdvertiser+",[MOBILEPHONENETWORKCODE],[MOBILEPHONENUM],[DESCRIPTION],[ADDRESS1],[ADDRESS2] ,[ADDRESS3]";
-						sqlInsertAdvertiser = sqlInsertAdvertiser+",[TOWN],[ISACTIVE],[COURSEPROVIDER] ,[CRTON],[CRTBY],[MODON] ,[MODBY])";
-						sqlInsertAdvertiser = sqlInsertAdvertiser +"VALUES";
-						sqlInsertAdvertiser =sqlInsertAdvertiser +"(?,?,?,?,?,?,?,?,?,?,?,?,";
-						sqlInsertAdvertiser =sqlInsertAdvertiser +" ?,?,?,getDate(),?,getDate(),? );";
-				try{
-					conn = ConnectionManager.getConnection();		
-					prepare = conn.prepareStatement(sqlInsertAdvertiser);
-					prepare.setString(1, advertiserCredentialMappings.get("advertiserName")[0]);
-					prepare.setString(2, advertiserCredentialMappings.get("advertiserEmail")[0]);
-					prepare.setString(3, advertiserCredentialMappings.get("landCountryCode")[0].split("\\+")[1]);
-					prepare.setString(4, advertiserCredentialMappings.get("landAreaCode")[0]);
-					prepare.setString(5, advertiserCredentialMappings.get("landPhoneNumber")[0]);				
-					prepare.setString(6, advertiserCredentialMappings.get("mobileCountryCode")[0].split("\\+")[1]);
-					prepare.setString(7, advertiserCredentialMappings.get("mobileAreaCode")[0]);
-					prepare.setString(8, advertiserCredentialMappings.get("mobilePhoneNumber")[0]);	
-					prepare.setString(9, advertiserCredentialMappings.get("advertiserDescription")[0]);
-					prepare.setString(10, advertiserCredentialMappings.get("address1")[0]);
-					prepare.setString(11, advertiserCredentialMappings.get("address2")[0]);
-					prepare.setString(12, advertiserCredentialMappings.get("address3")[0]);				
-					prepare.setString(13, advertiserCredentialMappings.get("townCode")[0]);
+				public int update(Object object) throws SQLException, Exception {
 					
-					if(advertiserCredentialMappings.get("AdvertiserStatus")[0].equals("1"))					
-						ACTIVE=Integer.toString(ApplicationStatus.ACTIVE.getStatusValue());				
-					prepare.setString(14, ACTIVE);
+					AdvertiserRole advertiserToBeProcessed = (AdvertiserRole)object;					
+					Connection conn=null;
+					PreparedStatement prepare = null;
+					int executionStatus = 0;
 					
-					prepare.setString(15, advertiserCredentialMappings.get("courseProviderCode")[0]);
+					String ACTIVE = Integer.toString(ApplicationStatus.INACTIVE.getStatusValue());
+					String modOrCreateBy =(String) helper.getSession(true).getAttribute("user");
 					
-					if(modOrCreateBy==null)
-						modOrCreateBy= "";
-					
-					prepare.setString(16, modOrCreateBy);//CRTBY
-					prepare.setString(17,modOrCreateBy);//MODBY
-					executionStatus= prepare.executeUpdate();				
+					String sqlInsertAdvertiser = "INSERT INTO [CAMPUS].[ADVERTISER] ";
+							sqlInsertAdvertiser = sqlInsertAdvertiser+"([NAME],[EMAIL],[LANDPHONECOUNTRYCODE],[LANDPHONEAREACODE] ,[LANDPHONENUM],[MOBILEPHONECOUNTRYCODE]";
+							sqlInsertAdvertiser = sqlInsertAdvertiser+",[MOBILEPHONENETWORKCODE],[MOBILEPHONENUM],[DESCRIPTION],[ADDRESS1],[ADDRESS2] ,[ADDRESS3]";
+							sqlInsertAdvertiser = sqlInsertAdvertiser+",[TOWN],[ISACTIVE],[COURSEPROVIDER] ,[CRTON],[CRTBY],[MODON] ,[MODBY])";
+							sqlInsertAdvertiser = sqlInsertAdvertiser +"VALUES";
+							sqlInsertAdvertiser =sqlInsertAdvertiser +"(?,?,?,?,?,?,?,?,?,?,?,?,";
+							sqlInsertAdvertiser =sqlInsertAdvertiser +" ?,?,?,getDate(),?,getDate(),? );";
+					try{
+						conn = ConnectionManager.getConnection();
 						
-				} catch (SQLException sqle) {
-					log.error("update(Object) : SQLException "+ sqle.toString());
-					throw sqle;
-				} catch (Exception exp) {
-					log.error("update(Object) :Exception "+exp.toString());
-					throw exp;					
-				} finally{
-					DaoHelper.closeConnection(conn);
-					DaoHelper.closeStatement(prepare);
-					modOrCreateBy=null;
-					ACTIVE = null;
-					advertiserCredentialMappings=null;
-					sqlInsertAdvertiser=null;
+						// Populating the table columns.
+						prepare = conn.prepareStatement(sqlInsertAdvertiser);
+						prepare.setString(1, advertiserToBeProcessed.getName());					
+						prepare.setString(2, advertiserToBeProcessed.getGeneralEmail());					
+						prepare.setString(3,advertiserToBeProcessed.getLandPhoneCountryCode());
+						prepare.setString(4, advertiserToBeProcessed.getLandPhoneAreaCode());
+						prepare.setString(5, advertiserToBeProcessed.getLandPhoneNo());				
+						prepare.setString(6, advertiserToBeProcessed.getMobilePhoneCountryCode());
+						prepare.setString(7, advertiserToBeProcessed.getMobilePhoneNetworkCode());
+						prepare.setString(8, advertiserToBeProcessed.getMobilePhoneNumber());
+						prepare.setString(9, advertiserToBeProcessed.getDescription());
+						prepare.setString(10, advertiserToBeProcessed.getAddress1());
+						prepare.setString(11, advertiserToBeProcessed.getAddress2());
+						prepare.setString(12, advertiserToBeProcessed.getAddress3());				
+						prepare.setString(13, advertiserToBeProcessed.getTownCode());								
+						prepare.setString(14, Integer.toString(advertiserToBeProcessed.getActiveStatus()));
+						prepare.setString(15,helper.getParameter("courseProviderCode"));
+						
+						// if the session attribute has not been set then set to the default value 
+						// which is accepted by data base table column.
+						// by data base definition.
+						if(modOrCreateBy==null)
+							modOrCreateBy= "";				
+						prepare.setString(16, modOrCreateBy);//CRTBY
+						prepare.setString(17,modOrCreateBy);//MODBY
+						
+						executionStatus= prepare.executeUpdate();				
+							
+					} catch (SQLException sqle) {
+						log.error("update(Object) : SQLException "+ sqle.toString());
+						throw sqle;
+					} catch (Exception exp) {
+						log.error("update(Object) :Exception "+exp.toString());
+						throw exp;					
+					} finally{
+						DaoHelper.closeConnection(conn);
+						DaoHelper.closeStatement(prepare);
+						modOrCreateBy=null;
+						ACTIVE = null;
+						sqlInsertAdvertiser=null;
+						advertiserToBeProcessed = null;
+					}
+					return executionStatus;
 				}
-				return executionStatus;
-			}
-		}.update(advertiserCredentialMappings);
+			}.update(advertiser);
+			/*
+			 * ###########################################################
+			 * End of adapter class creation and call to the data base
+			 * ###########################################################
+			 */	
+			
+		}
+		catch (SQLException sqle) {
+			log.error("createNewAdvertiser() : SQLException "+ sqle.toString());
+			throw sqle;
+		} catch (Exception exp) {
+			log.error("createNewAdvertiser() :Exception "+exp.toString());
+			throw exp;					
+		}
 		
 		return status;
 	}
@@ -209,23 +243,27 @@ public class AdvertiserFacilitator {
 	/**
 	 * isClientInputAccordanceWithValidation() validates if the input fields are 
 	 * having values and those are according to the business logic.
+	 *
 	 * @author dushantha DN
 	 * @return boolean
-	 * @throws Exception
+	 * @throws Exception the exception
 	 */
 
 	private boolean isClientInputAccordanceWithValidation() throws Exception {
 		boolean isvalidationSuccess = true;	
+		Validatory advertiserValidator = new PrevalentValidation();
+		
 		
 		
 		return isvalidationSuccess;
 	}
 	
+		
 	/**
 	 * Gets the helper.
 	 * @return the helper
 	 */
-	public IDataHelper getHelper() {
+	private IDataHelper getHelper() {
 		return helper;
 	}
 
@@ -233,7 +271,7 @@ public class AdvertiserFacilitator {
 	 * Sets the helper.
 	 * @param helper the new helper
 	 */
-	public void setHelper(IDataHelper helper) {
+	private void setHelper(IDataHelper helper) {
 		this.helper = helper;
 	}
 
@@ -241,7 +279,7 @@ public class AdvertiserFacilitator {
 	 * Gets the success code.
 	 * @return the success code
 	 */
-	public int getSuccessCode() {
+	private int getSuccessCode() {
 		return successCode;
 	}
 
@@ -249,7 +287,7 @@ public class AdvertiserFacilitator {
 	 * Sets the success code.
 	 * @param successCode the new success code
 	 */
-	public void setSuccessCode(int successCode) {
+	private void setSuccessCode(int successCode) {
 		this.successCode = successCode;
 	}
 
@@ -257,7 +295,7 @@ public class AdvertiserFacilitator {
 	 * Gets the message.
 	 * @return the message
 	 */
-	public String getMessage() {
+	private String getMessage() {
 		return message;
 	}
 
@@ -265,10 +303,58 @@ public class AdvertiserFacilitator {
 	 * Sets the message.
 	 * @param message the new message
 	 */
-	public void setMessage(String message) {
+	private void setMessage(String message) {
 		this.message = message;
 	}
 	
-	
-	
+	/**
+	 * Gets the an advertiser.<br>
+	 * The Purpose of the method is to obtain an Advertiser with the data fields which are<br> 
+	 * populated with the client fed informations that are bound to the HttpServletRequest as parameters. <br>
+	 * <b>NOTE</b><br>
+	 * <p>
+	 * 		If the user has not fed data related to the Advertiser a <b><u>null</u></b> will be returned
+	 * </p>
+	 * @return the an advertiser AdvertiserRole
+	 * @throws NumberFormatException -  the strings are not parsed to integer
+	 * @throws Exception -
+	 */
+	private AdvertiserRole getAnAdvertiser() throws NumberFormatException, Exception{
+		
+		AdvertiserRole advertiser = new BannerAdvertiser();//new GeneralAdvertiser();		
+		Map<String,String[]> advertiserCredentialMappings = helper.getParameterMap() ;
+		
+		if(advertiserCredentialMappings.isEmpty())
+			return null;
+		try{
+			//Inducing the advertiser with user fed data.
+			advertiser.setName(advertiserCredentialMappings.get("advertiserName")[0]);
+			advertiser.setGeneralEmail(advertiserCredentialMappings.get("advertiserEmail")[0]);
+			advertiser.setLandPhoneCountryCode(advertiserCredentialMappings.get("landCountryCode")[0].split("\\+")[1]);
+			advertiser.setLandPhoneAreaCode(advertiserCredentialMappings.get("landAreaCode")[0]);
+			advertiser.setLandPhoneNo(advertiserCredentialMappings.get("landPhoneNumber")[0]);
+			advertiser.setMobilePhoneCountryCode(advertiserCredentialMappings.get("mobileCountryCode")[0].split("\\+")[1]);
+			advertiser.setMobilePhoneNetworkCode(advertiserCredentialMappings.get("mobileAreaCode")[0]);
+			advertiser.setMobilePhoneNumber(advertiserCredentialMappings.get("mobilePhoneNumber")[0]);
+			advertiser.setDescription(advertiserCredentialMappings.get("advertiserDescription")[0]);
+			advertiser.setAddress1( advertiserCredentialMappings.get("address1")[0]);
+			advertiser.setAddress2( advertiserCredentialMappings.get("address2")[0]);
+			advertiser.setAddress3( advertiserCredentialMappings.get("address3")[0]);
+			advertiser.setTownCode(advertiserCredentialMappings.get("townCode")[0]);
+			advertiser.setActiveStatus(Integer.parseInt(advertiserCredentialMappings.get("AdvertiserStatus")[0]));
+			
+		}catch(NumberFormatException nfexp){
+			log.error("getAnAdvertiser() : NumberFormatException "+ nfexp.toString());
+			throw nfexp;
+		} catch (Exception exp){
+			log.error("getAnAdvertiser() : Exception "+ exp.toString());
+			throw exp;
+		} finally{
+			//making the instance suitable for GC.
+			advertiserCredentialMappings =null;
+		}
+		return advertiser;
+		
+	}
+		
 }
