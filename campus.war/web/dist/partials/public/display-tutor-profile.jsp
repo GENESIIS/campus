@@ -104,8 +104,7 @@
 		<div class="row">
 			<div class="tutor-intro col-xs-12">
 				<h2><span class="header-wrapper">Tutor Description</span></h2>
-				<p>Suspendisse potenti. Fusce sollicitudin odio ac urna auctor cursus. Duis interdum metus et ipsum finibus, at accumsan quam pulvinar. Duis iaculis facilisis metus at volutpat. Suspendisse id enim diam. Nam dignissim finibus tortor, id semper nunc cursus sed. Fusce nisi mi, fermentum ut libero quis, imperdiet dapibus ipsum. Sed faucibus risus a placerat euismod.</p>
-				<p>Phasellus a nisi maximus, pellentesque sem sit amet, dignissim mi. Quisque dignissim viverra consectetur. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Mauris pulvinar luctus nisi, id iaculis nisl dignissim eu. Sed in odio ac ipsum condimentum condimentum quis sit amet elit. Nunc pellentesque ex vitae urna porta.</p>
+				<p id="tutorDescription"></p>
 			</div>
 		</div>
 		<div class="row">
