@@ -7,6 +7,8 @@
 <!-- 20170427 c159-courseprovider-accept-tutor-request-cw - Remove Reject/Remove, Approve from the table & add Change Status & changed 
 				CCO value of the button from APPROVE_REMOVE_EMPLOYMENT TO SAVE_EMPLOYMENT_STATUS_CP -->
 <!-- 20170427 c159-courseprovider-accept-tutor-request-cw - Removed tutorCodeTable hidden variable -->
+<!-- 20170428 c159-courseprovider-accept-tutor-request-cw - Add courseprovidercode hidden variable -->
+
 
 
 
@@ -30,6 +32,12 @@
 </head>
 <body>
 	<div class="container" align="center">
+		<c:forEach var="cpCodeList" items="${result.collection}">		
+			<c:set var="cpcode" value="${cpCodeList[0]}"/>		
+		</c:forEach>
+				
+		<input type="hidden" name="courseprovidercode" id="courseprovidercode" value="${cpcode}"/>
+	
 		<header align="center">
 			<h1>View Tutor List</h1>
 		</header>
