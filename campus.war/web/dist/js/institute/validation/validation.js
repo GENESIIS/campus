@@ -28,7 +28,7 @@
  *20170321 DN c131-admin-manage-banner-upload-banner-image-dn urlTest() method an the comment amended. add \/{0,1} to the end of regex.
  *20170405 DN c83-admin-manage-banner-update-banner-info-dn isStringHasValiCharsAndLength() has modified to change the OR(|) test of 'testableInput' to AND(&&).
  *20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The method ajaxCallErorMessage(response,error,errorThrown) is implemented
- *20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The Function isWholeNumber() is implemented to thest if the test passed is awhole number
+ *20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The Function isWholeNumber() is implemented to thest if the test passed is a whole number
  */ 
 
  
