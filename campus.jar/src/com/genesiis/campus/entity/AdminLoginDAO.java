@@ -8,7 +8,7 @@ package com.genesiis.campus.entity;
 //20170424 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified to check from the logging attempts, user already blocked or not.
 //20170425 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified the logic. 
 //20170427 AS CAM-155-admin-logout-function-as- login details add generated PK set to the admin object, logoutDataUpdate() query modification completed 
-//20170427 AS CAM-155-admin-logout-function-as- logoutDataUpdate() date format changed.
+//20170428 AS CAM-155-admin-logout-function-as- logoutDataUpdate() date format changed.
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
