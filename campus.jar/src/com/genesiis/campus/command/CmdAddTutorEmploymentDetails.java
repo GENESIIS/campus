@@ -16,6 +16,7 @@ package com.genesiis.campus.command;
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw create courseproviderLoginUrl value.
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw modified sendTutorEmploymentConfirmEmailmethod call & add sendTutorEmploymentConfirmEmail as a parameter
 				//add gender into getListOfEmailToSendEmploymentRequest method
+//20170428 CW c159-courseprovider-accept-tutor-request-cw modify verificationstatus to confirmationStatus in setEmploymentDetails method
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -139,7 +140,7 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 		Employment employment = new Employment();
 		
 		if(tutorCode != null && employerCode != null){
-			employment.setVarificationstatus(ApplicationStatus.PENDING.getStatusValue()); // initially employer verification status is pending
+			employment.setConfirmationStatus(ApplicationStatus.PENDING.getStatusValue()); // initially employer verification status is pending
 			employment.setCrtby("chinthaka");
 			employment.setModby("-");
 			employment.setTutor(Integer.parseInt(tutorCode));
