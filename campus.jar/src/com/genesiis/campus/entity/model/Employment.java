@@ -2,6 +2,7 @@ package com.genesiis.campus.entity.model;
 
 //20170327 CW c157-add-tutor-employment-details-cw INIT Employment.java
 //20170404 CW c157-add-tutor-employment-details-cw add doc comments
+//20170428 CW c159-courseprovider-accept-tutor-request-cw modify verificationstatus to confirmationStatus & add initiatedBy variable & its getters & Setters
 
 import java.sql.Date;
 
@@ -10,13 +11,14 @@ import java.sql.Date;
  */
 public class Employment {
 	private int code;
-	private int varificationstatus;
+	private int confirmationStatus;
 	private Date crton;
 	private String crtby;
 	private Date modon;
 	private String modby;
 	private int tutor;
 	private int courseprovider;
+	private String initiatedBy;
 	
 	/**
 	 * @return the code
@@ -31,16 +33,16 @@ public class Employment {
 		this.code = code;
 	}
 	/**
-	 * @return the varificationstatus
+	 * @return the confirmationStatus
 	 */
-	public int getVarificationstatus() {
-		return varificationstatus;
+	public int getConfirmationStatus() {
+		return confirmationStatus;
 	}
 	/**
-	 * @param varificationstatus the varificationstatus to set
+	 * @param confirmationStatus the confirmationStatus to set
 	 */
-	public void setVarificationstatus(int varificationstatus) {
-		this.varificationstatus = varificationstatus;
+	public void setConfirmationStatus(int confirmationStatus) {
+		this.confirmationStatus = confirmationStatus;
 	}
 	/**
 	 * @return the crton
@@ -113,5 +115,11 @@ public class Employment {
 	 */
 	public void setCourseprovider(int courseprovider) {
 		this.courseprovider = courseprovider;
+	}
+	public String getInitiatedBy() {
+		return initiatedBy;
+	}
+	public void setInitiatedBy(String initiatedBy) {
+		this.initiatedBy = initiatedBy;
 	}
 }
