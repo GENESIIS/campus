@@ -78,9 +78,9 @@
 										<img src="/dist/i/public/display-tutor/social-media/linkedin.png" alt="Linkedin" /></a></li>
 									<li class="item5 list instagram"><a href="#" title="Instagram" id="instagramURL" data-toggle="tooltip" title="">
 										<img src="/dist/i/public/display-tutor/social-media/instagram.png" alt="Instagram" /></a></li>
-									<li class="item6 list whatsapp"><a href="#" title="Whatsapp" id="whatsappNumber" data-toggle="tooltip" title="">
+									<li class="item6 list whatsapp"><a href="javascript:" title="Whatsapp" id="whatsappNumber" data-toggle="tooltip" title="">
 										<img src="/dist/i/public/display-tutor/social-media/whatsapp.png" alt="Whatsapp" /></a></li>
-									<li class="item7 list viber"><a href="#" title="Viber" id="viberNumber" data-toggle="tooltip" title="">
+									<li class="item7 list viber"><a href="javascript:" title="Viber" id="viberNumber" data-toggle="tooltip" title="">
 										<img src="/dist/i/public/display-tutor/social-media/viber.png" alt="Viber" /></a></li>
 									<li class="item8 list myspace"><a href="#" title="Myspace" id="myspaceURL" data-toggle="tooltip" title="">
 										<img src="/dist/i/public/display-tutor/social-media/myspace.png" alt="Myspace" /></a></li>
@@ -90,10 +90,10 @@
 					</div>
 					<div class="contact-list col-xs-12">
 						<div class="row">
-							<div class="tel col-md-3 col-sm-6 col-xs-12 clearfix"><i class="fa fa-phone" aria-hidden="true"></i> +94 112 698 698</div>
-							<div class="mobile col-md-3 col-sm-6 col-xs-12 clearfix"><i class="fa fa-mobile-phone" aria-hidden="true"></i> +94 776 698 698</div>
-							<div class="email col-md-4 col-sm-6 col-xs-12 clearfix"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:">dimuthu.kalyanaratne@gmail.com</a></div>
-							<div class="web col-md-2 col-sm-6 col-xs-12 clearfix"><i class="fa fa-globe" aria-hidden="true"></i> <a href="#" target="_blank">Visit Website</a></div>
+							<div class="tel col-md-3 col-sm-6 col-xs-12 clearfix" id="landPhoneNumber"><i class="fa fa-phone" aria-hidden="true"></i></div>
+							<div class="mobile col-md-3 col-sm-6 col-xs-12 clearfix" id="mobilePhoneNubmer"><i class="fa fa-mobile-phone" aria-hidden="true"></i></div>
+							<div class="email col-md-4 col-sm-6 col-xs-12 clearfix"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:" id="email"></a></div>
+							<div class="web col-md-2 col-sm-6 col-xs-12 clearfix"><i class="fa fa-globe" aria-hidden="true"></i> <a href="javascript:" target="_blank"  id="webLink"></a></div>
 						</div>
 					</div>
 				</div>						
