@@ -1,7 +1,7 @@
 /**
  * 20170427 JH c135-public-display-tutor-profile tutor-profile-helper.js created, added loadTutor() method
- * 20170428 JH c135-public-display-tutor-profile get tutor details from the back end, added String decoder methods to get the string tutor code 
- * 				and display profile details wip 
+ * 20170428 JH c135-public-display-tutor-profile get tutor details from the back end, added String decoder methods to get the string tutor code, 
+ * 				loadTutor() method coding to display profile details wip
  */
 
 $( document ).ready(function() {
@@ -37,7 +37,15 @@ function loadTutor(code){
 					 					 
 					 $('#tutorImage').attr("src", tutorImagePath);
 					 $('#fullName').text(fullName);
-					 $('#tutorRecord').val(address);
+					 $('#list-breadcrumb-item').text(fullName);
+					 $('#address').text(address);
+					 $('#facebookURL').attr('href', tutorRecord[16]);
+					 $('#twitterURL').attr('href', tutorRecord[17]);
+					 $('#linkedinURL').attr('href', tutorRecord[19]);
+					 $('#instagramURL').attr('href', tutorRecord[20]);
+					 $('#whatsappNumber').attr('href', tutorRecord[21]);
+					 $('#viberNumber').attr('href', tutorRecord[22]);
+					 $('#myspaceURL').attr('href', tutorRecord[18]);
 				 }
 			}
 
