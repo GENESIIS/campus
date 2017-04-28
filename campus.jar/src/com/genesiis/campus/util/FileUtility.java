@@ -8,6 +8,7 @@ package com.genesiis.campus.util;
 //20170222 PN CAM-48: implement remvoeOldAndUploadNew(String imgName) method to rename and save course provider related images.
 //20170224 PN CAM-48: non static logger variable changed into static.
 //20170226 PN CAM-48: implemented deleteFile(String folder, String imgName) method to delete cp image from the disk.
+//20170428 PN CAM-163: getFileDetails(String folder) method implemented to get all the image details to the JSP page.
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -19,7 +20,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -539,5 +542,36 @@ public class FileUtility {
 			throw ioe;
 		}
 		return false;
+	}
+	
+	/**
+	 * 
+	 * @param folder - disk path name
+	 * @return Collection<Collection<String>> - collection contains all the details of images.
+	 * @throws IOException
+	 */
+	public static Collection<Collection<String>> getFileDetails(String folder) throws IOException {
+		File file = null;
+		Collection<Collection<String>> details = new ArrayList<Collection<String>>();
+		String[] paths;
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		try {
+			// create new file
+			file = new File(folder);
+			File[] listOfFiles = file.listFiles();
+			
+			for (int i = 0; i < listOfFiles.length; i++) {
+				ArrayList<String> singleImage = new ArrayList<String>();
+				singleImage.add(listOfFiles[i].getName());
+				singleImage.add((Long.toString((listOfFiles[i].length())/100000)));
+				singleImage.add(listOfFiles[i].getName().substring(listOfFiles[i].getName().lastIndexOf(".")+1));
+				singleImage.add(sdf.format(listOfFiles[i].lastModified()));
+				details.add(singleImage);
+			}		
+		} catch (Exception e) {
+			log.error("getFileDetails(): " + e.toString());
+			throw e;
+		}
+		return details;
 	}
 }
