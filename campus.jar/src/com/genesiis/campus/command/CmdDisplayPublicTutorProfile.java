@@ -115,8 +115,6 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 			
 			
 		}
-		
-		log.info(tutor.toString());
 		return tutor;
 	}
 
