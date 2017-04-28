@@ -5,7 +5,7 @@
 
 $( document ).ready(function() {
 	var code = $('#tutorCode').val();
-	loadTutor(code);
+	loadTutor(hashDecode(code)); //decode the encoded tutor code
 });
 
 function loadTutor(code){
@@ -27,22 +27,19 @@ function loadTutor(code){
 				 var tutorRecord = response.tutor;
 				 if (tutorRecord !== undefined && tutorRecord !== null) {
 					 
-					 $('#fullName').val(tutorRecord[3] + tutorRecord[4] + tutorRecord[5]);
+					 var imagePath = response.tutorProfileImagePath;
+					 var fileSeperator = "/";
+					 var imageExtension = ".jpg";
+					 var tutorImagePath = fileSeperator + imagePath + fileSeperator + tutorRecord[0] + fileSeperator + tutorRecord[0] + imageExtension;
+					 var fullName = tutorRecord[3] + " " +  tutorRecord[4] + " " + tutorRecord[5];
+					 var address = tutorRecord[24] + ", " + tutorRecord[25] + ", " + tutorRecord[26];
+					 					 
+					 $('#tutorImage').attr("src", tutorImagePath);
+					 $('#fullName').text(fullName);
+					 $('#tutorRecord').val(address);
 				 }
 			}
 
-//			if (response !== undefined && response !== null) {
-//				window.tutorList = response.result;
-//				window.tutorProfileImagePath = response.tutorProfileImagePath;
-//				window.majorList =  response.majorMap;
-//				window.categoryList = response.categoryMap;
-//				window.qualificationList = response.qualificationMap;
-//
-//				DisplayTutorTable();
-//
-//			}
-			
-			alert("sdfjkldsf");
 		},
 		error : function(x, status, error) {
 			var err = displayErrorMessage(x, status, error);
@@ -50,4 +47,20 @@ function loadTutor(code){
 			$("#userMessage").html(err);
 		}
 	});
+}
+
+
+
+/**
+ * String Hash code decode to Sting
+ * Added from CAM-22
+ * @param data
+ * @returns String code
+ */
+//
+function hashDecode(data) {
+	// Decode the String
+	var decodedString = atob(data);
+
+	return decodedString;
 }
