@@ -1,6 +1,6 @@
 <!-- 20170330 DK c135 Creating the structure and the layout / UI Integration -->
-<!-- 20170428 JH c135-public-display-tutor-profile added hidden input tutorCode to store post data, add id attributes to assign values wip -->
-
+<!-- 20170428 JH c135-public-display-tutor-profile added hidden input tutorCode to store post data, add id attributes to assign values wip,
+					removed google+ social media link -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +41,7 @@
 			<div class="page-nav col-sm-6">
 				<ul class="breadcrumb pull-right">
 					<li class="breadcrumb-item"><a href="/dist/partials/public/display-tutors.jsp">Tutors</a></li>
-					<li class="breadcrumb-item active">Dimuthu Kalyanaratne</li>
+					<li class="breadcrumb-item active" id="list-breadcrumb-item"></li>
 				</ul>
 			</div>
 		</div>
@@ -57,24 +57,23 @@
 					<div class="tutor-desc col-xs-12">
 						<h3>
 							<span class="tutor-name" id="fullName" name="fullName"></span>
-							<span class="tutor-title" id="currentTitle" name="currentTitle">Associate Professor in UI/UX Development</span>
+							<span class="tutor-title" id="currentTitle" name="currentTitle"></span>
 						</h3>
 					</div>
 					<div class="social-list col-xs-12">
 						<div class="row">
 							<div class="col-sm-4 clearfix">
-								<address id="address" name="address"><i class="fa fa-map-marker" aria-hidden="true"></i> Pitakotte, Sri Lanka</address>
+								<address id="address" name="address"><i class="fa fa-map-marker" aria-hidden="true"></i> </address>
 							</div>
 							<div class="col-sm-8 clearfix">
 								<ul class="social-media list-unstyled list-inline pull-right">
-									<li class="item1 list facebook"><a href="#" title="Facebook"><img src="/dist/i/public/display-tutor/social-media/facebook.png" alt="Facebook" /></a></li>
-									<li class="item2 list twitter"><a href="#" title="Twitter"><img src="/dist/i/public/display-tutor/social-media/twitter.png" alt="Twitter" /></a></li>
-									<li class="item3 list google+"><a href="#" title="Google+"><img src="/dist/i/public/display-tutor/social-media/google+.png" alt="Google+" /></a></li>
-									<li class="item4 list linkedin"><a href="#" title="Linkedin"><img src="/dist/i/public/display-tutor/social-media/linkedin.png" alt="Linkedin" /></a></li>
-									<li class="item5 list instagram"><a href="#" title="Instagram"><img src="/dist/i/public/display-tutor/social-media/instagram.png" alt="Instagram" /></a></li>
-									<li class="item6 list whatsapp"><a href="#" title="Whatsapp"><img src="/dist/i/public/display-tutor/social-media/whatsapp.png" alt="Whatsapp" /></a></li>
-									<li class="item7 list viber"><a href="#" title="Viber"><img src="/dist/i/public/display-tutor/social-media/viber.png" alt="Viber" /></a></li>
-									<li class="item8 list myspace"><a href="#" title="Myspace"><img src="/dist/i/public/display-tutor/social-media/myspace.png" alt="Myspace" /></a></li>
+									<li class="item1 list facebook"><a href="#" title="Facebook" id="facebookURL"><img src="/dist/i/public/display-tutor/social-media/facebook.png" alt="Facebook" /></a></li>
+									<li class="item2 list twitter"><a href="#" title="Twitter" id="twitterURL"><img src="/dist/i/public/display-tutor/social-media/twitter.png" alt="Twitter" /></a></li>
+									<li class="item4 list linkedin"><a href="#" title="Linkedin" id="linkedinURL"><img src="/dist/i/public/display-tutor/social-media/linkedin.png" alt="Linkedin" /></a></li>
+									<li class="item5 list instagram"><a href="#" title="Instagram" id="instagramURL"><img src="/dist/i/public/display-tutor/social-media/instagram.png" alt="Instagram" /></a></li>
+									<li class="item6 list whatsapp"><a href="#" title="Whatsapp" id="whatsappNumber"><img src="/dist/i/public/display-tutor/social-media/whatsapp.png" alt="Whatsapp" /></a></li>
+									<li class="item7 list viber"><a href="#" title="Viber" id="viberNumber"><img src="/dist/i/public/display-tutor/social-media/viber.png" alt="Viber" /></a></li>
+									<li class="item8 list myspace"><a href="#" title="Myspace" id="myspaceURL"><img src="/dist/i/public/display-tutor/social-media/myspace.png" alt="Myspace" /></a></li>
 								</ul>
 							</div>
 						</div>
