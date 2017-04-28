@@ -1,6 +1,6 @@
 <!-- 20170330 DK c135 Creating the structure and the layout / UI Integration -->
 <!-- 20170428 JH c135-public-display-tutor-profile added hidden input tutorCode to store post data, add id attributes to assign values wip,
-					removed google+ social media link -->
+					removed google+ social media link, removed span tag for tutor-title, added userMessage div to display user message, added tooltips for social media links -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,7 +45,11 @@
 				</ul>
 			</div>
 		</div>
+		<div class="row">
+			<div class="alert alert-danger" id="userMessage" name="userMessage" style="display: none; visibility: hidden;"></div>
+		</div>
 	</div>
+	
 	<div class="about-section container">
 		<div class="row">
 			<div class="profile-img col-sm-2">
@@ -57,7 +61,6 @@
 					<div class="tutor-desc col-xs-12">
 						<h3>
 							<span class="tutor-name" id="fullName" name="fullName"></span>
-							<span class="tutor-title" id="currentTitle" name="currentTitle"></span>
 						</h3>
 					</div>
 					<div class="social-list col-xs-12">
@@ -67,13 +70,20 @@
 							</div>
 							<div class="col-sm-8 clearfix">
 								<ul class="social-media list-unstyled list-inline pull-right">
-									<li class="item1 list facebook"><a href="#" title="Facebook" id="facebookURL"><img src="/dist/i/public/display-tutor/social-media/facebook.png" alt="Facebook" /></a></li>
-									<li class="item2 list twitter"><a href="#" title="Twitter" id="twitterURL"><img src="/dist/i/public/display-tutor/social-media/twitter.png" alt="Twitter" /></a></li>
-									<li class="item4 list linkedin"><a href="#" title="Linkedin" id="linkedinURL"><img src="/dist/i/public/display-tutor/social-media/linkedin.png" alt="Linkedin" /></a></li>
-									<li class="item5 list instagram"><a href="#" title="Instagram" id="instagramURL"><img src="/dist/i/public/display-tutor/social-media/instagram.png" alt="Instagram" /></a></li>
-									<li class="item6 list whatsapp"><a href="#" title="Whatsapp" id="whatsappNumber"><img src="/dist/i/public/display-tutor/social-media/whatsapp.png" alt="Whatsapp" /></a></li>
-									<li class="item7 list viber"><a href="#" title="Viber" id="viberNumber"><img src="/dist/i/public/display-tutor/social-media/viber.png" alt="Viber" /></a></li>
-									<li class="item8 list myspace"><a href="#" title="Myspace" id="myspaceURL"><img src="/dist/i/public/display-tutor/social-media/myspace.png" alt="Myspace" /></a></li>
+									<li class="item1 list facebook"><a href="#" title="Facebook" id="facebookURL" data-toggle="tooltip" title="">
+										<img src="/dist/i/public/display-tutor/social-media/facebook.png" alt="Facebook" /></a></li>
+									<li class="item2 list twitter"><a href="#" title="Twitter" id="twitterURL" data-toggle="tooltip" title="">
+										<img src="/dist/i/public/display-tutor/social-media/twitter.png" alt="Twitter" /></a></li>
+									<li class="item4 list linkedin"><a href="#" title="Linkedin" id="linkedinURL" data-toggle="tooltip" title="">
+										<img src="/dist/i/public/display-tutor/social-media/linkedin.png" alt="Linkedin" /></a></li>
+									<li class="item5 list instagram"><a href="#" title="Instagram" id="instagramURL" data-toggle="tooltip" title="">
+										<img src="/dist/i/public/display-tutor/social-media/instagram.png" alt="Instagram" /></a></li>
+									<li class="item6 list whatsapp"><a href="#" title="Whatsapp" id="whatsappNumber" data-toggle="tooltip" title="">
+										<img src="/dist/i/public/display-tutor/social-media/whatsapp.png" alt="Whatsapp" /></a></li>
+									<li class="item7 list viber"><a href="#" title="Viber" id="viberNumber" data-toggle="tooltip" title="">
+										<img src="/dist/i/public/display-tutor/social-media/viber.png" alt="Viber" /></a></li>
+									<li class="item8 list myspace"><a href="#" title="Myspace" id="myspaceURL" data-toggle="tooltip" title="">
+										<img src="/dist/i/public/display-tutor/social-media/myspace.png" alt="Myspace" /></a></li>
 								</ul>
 							</div>
 						</div>
