@@ -755,6 +755,7 @@ body, html {
                 line-height: 20px; }
 
 /* 20170307 C106 TR INIT styling list of tutors */
+/* 20170428 C134 Update data table styles */
 .admin-content {
   display: block;
   position: relative; }
@@ -783,7 +784,7 @@ body, html {
           margin-left: 15px; }
       .admin-content .content-holder .tutors-table .dataTables_length {
         font-size: 15px;
-        font-family: "Raleway", sans-serif; }
+        font-family: "Roboto", sans-serif; }
         .admin-content .content-holder .tutors-table .dataTables_length select {
           margin: 0 15px; }
       .admin-content .content-holder .tutors-table .dataTables_filter {
@@ -801,12 +802,13 @@ body, html {
           font-size: 15px;
           font-weight: bold; }
       .admin-content .content-holder .tutors-table .dataTable {
-        border-top: 4px solid #e1e1e1;
+        border-top: 4px solid #64ad7b;
         margin-top: 15px !important;
         font-family: "Roboto", sans-serif; }
       .admin-content .content-holder .tutors-table thead tr {
         height: 70px;
-        font-size: 16px; }
+        font-size: 16px;
+        color: #337ab7; }
         .admin-content .content-holder .tutors-table thead tr .sorting:after {
           content: "" !important; }
         .admin-content .content-holder .tutors-table thead tr .sorting_asc:after {
@@ -815,8 +817,10 @@ body, html {
           content: "" !important; }
       .admin-content .content-holder .tutors-table tbody tr {
         height: 65px !important; }
+      .admin-content .content-holder .tutors-table tbody tr.odd {
+        background-color: #eaf5ff !important; }
   .admin-content .dataTables_wrapper {
-    font-family: "Raleway", sans-serif; }
+    font-family: "Roboto", sans-serif; }
     .admin-content .dataTables_wrapper .dataTables_paginate .pagination {
       padding: 1em 0 !important; }
       .admin-content .dataTables_wrapper .dataTables_paginate .pagination .paginate_button {

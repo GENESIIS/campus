@@ -1,4 +1,5 @@
 /* 20170307 C106 TR INIT styling list of tutors */
+/* 20170428 C134 Update data table styles */
 
 .admin-content
   display: block
@@ -37,7 +38,7 @@
       // show entries count area
       .dataTables_length
         font-size: 15px
-        font-family: "Raleway", sans-serif
+        font-family: "Roboto", sans-serif
 
         select
           margin: 0 15px
@@ -61,7 +62,7 @@
 
 
       .dataTable
-        border-top: 4px solid #e1e1e1
+        border-top: 4px solid #64ad7b
         margin-top: 15px !important
         font-family: "Roboto", sans-serif
 
@@ -69,6 +70,7 @@
         tr
           height: 70px
           font-size: 16px
+          color: #337ab7
 
           .sorting:after
             content: "" !important
@@ -82,9 +84,12 @@
       tbody
         tr
           height: 65px !important
+        tr.odd
+          background-color: #eaf5ff !important
+
 
   .dataTables_wrapper
-    font-family: "Raleway", sans-serif
+    font-family: "Roboto", sans-serif
 
     .dataTables_paginate
       .pagination
