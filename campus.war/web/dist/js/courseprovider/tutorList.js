@@ -8,11 +8,15 @@
  * 20170426 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill employmentCode WIP
  * 20170427 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill employmentCode 
  * 20170427 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill List Item conditionally
+ * 20170428 CW c159-courseprovider-accept-tutor-request-cw add validations to cpCode variable in ready function
  */
 
 $(document).ready(function() {
 
 	var cpCode = $("#cpCode").val();
+	if(cpCode == ""){
+		cpCode = $("#courseprovidercode").val();
+	}
 	displayTutorList(cpCode);  
 });
 
@@ -77,7 +81,7 @@ function fillListItems(maxIndex, response){
 		var status = $("#" + listId);
 		status.find('option').remove();
 		
-		$('<option>').val("0").text("--- Select Status ---").appendTo(status);
+		$('<option>').val("-99").text("--- Select Status ---").appendTo(status);
 		
 		$.each(response.applicationStatusMap, function(index, value) {
 			var res = value.toString();
