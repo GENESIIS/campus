@@ -1,4 +1,6 @@
 <!-- 20170330 DK c135 Creating the structure and the layout / UI Integration -->
+<!-- 20170428 JH c135-public-display-tutor-profile added hidden input tutorCode to store post data -->
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,6 +25,7 @@
 	   
 </head>
 <body class="profile-display public">
+<input type="hidden" name="tutorCode" id="tutorCode" value=${param.tutorCode }>
 
 <!-- Header-->
 <jsp:include page="/dist/partials/layout/header.jsp"></jsp:include>
@@ -55,7 +58,7 @@
 				<div class="row">
 					<div class="tutor-desc col-xs-12">
 						<h3>
-							<span class="tutor-name">Dimuthu Kalyanaratne</span>
+							<span class="tutor-name" id="fullName" name="fullName"></span>
 							<span class="tutor-title">Associate Professor in UI/UX Development</span>
 						</h3>
 					</div>
@@ -203,7 +206,7 @@
 	<script src="/dist/bower-components/datatable/responsive.bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
 	
 	<!-- page load helper -->
-	<script src="/dist/js/public/public-list-tutor-helper.js" type="text/javascript"></script>
+	<script src="/dist/js/public/tutor-profile-helper.js" type="text/javascript"></script>
 	
 	<!-- error handling java script -->
 	<script src="/dist/js/error-handling.js" type="text/javascript"></script>

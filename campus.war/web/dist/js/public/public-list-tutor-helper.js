@@ -79,7 +79,7 @@ function hashEncode(data) {
  */
 function selectTutorRecord(code){
 
-	 var tutorCode = hashEncode(code);
+	 var tutorCode = code;
 	  var url = '/dist/partials/public/display-tutor-profile.jsp';
 	  var form = $('<form action="' + url + '" method="post">' +
 			  	'<input type="hidden" name="tutorCode" value="' + tutorCode+ '" />' +
@@ -87,8 +87,7 @@ function selectTutorRecord(code){
 	  			'</form>');
 	  			$('body').append(form);
 	  			$(form).submit();
-	//window.location.assign("/dist/partials/public/display-tutor-profile.jsp");
-	   
+  
 }
 
 /**
