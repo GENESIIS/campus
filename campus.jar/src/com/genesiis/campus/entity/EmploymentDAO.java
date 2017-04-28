@@ -4,7 +4,9 @@ package com.genesiis.campus.entity;
 // 20170330 CW c157-add-tutor-employment-details-cw create deleteMultiple method
 // 20170331 CW c157-add-tutor-employment-details-cw add method comments into add method
 // 20170404 CW c157-add-tutor-employment-details-cw modified doc comments
-// 20170427 CW c159-courseprovider-accept-tutor-request-cw add update method tu do a batch update in the status
+// 20170427 CW c159-courseprovider-accept-tutor-request-cw add update method to do a batch update in the status
+// 20170427 CW c159-courseprovider-accept-tutor-request-cw completed update(Object object) method implementations
+						//modify verificationstatus to confirmationStatus
 
 import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
 import com.genesiis.campus.entity.model.Employment;
@@ -51,7 +53,7 @@ public class EmploymentDAO implements ICrud {
 			conn = ConnectionManager.getConnection();			
 			
 			stmt = conn.prepareStatement(query);
-			stmt.setInt(1, employmentData.getVarificationstatus()); // VARIFICATIONSTATUS
+			stmt.setInt(1, employmentData.getConfirmationStatus()); // VARIFICATIONSTATUS
 			stmt.setString(2, employmentData.getCrtby()); // CRTBY
 			stmt.setString(3, employmentData.getModby()); // MODBY
 			stmt.setInt(4, employmentData.getTutor()); // TUTOR
@@ -82,20 +84,19 @@ public class EmploymentDAO implements ICrud {
 		int totalNumOfRecordsAffected = 0;
 		
 		try {			
-			List<String> employmentStatusChangeCollection = (ArrayList<String>) object; 
+			List<Employment> employmentStatusChangeCollection = (ArrayList<Employment>) object; 
 			
 			String query = "UPDATE [campus].[EMPLOYMENT] SET CONFIRMATIONSTATUS = ?, MODBY = ?, MODON = ? WHERE CODE = ?";
 			
 			con = ConnectionManager.getConnection();
 			ps = con.prepareStatement(query);
 						
-			for(employmentStatus EMP : employmentStattusChangeCollection) {
+			for(Employment emp : employmentStatusChangeCollection) {
 				
-				ps.setInt(1, bvs.getViewCount());
-				ps.setDate(2, bvs.getLastViewDate());			
-				ps.setTime(3, bvs.getLastViewTime());			
-				ps.setString(4, bvs.getModBy());
-				ps.setInt(5, bvs.getCode());
+				ps.setInt(1, emp.getConfirmationStatus());
+				ps.setString(2, emp.getModby());			
+				ps.setDate(3, emp.getModon());			
+				ps.setInt(4, emp.getCode());
 				
 			    ps.addBatch();
 			}			
@@ -107,10 +108,10 @@ public class EmploymentDAO implements ICrud {
 			 }
 			
 		} catch (SQLException sqle) {
-			Log.info("update(Object): SQLException: " + sqle.toString());
+			log.info("update(Object): SQLException: " + sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			Log.info("update(Object): Exception:" + ex.toString());
+			log.info("update(Object): Exception:" + ex.toString());
 			throw ex;
 		} finally {
 			if (ps != null) {
