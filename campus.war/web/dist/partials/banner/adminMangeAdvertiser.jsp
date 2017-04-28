@@ -62,8 +62,8 @@
 							placeholder="-- Select an Advertiser --" onclick="clearField('courseProviderInfor');">
 			<datalist id="courseProviderList" name="courseProviderList"> </datalist>
 			<input type="hidden" id="sCourseProviderCode" name="sCourseProviderCode" />
-          		&nbsp; &nbsp;          
-          <input type="button" value="Add New Course Provider">
+          		&nbsp; &nbsp;
+          		<label>Add New Course Provider</label>  
          <hr>
       </div>
       <!--End CourseProvider list -->
