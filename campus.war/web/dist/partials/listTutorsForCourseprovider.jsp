@@ -9,10 +9,7 @@
 <!-- 20170427 c159-courseprovider-accept-tutor-request-cw - Removed tutorCodeTable hidden variable -->
 <!-- 20170428 c159-courseprovider-accept-tutor-request-cw - Add courseprovidercode hidden variable -->
 <!-- 20170428 c159-courseprovider-accept-tutor-request-cw - Change courseprovidercode hidden variable declared place -->
-
-
-
-
+<!-- 20170428 c159-courseprovider-accept-tutor-request-cw - Add Requested Date into the table -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -22,7 +19,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Add Tutor Employment details</title>
+<title>Manage Tutors</title>
 
 	<!--     Data Table CSS -->
 <link href="/dist/datatable/dataTables.bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -36,12 +33,11 @@
 	<div class="container" align="center">
 		
 		<header align="center">
-			<h1>View Tutor List</h1>
+			<h1>Manage Tutors</h1>
 		</header>
 
 		<div align="center">
 			<form action="/TutorController" method="POST">
-				<h1>View Tutor Details</h1>
 				<tr>
 					<td>
 						<h2 id="tablemessage" style="color: red">${tablemessage}</h2>
@@ -60,6 +56,7 @@
 					<table id="Tutors" width="80%">
 						<tr>
 							<th></th>
+							<th>Requested Date</th>
 							<th>Name</th>
 							<th>Gender</th>
 							<th>Email</th>
