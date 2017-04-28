@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
  * 20170223 PN CAM-48: implemented getFileUploadError() method implemented. modified execute method to fix incorrect validations in backend.
  * 20170226 PN CAM-48: getImageUploadConfigs() implementation changed. modified execute method to get all the files in courseprovider's logo path and pass it into the JSP file as an array.
  * 20170226 PN CAM-48: createFileName() implementation changed.
+ * 20170228 PN CAM-163:	set collection list to pass all the image details belongs to the particular customer.
  */
 
 import com.genesiis.campus.entity.ICrud;
@@ -58,6 +59,8 @@ public class CmdUploadCPImg implements ICommand {
 		// Valid file extensions to the user.
 		String validExtensions[] = { "jpeg", "jpg", "png", "gif" };
 		
+		Collection<Collection<String>> details = new ArrayList<Collection<String>>(); 
+		
 		try {
 			Map<String, Object> formFielsd = helper.getFormFields();
 			//Get form fields data from the request.
@@ -94,6 +97,7 @@ public class CmdUploadCPImg implements ICommand {
 			}
 			// This code value given here can be any SYSTEMCONFIGCODE given for for CP images.
 			listOfFiles = FileUtility.getFileNames(uploadPath + "/" + Integer.toString(courseProviderCode) + "/");
+			details = FileUtility.getFileDetails(uploadPath + "/" + Integer.toString(courseProviderCode) + "/");
 		} catch (SQLException sqle) {
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
@@ -109,6 +113,7 @@ public class CmdUploadCPImg implements ICommand {
 		helper.setAttribute("fileUploadSuccess", fileUploadSuccess);
 		helper.setAttribute("fileUploadError", fileUploadError);
 		helper.setAttribute("listOfFiles", listOfFiles);
+		helper.setAttribute("cpImageData", details);
 		return view;
 	}
 	
