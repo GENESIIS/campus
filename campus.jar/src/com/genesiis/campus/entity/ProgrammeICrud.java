@@ -4,7 +4,9 @@ package com.genesiis.campus.entity;
 //20170108 c6-list-available-institutes-on-the-view Declaring new methods
 //20170202 DJ c138-add-basic-programme-MP-dj Initiate getAllClassTypes() method.
 //20170428 DJ c145-add-enhanced-programme-MP-dj Initiated addSemesterDetails() method.
+//20170428 DJ c145-add-enhanced-programme-MP-dj Initiated addModuleDetails() method.
 
+import com.genesiis.campus.entity.model.ModuleDTO;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
 import com.genesiis.campus.entity.model.SemesterDTO;
 
@@ -38,6 +40,8 @@ public interface ProgrammeICrud extends ICrud {
 
 	public int addProgrammeDetails(ProgrammeDTO programmeDTO) throws SQLException, Exception;
 	
-	public int[] addSemesterDetails(ArrayList<SemesterDTO> semesterList) throws SQLException, Exception;	
+	public int[] addSemesterDetails(ArrayList<SemesterDTO> semesterList) throws SQLException, Exception;
+	
+	public int[] addModuleDetails(ArrayList<ModuleDTO> moduleList) throws SQLException, Exception;	
 
 }

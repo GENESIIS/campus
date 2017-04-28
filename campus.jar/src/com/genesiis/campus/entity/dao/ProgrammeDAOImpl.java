@@ -9,6 +9,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Initiated addSemesterDetails() method.
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Insert semester details as a batch update.
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Initiated addModuleDetails() method.
+//DJ 20170428 c145-add-enhanced-programme-MP-dj Implement addModuleDetails() method, sql implementation .
 
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.model.ModuleDTO;
@@ -446,7 +447,29 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 
 	@Override
 	public int[] addModuleDetails(ArrayList<ModuleDTO> moduleList)throws SQLException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		int[] successCount;
+
+		try {
+			conn = ConnectionManager.getConnection();
+
+			StringBuilder sb = new StringBuilder("INSERT INTO [CAMPUS].[MODULE] ([NAME] ,[DESCRIPTION],[INTERNALCODEOFMODULE] ,[CREDITVALUE] ,[COMPULSORYSTATUS],[TUTOREDBY] ,[SEMESTER] ,[ISTUTORRELATED],[TUTOR] ,[ISACTIVE],[CRTON] ,[CRTBY])");
+			sb.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,)");
+			stmt = conn.prepareStatement(sb.toString());
+
+			successCount = stmt.executeBatch();
+		} catch (SQLException sqlException) {
+			log.info("addModuleDetails() sqlException"
+					+ sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("addModuleDetails() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, null);
+		}
+		return successCount;
+
 	}
 }

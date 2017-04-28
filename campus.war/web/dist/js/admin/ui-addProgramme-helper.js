@@ -128,7 +128,7 @@ $(document).ready(function() {
 	
 	
 	/*
-	 ********************TOTO:DJ Semester implementation work flow******************************************	  
+	 ********************START TOTO:DJ Semester implementation work flow******************************************	  
 	 */
 	$('.btn-save').on('click', function(event){			
 		window.location.href = 'addSemesterDetails.jsp';
@@ -149,9 +149,30 @@ $(document).ready(function() {
 			error : function(jqXHR, exception) {			
 				errorCodeGeneration(jqXHR, exception);
 			}
-		});	
-		
+		});		
 	});
+	
+	$('.module-save').on('click',function(event){
+		alert("module-save");
+		$.ajax({
+			url : '../../AdminController',
+			type: 'POST',
+			data : {
+				CCO : 'ADD_MODULE_DETAILS'			
+			},
+			dataType : "json",
+			success : function(response) {			
+				alert("success");
+			},
+			error : function(jqXHR, exception) {			
+				errorCodeGeneration(jqXHR, exception);
+			}
+		});		
+	});
+	
+	/*
+	 ********************END TOTO:DJ Semester implementation work flow-******************************************	  
+	 */
 });
 
 /*
