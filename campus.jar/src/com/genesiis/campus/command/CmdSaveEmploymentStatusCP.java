@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170425 CW c159-courseprovider-accept-tutor-request-cw created approveList & rejcetList variables
 //20170427 CW c159-courseprovider-accept-tutor-request-cw refactor the name of the class into CmdSaveEmploymentStatusCP
 //20170428 CW c159-courseprovider-accept-tutor-request-cw modified execute method to update data, view message & view final tutor list
+//20170428 CW c159-courseprovider-accept-tutor-request-cw remove commented lines
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -44,7 +45,7 @@ public class CmdSaveEmploymentStatusCP implements ICommand {
 			if(Validator.isNotEmpty(maxSequence)){
 				maxIndex = Integer.parseInt(maxSequence);				
 
-				for(int i = 1; i <= maxIndex+1; i++){ // creating the comma separated list of employment codes needed to remove
+				for(int i = 1; i <= maxIndex+1; i++){
 					
 					String list = "confirmationStatus" + i;
 					String empCode = "employmentCode" + i;
@@ -64,11 +65,10 @@ public class CmdSaveEmploymentStatusCP implements ICommand {
 						}else{
 							emp.setModby(modUser);
 						}
-						//emp.setModon(modon);
+
 						if(Validator.isNotEmpty(helper.getParameter(empCode))){
 							emp.setCode(Integer.parseInt(helper.getParameter(empCode)));
-						}
-						
+						}						
 						employmentCollection.add(emp);
 					}
 				}
@@ -83,6 +83,7 @@ public class CmdSaveEmploymentStatusCP implements ICommand {
 				
 				String cpCode = helper.getParameter("cpCode");
 				if(cpCode == ""){
+					log.info("courseprovidercode = "+helper.getParameter("courseprovidercode"));
 					cpCode =  helper.getParameter("courseprovidercode");
 				}
 				
@@ -92,52 +93,6 @@ public class CmdSaveEmploymentStatusCP implements ICommand {
 				allcpCodeList.add(cpCodeList);
 				view.setCollection(allcpCodeList);	
 				
-				
-				/*
-				if(!bothSelected){
-					
-					for(int i = 1; i <= maxIndex+1; i++){ // creating the comma separated list of employment codes needed to remove
-	
-						if(Validator.isNotEmpty(helper.getParameter("isApprove"+i)) && helper.getParameter("isApprove"+i).equals("1")){
-							if(approveList == ""){
-								approveList = helper.getParameter("employmentCode"+i);
-							}else{
-								approveList = approveList + "," + helper.getParameter("employmentCode"+i);
-							}			
-						}
-						
-						if(Validator.isNotEmpty(helper.getParameter("isRemove"+i)) && helper.getParameter("isRemove"+i).equals("1")){
-							if(rejcetList == ""){
-								rejcetList = helper.getParameter("employmentCode"+i);
-							}else{
-								rejcetList = rejcetList + "," + helper.getParameter("employmentCode"+i);
-							}			
-						}
-					}
-					*/
-		/*			if(deleteList != ""){
-						final EmploymentDAO employment = new EmploymentDAO();
-						status = employment.deleteMultiple(deleteList);
-					}else{
-						tablemessage = "Please select Employment Details to delete ...";				
-					}
-					
-					if(status > 0){
-						tablemessage = "Selected employers successfully removed ...";
-					}
-					
-					String tutorCode = helper.getParameter("tutorCodeTable");		
-					Collection<Collection<String>> allSelectedFeaturedCourseProviderList = FeaturedCourseProviderDAO.getTutorSelectedFCP(tutorCode);			
-					
-					if(allSelectedFeaturedCourseProviderList == null || allSelectedFeaturedCourseProviderList.isEmpty()){
-						Collection<String> singleTutorEmploymentViewCollection = new ArrayList<String>();
-						singleTutorEmploymentViewCollection.add(tutorCode);
-						allSelectedFeaturedCourseProviderList.add(singleTutorEmploymentViewCollection);
-					}
-					
-					view.setCollection(allSelectedFeaturedCourseProviderList);	
-	
-				}*/
 			}
 		} catch (Exception exception) {
 			log.error("execute() : Exception" + exception.toString());
