@@ -1,5 +1,5 @@
 <!-- 20170330 DK c135 Creating the structure and the layout / UI Integration -->
-<!-- 20170428 JH c135-public-display-tutor-profile added hidden input tutorCode to store post data -->
+<!-- 20170428 JH c135-public-display-tutor-profile added hidden input tutorCode to store post data, add id attributes to assign values wip -->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -40,9 +40,7 @@
 			</div>
 			<div class="page-nav col-sm-6">
 				<ul class="breadcrumb pull-right">
-					<li class="breadcrumb-item"><a href="#">Tutors</a></li>
-					<li class="breadcrumb-item"><a href="#">List all tutors</a></li>
-					<li class="breadcrumb-item"><a href="#">Tutor profile</a></li>
+					<li class="breadcrumb-item"><a href="/dist/partials/public/display-tutors.jsp">Tutors</a></li>
 					<li class="breadcrumb-item active">Dimuthu Kalyanaratne</li>
 				</ul>
 			</div>
@@ -51,7 +49,7 @@
 	<div class="about-section container">
 		<div class="row">
 			<div class="profile-img col-sm-2">
-				<img class="img-responsive" src="/dist/i/public/display-tutor/profile.jpg" alt="" />
+				<img class="img-responsive" src="" alt="Tutor profile image" id="tutorImage"/>
 			</div>
 			<div class="profile-info col-sm-10">
 				<h2 class="section-title">About</h2>
@@ -59,13 +57,13 @@
 					<div class="tutor-desc col-xs-12">
 						<h3>
 							<span class="tutor-name" id="fullName" name="fullName"></span>
-							<span class="tutor-title">Associate Professor in UI/UX Development</span>
+							<span class="tutor-title" id="currentTitle" name="currentTitle">Associate Professor in UI/UX Development</span>
 						</h3>
 					</div>
 					<div class="social-list col-xs-12">
 						<div class="row">
 							<div class="col-sm-4 clearfix">
-								<address><i class="fa fa-map-marker" aria-hidden="true"></i> Pitakotte, Sri Lanka</address>
+								<address id="address" name="address"><i class="fa fa-map-marker" aria-hidden="true"></i> Pitakotte, Sri Lanka</address>
 							</div>
 							<div class="col-sm-8 clearfix">
 								<ul class="social-media list-unstyled list-inline pull-right">
