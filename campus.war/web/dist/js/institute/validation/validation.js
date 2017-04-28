@@ -27,7 +27,8 @@
  *20170315 DN c81-admin-manage-banner-add-and-view-banner-dn isDate() method has been implemented. compareDates() doc commented re structured 
  *20170321 DN c131-admin-manage-banner-upload-banner-image-dn urlTest() method an the comment amended. add \/{0,1} to the end of regex.
  *20170405 DN c83-admin-manage-banner-update-banner-info-dn isStringHasValiCharsAndLength() has modified to change the OR(|) test of 'testableInput' to AND(&&).
- *20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The method ajaxCallErorMessage(response,error,errorThrown) is implemented 
+ *20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The method ajaxCallErorMessage(response,error,errorThrown) is implemented
+ *20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The Function isWholeNumber() is implemented to thest if the test passed is awhole number
  */ 
 
  
@@ -214,6 +215,23 @@ function urlTest(urlInputTextid){
 	}
 	return validUrl;
 }
+
+/**
+ * Test if the supplying parameter is a whole number
+ * @param testingNumber
+ * @returns {Boolean}
+ */
+function isWholeNumber(testingNumber){
+	var isWholeNumber= false;
+	if(testingNumber===""|testingNumber===null){
+		return isWholeNumber;
+	}
+	var testingNumberPattern = /^\d+$/g;
+	if( isPatternMatch(testingNumberPattern,testingNumber))
+		isWholeNumber =true;
+	return isWholeNumber;
+}
+
 
 /**
  * compareDates() accept two string dates which separated by given 
