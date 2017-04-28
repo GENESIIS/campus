@@ -6,6 +6,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
+
+<!-- Bootstrap & CSS Style-->
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css"	rel="stylesheet">
+<!-- FontAwsome Styles-->
+<link href="/dist/bower-components/faw/css/font-awesome.min.css" rel="stylesheet">
+
+<link href="/dist/css/style.css" rel="stylesheet">
 </head>
 <body>
 <h1>********************SEMESTER **************************</h1>
@@ -41,8 +48,14 @@
 		</div>
 	</div>
 	<div>
-	<input type="button" class="btn btn-register pull-right" id="addProgramme" value="Add"/>
+	<input type="button" class="btn btn-register semester-save pull-right" id="addSemester" value="Add"/>
 	</div>
 </div>
+<!-- jQuery & Other js -->
+	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
+	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/bootstrap/bootstrap.min.js"></script>
+	<script src="/dist/js/main.js"></script>
+	<script src="/dist/js/admin/ui-addProgramme-helper.js"></script>
 </body>
 </html>

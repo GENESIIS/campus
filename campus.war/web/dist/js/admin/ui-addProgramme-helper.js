@@ -7,6 +7,7 @@
  * 20170213 DJ c138-add-basic-programme-MP-dj  Implemented clearErrorMessage() common method.
  * 20170214 DJ c138-add-basic-programme-MP-dj  Implemented validateFormData() to validate input data.
  * 20170427 DJ c145-add-enhanced-programme-MP-dj  Redirects to semester detail view after successfully completed course detail adding
+ * 20170428 DJ c145-add-enhanced-programme-MP-dj  triggers the add semester detail button action.
  *  */
 
 $(document).ready(function() {	
@@ -123,8 +124,34 @@ $(document).ready(function() {
 	 */		
 	$('#classTypelist').on('focusout', function(event) {	
 		clearErrorMessage(".block-class-type");
-	});		
+	});
 	
+	
+	/*
+	 ********************TOTO:DJ Semester implementation work flow******************************************	  
+	 */
+	$('.btn-save').on('click', function(event){			
+		window.location.href = 'addSemesterDetails.jsp';
+	});
+	
+	$('.semester-save').on('click',function(event){
+		alert("semester save");
+		$.ajax({
+			url : '../../AdminController',
+			type: 'POST',
+			data : {
+				CCO : 'ADD_SEMESTER_DETAILS'			
+			},
+			dataType : "json",
+			success : function(response) {			
+				populateSemesterAddView(response);
+			},
+			error : function(jqXHR, exception) {			
+				errorCodeGeneration(jqXHR, exception);
+			}
+		});	
+		
+	});
 });
 
 /*
@@ -267,26 +294,6 @@ function addProgrammeDetails(){
 		});	
 		
 	}	
-}
-
-
-function populateSemesterAddView(response){
-	
-/*	$.ajax({
-		url : '../../AdminController',
-		type: 'POST',
-		data : {
-			CCO : 'LIST_PROGRAMME_ADD_VIEW'			
-		},
-		dataType : "json",
-		success : function(response) {			
-			populateProgrammeAddView(response);
-		},
-		error : function(jqXHR, exception) {			
-			errorCodeGeneration(jqXHR, exception);
-		}
-	});	
-	*/
 }
 
 /*
@@ -610,4 +617,13 @@ function errorCodeGeneration(jqXHR, exception){
          msg = 'Uncaught Error.\n' + jqXHR.responseText;
      }	        
  alert(msg);
+}
+
+
+
+
+function populateSemesterAddView(response){
+	
+	
+	
 }

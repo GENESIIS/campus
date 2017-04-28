@@ -6,9 +6,11 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170203 c138-add-basic-programme Implemented getAllLevels() method.
 //DJ 20170203 c138-add-basic-programme Implemented getAllClassTypes() method.
 //DJ 20170207 c138-add-basic-programme Initiated addProgrammeDetails() method.
+//DJ 20170428 c145-add-enhanced-programme-MP-dj Initiated addSemesterDetails() method.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
+import com.genesiis.campus.entity.model.SemesterDTO;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -394,4 +396,36 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		return successStatus;
 	}
 
+	/**
+	 *Add Semester details to application.	 
+	 * @author DJ
+	 * @param semesterList   ArrayList of SemesterDTO
+	 * @return int 
+	 */
+	@Override
+	public int addSemesterDetails(ArrayList<SemesterDTO> semesterList) throws SQLException, Exception {		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		int successStatus = 0;
+		try {
+			conn = ConnectionManager.getConnection();
+
+			StringBuilder sb = new StringBuilder();
+
+			stmt = conn.prepareStatement(sb.toString());
+			successStatus = stmt.executeUpdate();
+			
+		} catch (SQLException sqlException) {
+			log.info("addSemesterDetails() sqlException"
+					+ sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.info("addSemesterDetails() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, null);
+		}
+		return successStatus;
+	}
 }

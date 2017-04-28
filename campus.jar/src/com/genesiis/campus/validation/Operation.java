@@ -11,6 +11,7 @@ package com.genesiis.campus.validation;
 //20170202 DJ c138-add-basic-programme-MP-dj Add LIST_PROGRAMME_ADD_VIEW.
 //20170206 DJ c138-add-basic-programme-MP-dj Add ADD_PROGRAMME_DETAILS.
 //20170221 DJ c145-add-enhanced-programme Add LIST_COURSE_PROVIDER_TOWN enum property.
+//20170428 DJ c145-add-enhanced-programme Add ADD_SEMESTER_DETAILS enum property.
 /**
  * Operation class facilitate in binding the CCO
  * 
@@ -20,7 +21,8 @@ public enum Operation {
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_PROGRAMME_ADD_VIEW("LIST_PROGRAMME_ADD_VIEW",ResponseType.JSON," "),
 	ADD_PROGRAMME_DETAILS("ADD_PROGRAMME_DETAILS",ResponseType.JSON," "),
-	LIST_COURSE_PROVIDER_TOWN("LIST_COURSE_PROVIDER_TOWN",ResponseType.JSON," ");
+	LIST_COURSE_PROVIDER_TOWN("LIST_COURSE_PROVIDER_TOWN",ResponseType.JSON," "),
+	ADD_SEMESTER_DETAILS("ADD_SEMESTER_DETAILS",ResponseType.JSON," ");
 			
 	private final String commandString;
 	private final ResponseType responseType;

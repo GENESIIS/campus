@@ -260,6 +260,11 @@
 						<div class="row clearfix">
 							 <!--  <button type="button" class="btn btn-register pull-right"  onclick="addProgramme();" id="addProgramme" >Add Course</button> -->							  
 							  <input type="button" class="btn btn-register pull-right" id="addProgramme" value="ADD" onclick="addProgrammeDetails();" />								
+						</div>
+						<div class="row clearfix">
+							<div class="btn btn-save">
+							<input type="button" value="Save & Countinue"/>
+							</div>
 						</div>						
 					</form>				
 				</div>			
