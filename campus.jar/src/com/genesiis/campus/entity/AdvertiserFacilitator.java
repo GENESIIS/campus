@@ -10,6 +10,7 @@ package com.genesiis.campus.entity;
  * 20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn.The inner class GeneralAdvertiser.java has been created. The method 
  * 				getAnAdvertiser() implemented and the method createNewAdvertiser() has been refactored.
  * 				The inner class GeneralAdvertiser.java has been removed favour of com.genesiis.campus.entity.model.BannerAdvertiser.java.
+ * 				The method isClientInputAccordanceWithValidation() has been fully implemented.
  */
 
 import com.genesiis.campus.entity.model.AdvertiserRole;
@@ -21,6 +22,7 @@ import com.genesiis.campus.util.JasonInflator;
 import com.genesiis.campus.validation.ApplicationStatus;
 import com.genesiis.campus.validation.Operation;
 import com.genesiis.campus.validation.PrevalentValidation;
+import com.genesiis.campus.validation.PrevalentValidation.FailedValidationException;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.Validatory;
 
@@ -91,7 +93,7 @@ public class AdvertiserFacilitator {
 					// validate incoming data is correct
 				int executionStatus=0;
 					if(isClientInputAccordanceWithValidation())					
-						 executionStatus=createNewAdvertiser();
+						 executionStatus=createNewAdvertiser(this.getAnAdvertiser());
 					
 					if(executionStatus>0){
 						setSuccessCode(1);
@@ -128,15 +130,16 @@ public class AdvertiserFacilitator {
 	 * @throws SQLException the SQL exception
 	 * @throws Exception the exception
 	 */
-	private int createNewAdvertiser() throws SQLException,Exception{
+	private int createNewAdvertiser(AdvertiserRole advertiserrRole) throws SQLException,Exception{
 		
 		// clears any message brought forward
 		this.setMessage(""); 
 		int status = 0;
 		try{
 			
-			
-			AdvertiserRole advertiser  = this.getAnAdvertiser();
+			// THIS ARGUMENT CAN BE SENT TO THE createNewAdvertiser() FROM
+			// processAdvertiser() METHOD.
+			AdvertiserRole advertiser  = advertiserrRole; 
 			if(advertiser == null) throw new IllegalArgumentException("AdvertiserRole is null");
 			/*
 			 * ###########################################################
@@ -243,8 +246,6 @@ public class AdvertiserFacilitator {
 	/**
 	 * isClientInputAccordanceWithValidation() validates if the input fields are 
 	 * having values and those are according to the business logic.
-	 *
-	 * @author dushantha DN
 	 * @return boolean
 	 * @throws Exception the exception
 	 */
@@ -252,9 +253,64 @@ public class AdvertiserFacilitator {
 	private boolean isClientInputAccordanceWithValidation() throws Exception {
 		boolean isvalidationSuccess = true;	
 		Validatory advertiserValidator = new PrevalentValidation();
-		
-		
-		
+	 try{
+		 	// Advertiser Name Validation
+			advertiserValidator.isNotEmpty(helper.getParameter("advertiserName"),					
+							" please fill the advertiser name " +SystemMessage.EMPTYFIELD.message() + "\n");
+			// email validation
+			advertiserValidator.validateEmail(
+					helper.getParameter("advertiserEmail"),
+					SystemMessage.INVALID_EMAIL_FORMAT.message()+"\n");
+			
+			//Land Phone country code
+			advertiserValidator.isInteger( helper.getParameter("landCountryCode"),
+					"Please enter a valid land phone Country Code \n");
+			// Land phone area code
+			advertiserValidator.isInteger(helper.getParameter("landAreaCode"),
+					"Please enter a valid land phone area Code");
+			//Land phone number
+			advertiserValidator.isValidWholeNumber(helper.getParameter("landPhoneNumber"),"Please enter valid phone Number \n");
+			
+			//Land mobile country code
+			advertiserValidator.isInteger( helper.getParameter("mobileCountryCode"),
+					"Please enter a valid  mobile phone Country Code \n");
+			// Land mobile area code
+			advertiserValidator.isInteger( helper.getParameter("mobileAreaCode"),
+					"Please enter a valid mobile phone area Code \n");
+			// Land mobile number
+			advertiserValidator.isValidWholeNumber(helper.getParameter("mobilePhoneNumber"),
+					"Please enter valid mobile Number \n");
+			// Address1
+			advertiserValidator.isNotEmpty(helper.getParameter("address1"),
+					"Address Line 1 " + SystemMessage.EMPTYFIELD.message());
+			//Address2
+			advertiserValidator.isNotEmpty(helper.getParameter("address2"),
+					"Address Line 2 " + SystemMessage.EMPTYFIELD.message()+"\n");
+			//Address3
+			advertiserValidator.isNotEmpty(helper.getParameter("address3"),
+					"Address Line 3 " + SystemMessage.EMPTYFIELD.message()+"\n");
+			// town validation
+						advertiserValidator.isNotEmpty(helper.getParameter("townCode"),
+								"Invalid town Please select correct available Country and a town \n ");
+						advertiserValidator.isValidWholeNumber(helper.getParameter("townCode"),
+								"Please enter a valid Town");
+		 
+		 }catch (NumberFormatException  nfexp){
+			 log.error("isClientInputAccordanceWithValidation() : NumberFormatException "+ nfexp.toString());
+				throw nfexp; 
+		 } catch (FailedValidationException fvexp) {
+			
+			 log.error("isClientInputAccordanceWithValidation() : FailedValidationException "+ fvexp.toString());
+			 String [] errorMessagePart =fvexp.toString().split(":");
+			 this.message = message +" "+ errorMessagePart[1];
+			 this.setSuccessCode(-2);
+			 setResponseCridentials(helper);
+			 return false;
+			 
+		 } catch (Exception exp) {
+			 log.error("isClientInputAccordanceWithValidation() : Exception "+ exp.toString());
+				throw exp;
+		 }		
 		return isvalidationSuccess;
 	}
 	
