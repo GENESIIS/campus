@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 // 20170427 CW c159-courseprovider-accept-tutor-request-cw add update method to do a batch update in the status
 // 20170427 CW c159-courseprovider-accept-tutor-request-cw completed update(Object object) method implementations
 						//modify verificationstatus to confirmationStatus
+// 20170428 CW c159-courseprovider-accept-tutor-request-cw modified the query in update(Object object) method
 
 import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
 import com.genesiis.campus.entity.model.Employment;
@@ -86,7 +87,7 @@ public class EmploymentDAO implements ICrud {
 		try {			
 			List<Employment> employmentStatusChangeCollection = (ArrayList<Employment>) object; 
 			
-			String query = "UPDATE [campus].[EMPLOYMENT] SET CONFIRMATIONSTATUS = ?, MODBY = ?, MODON = ? WHERE CODE = ?";
+			String query = "UPDATE [campus].[EMPLOYMENT] SET CONFIRMATIONSTATUS = ?, MODBY = ?, MODON = GETDATE() WHERE CODE = ?";
 			
 			con = ConnectionManager.getConnection();
 			ps = con.prepareStatement(query);
@@ -95,8 +96,8 @@ public class EmploymentDAO implements ICrud {
 				
 				ps.setInt(1, emp.getConfirmationStatus());
 				ps.setString(2, emp.getModby());			
-				ps.setDate(3, emp.getModon());			
-				ps.setInt(4, emp.getCode());
+				//ps.setDate(3, emp.getModon());			
+				ps.setInt(3, emp.getCode());
 				
 			    ps.addBatch();
 			}			
