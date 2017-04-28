@@ -1,6 +1,7 @@
 /**
  * 20170314 AS c23-admin-login-logout-function-as - admin-login.js created 
  * 20170426 AS c155-admin-logout-function-as ALogout function coding WIP
+ * 20170428 AS c155-admin-logout-function-as ALogout function page redirection script changed.
  */
 
 var theNewScript = document.createElement("script");
@@ -112,12 +113,12 @@ function ALogout() {
 						$('#logout-popup').modal('show');
 						
 						setTimeout( function(){
-							window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
+							window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "admin Login  page"
 							}, 5000); 
 					}else{
 					 
 					setTimeout( function(){
-						window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "Student Login or public index page"
+						window.location.href = response['pageURL']; 
 						}, 5000);
 					
 					}
