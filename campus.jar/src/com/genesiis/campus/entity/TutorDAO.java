@@ -42,6 +42,9 @@ package com.genesiis.campus.entity;
 //20170425 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method query to decode VARIFICATIONSTATUS
 //20170425 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method & changed VARIFICATIONSTATUS into CONFIRMATIONSTATUS
 //20170427 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method & add INITIATEDBY to the query
+//20170428 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method & add CRTON to the query
+					// fixed getTutorsListOfCourseprovider method query error, add CONFIRMATIONSTATUS into the query & modify String courseProviderCode into String ...courseProviderCode
+					// create status value from String ...courseProviderCode
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -438,7 +441,7 @@ public class TutorDAO implements ICrud {
 	 * @author Chinthaka 
 	 * @return Returns a collection of collection consists the Tutors list of given course provider
 	 */
-	public Collection<Collection<String>> getTutorsListOfCourseprovider(String courseProviderCode) throws SQLException, Exception {
+	public Collection<Collection<String>> getTutorsListOfCourseprovider(String ...courseProviderCode) throws SQLException, Exception {
 		
 		final Collection<Collection<String>> allEmploymentTutorsList = new ArrayList<Collection<String>>();
 		Connection conn = null;
@@ -450,17 +453,30 @@ public class TutorDAO implements ICrud {
 		queryBuilder.append("T.EMAIL, T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
 		queryBuilder.append("T.MOBILEPHONECOUNTRYCODE + T.MOBILEPHONENETWORKCODE + T.MOBILEPHONENUMBER MOBILENUMBER, ");
 		queryBuilder.append("EMP.CODE EMPCODE, EMP.COURSEPROVIDER CPCODE, ");
-		queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN 0 then 'Inactive' WHEN 1 then 'Active' WHEN 2 then 'Pending' WHEN 4 then 'Expired' WHEN -1 then 'Undefined' END CONFIRMSTATUS, ");
-		queryBuilder.append("EMP.INITIATEDBY INITIATEDBY ");
+		queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN 0 then 'Inactive' WHEN 1 then 'Active' WHEN 2 then 'Pending' WHEN 3 then 'Expired' WHEN 4 then 'Deleted' WHEN -1 then 'Undefined' END CONFIRMSTATUS, ");
+		queryBuilder.append("EMP.INITIATEDBY INITIATEDBY, EMP.CRTON CRTON ");
 		queryBuilder.append("FROM CAMPUS.TUTOR T ");
 		queryBuilder.append("INNER JOIN CAMPUS.EMPLOYMENT EMP ON T.CODE = EMP.TUTOR ");
-		queryBuilder.append("WHERE EMP.COURSEPROVIDER =  ? ORDER BY T.CODE DESC");
+		queryBuilder.append("WHERE EMP.COURSEPROVIDER =  ? AND EMP.CONFIRMATIONSTATUS IN (?) ORDER BY EMP.CRTON DESC");
 		
 		try {	
-			
 			conn = ConnectionManager.getConnection();						
-			stmt = conn.prepareStatement(queryBuilder.toString());
-			stmt.setString(1, courseProviderCode);
+			stmt = conn.prepareStatement(queryBuilder.toString());			
+			
+			if(courseProviderCode.length >= 2){
+				stmt.setString(1, courseProviderCode[0]);
+				String status = null;
+				
+				for(int i = 1; i <= courseProviderCode.length; i++){	
+					if(i != courseProviderCode.length){
+						status = status + courseProviderCode[i] + ",";
+					}else{
+						status = status + courseProviderCode[i];
+					}
+				}			
+				stmt.setString(2, status);
+			}
+			
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
@@ -476,6 +492,7 @@ public class TutorDAO implements ICrud {
 				singleEmploymentTutorsList.add(rs.getString("CONFIRMSTATUS"));
 				singleEmploymentTutorsList.add(rs.getString("CPCODE"));
 				singleEmploymentTutorsList.add(rs.getString("INITIATEDBY"));
+				singleEmploymentTutorsList.add(rs.getString("CRTON"));
 
 				allEmploymentTutorsList.add(singleEmploymentTutorsList);
 			}		
