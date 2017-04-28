@@ -1,6 +1,7 @@
 /**
  * 20170427 JH c135-public-display-tutor-profile tutor-profile-helper.js created, added loadTutor() method
- * 20170428 JH c135-public-display-tutor-profile get tutor details from the back end 
+ * 20170428 JH c135-public-display-tutor-profile get tutor details from the back end, added String decoder methods to get the string tutor code 
+ * 				and display profile details wip 
  */
 
 $( document ).ready(function() {
