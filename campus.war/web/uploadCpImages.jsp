@@ -101,11 +101,12 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-12">
-								<table class="tbl-logo-list table">
+								<table class="tbl-logo-list table" id="cpImageData">
 									<thead>
 										<tr>
 											<th></th>
 											<th>Image Name</th>
+											<th>Added</th>
 											<th></th>
 										</tr>
 									</thead>
@@ -117,6 +118,7 @@
 												</a>
 											</td>
 											<td><span id="cp_img_name" name="cp_img_name"></span></td>
+											<th>Added</th>
 											<td class="">
 <!-- 												<a class="remove-item action-item fa fa-trash-o" aria-hidden="true" id="cp_img_upload_btn" name="cp_img_upload_btn">&nbsp;</a> -->
 												<button type="button" class="btn-default btn-sm" id="cp_img_delete_btn" name="cp_img_delete_btn">
