@@ -3,6 +3,7 @@
     
  <!-- 20170406 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp page created to maintain logged users session details.   -->   
  <!-- 20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->   
+<!--  20170428 AS c155-admin-logout-function-as privilege handling page redirection script changed. -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -48,9 +49,12 @@
 			
 		</c:forEach>
 		<c:if test="${conVal == 0}">
-			<%
-				response.sendRedirect("/dist/partials/admin/admin-login.jsp");
-			%>
+			<script>
+				var myURL = document.location.host;
+
+				location.replace('http://' + myURL + "/dist/partials/admin/admin-dashboard.jsp");
+			</script>
+			
 		</c:if>
 		<!-- iterating user authenticated button actions -->
 		<c:forEach var="userDataCollection2"
