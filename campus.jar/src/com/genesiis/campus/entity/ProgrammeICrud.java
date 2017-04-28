@@ -38,6 +38,6 @@ public interface ProgrammeICrud extends ICrud {
 
 	public int addProgrammeDetails(ProgrammeDTO programmeDTO) throws SQLException, Exception;
 	
-	public int addSemesterDetails(ArrayList<SemesterDTO> semesterList) throws SQLException, Exception;	
+	public int[] addSemesterDetails(ArrayList<SemesterDTO> semesterList) throws SQLException, Exception;	
 
 }

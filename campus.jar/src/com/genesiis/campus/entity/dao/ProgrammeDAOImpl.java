@@ -7,6 +7,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170203 c138-add-basic-programme Implemented getAllClassTypes() method.
 //DJ 20170207 c138-add-basic-programme Initiated addProgrammeDetails() method.
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Initiated addSemesterDetails() method.
+//DJ 20170428 c145-add-enhanced-programme-MP-dj Insert semester details as a batch update.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
@@ -397,24 +398,35 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 	}
 
 	/**
-	 *Add Semester details to application.	 
+	 *Insertion of semester details to application.Implementation done as a batch update.	 
 	 * @author DJ
 	 * @param semesterList   ArrayList of SemesterDTO
-	 * @return int 
+	 * @return int[] 
 	 */
 	@Override
-	public int addSemesterDetails(ArrayList<SemesterDTO> semesterList) throws SQLException, Exception {		
+	public int [] addSemesterDetails(ArrayList<SemesterDTO> semesterList) throws SQLException, Exception {		
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		int successStatus = 0;
+		int [] successCount;
+		
 		try {
 			conn = ConnectionManager.getConnection();
-
-			StringBuilder sb = new StringBuilder();
-
+			String sb = "INSERT INTO  CAMPUS.SEMESTER (NAME, DESCRIPTION, YEARNO, SEMESTERNO, ISACTIVE, PROGRAMME, CRTON , CRTBY ) VALUES(?,?,?,?,?,?,?,?)";			
 			stmt = conn.prepareStatement(sb.toString());
-			successStatus = stmt.executeUpdate();
+			
+			for(SemesterDTO semesterDTO:semesterList){
+				stmt.setString(1,semesterDTO.getName());
+				stmt.setString(2,semesterDTO.getDescription());
+				stmt.setInt(3,semesterDTO.getYearNum());
+				stmt.setInt(4,semesterDTO.getSemesterNum());
+				stmt.setInt(5,semesterDTO.getIsActive());
+				stmt.setInt(6,semesterDTO.getProgrammeCode());				
+				stmt.setDate(7,new java.sql.Date(semesterDTO.getCrtOn().getTime()));
+				stmt.setString(8,semesterDTO.getCrtBy());
+				stmt.addBatch();
+			}
+			successCount=stmt.executeBatch();	
 			
 		} catch (SQLException sqlException) {
 			log.info("addSemesterDetails() sqlException"
@@ -426,6 +438,6 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		} finally {
 			DaoHelper.cleanup(conn, stmt, null);
 		}
-		return successStatus;
+		return successCount;
 	}
 }
