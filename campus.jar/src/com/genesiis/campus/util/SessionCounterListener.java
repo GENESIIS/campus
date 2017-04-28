@@ -7,13 +7,15 @@ package com.genesiis.campus.util;
 //20170227 AS CAM-21 Session attribute added final modifier 
 //20170228 AS CAM-21 removed Session attribute in destroyed method 
 //20170427 AS CAM-155-admin-logout-function-as- sessionDestroyed() implementation changed.
-
+//20170428 AS CAM-155-admin-logout-function-as- sessionDestroyed() implementation modified.
 import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.validation.SystemMessage;
 import com.genesiis.campus.validation.UserType;
 
 import org.apache.log4j.Logger;
+
+import java.sql.SQLException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -33,12 +35,11 @@ public class SessionCounterListener implements HttpSessionListener {
 		currentSession++;
 		final HttpSession session = event.getSession();
 		serveltContext = event.getSession().getServletContext();
-		event.getSession().setMaxInactiveInterval(60 * 60); // session
+		event.getSession().setMaxInactiveInterval(60 * 10); // session
 															// expiration time
 		serveltContext.setAttribute("totalUsers", totalSession);
 		serveltContext.setAttribute("curentSession", currentSession);
-		
-
+	
 	}
 
 	@Override
@@ -49,11 +50,12 @@ public class SessionCounterListener implements HttpSessionListener {
 		
 			Object userType = event.getSession().getAttribute("userTypeString");
 			if (userType instanceof String) {
-
+			int userLoginHistoryCode = (Integer)event.getSession().getAttribute("userLoginHistoryCode");
 				if (((String) userType).equalsIgnoreCase(UserType.ADMIN.getUserType())) {
 
 					Admin adminData = new Admin();
 					adminData.setLoginHistoryModBy("system");
+					adminData.setLoginHistoryCode(userLoginHistoryCode);
 					AdminLoginDAO.logoutDataUpdate(adminData);
 
 					event.getSession().removeAttribute("user");
@@ -63,20 +65,20 @@ public class SessionCounterListener implements HttpSessionListener {
 					event.getSession().removeAttribute("userTypeString");
 					event.getSession().removeAttribute("userLoginHistoryCode");
 					event.getSession().invalidate();
-					log.info("Admin");
+					
 
 				} else if (((String) userType).equalsIgnoreCase(UserType.STUDENT.getUserType())) {
-					log.info("Student");
+					
 
 				} else if (((String) userType).equalsIgnoreCase(UserType.TUTOR.getUserType())) {
 
 				} else if (((String) userType).equalsIgnoreCase(UserType.FEATURED_COURSE_PROVIDER.getUserType())) {
 
 				} else if (((String) userType).equalsIgnoreCase(UserType.SUPER_ADMIN.getUserType())) {
-					log.info("Super Admin");
-
+					
 					Admin adminData = new Admin();
 					adminData.setLoginHistoryModBy("system");
+					adminData.setLoginHistoryCode(userLoginHistoryCode);
 					AdminLoginDAO.logoutDataUpdate(adminData);
 
 					event.getSession().removeAttribute("user");
@@ -87,10 +89,10 @@ public class SessionCounterListener implements HttpSessionListener {
 					event.getSession().invalidate();
 
 				} else if (((String) userType).equalsIgnoreCase(UserType.COMPANY_DEO.getUserType())) {
-					log.info("Company DEO");
-
+					
 					Admin adminData = new Admin();
 					adminData.setLoginHistoryModBy("system");
+					adminData.setLoginHistoryCode(userLoginHistoryCode);
 					AdminLoginDAO.logoutDataUpdate(adminData);
 
 					event.getSession().removeAttribute("user");
@@ -112,6 +114,10 @@ public class SessionCounterListener implements HttpSessionListener {
 			serveltContext.setAttribute("curentSession", currentSession);
 			serveltContext.setAttribute("message", message);
 
+		} catch (SQLException e) {
+			log.error("sessionDestroyed(HttpSessionEvent event) :  SQLException"
+					+ e.toString());
+			
 		} catch (Exception e) {
 			log.error("sessionDestroyed(HttpSessionEvent event) :  Exception" + e.toString());
 		}
