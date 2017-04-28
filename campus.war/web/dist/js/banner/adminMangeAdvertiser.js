@@ -11,7 +11,8 @@
  * 20170426 DN c88-admin-manage-advertiser-add-new-advertiser-dn.the click event for advertiser record creation has been coded
  * 20170427 DN c88-admin-manage-advertiser-add-new-advertiser-dn.Changed the name of the method call to prevent default action on the event 
  * 				to preventDefault where the control is transfered to the server once the onclick of the createAdvertiser element 
- * 				The method displayLabelMessage(messagePopUpId,labelid,cssColour,message) created.
+ * 				The method displayLabelMessage(messagePopUpId,label id,cssColour,message) created.
+ * 20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn The Page clearing functionality has been implemented
  */
 
 
@@ -599,3 +600,31 @@ function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
 	jQuery('#'+labelid).css({'color':cssColour,'font-weight':'bold'}).html("<h2>"+message+"</h2>");
 	
 }
+
+/**
+ * this event triggers and clears all the filled page data<br>
+ * In any event of refreshing the page this event gets fired<br>
+ */
+
+$(document).on('click','#clearData',function(event){	
+	$('#courseProvider').val('');
+	$('#advertiserName').val('');
+	$('#advertiserEmail').val('');
+	$('#courseProviderDescription').val('');
+	$('#landCountryCode').val('');
+	$('#landAreaCode').val('');
+	$('#landPhoneNumber').val('');
+	$('#mobileCountryCode').val('');
+	$('#mobileAreaCode').val('');
+	$('#mobilePhoneNumber').val('');
+	$('#address1').val('');
+	$('#address2').val('');
+	$('#address3').val('');
+	$('#country').val('');
+	$('#town').val('');
+	
+});
+
+
+
+
