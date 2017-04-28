@@ -8,8 +8,10 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170207 c138-add-basic-programme Initiated addProgrammeDetails() method.
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Initiated addSemesterDetails() method.
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Insert semester details as a batch update.
+//DJ 20170428 c145-add-enhanced-programme-MP-dj Initiated addModuleDetails() method.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
+import com.genesiis.campus.entity.model.ModuleDTO;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
 import com.genesiis.campus.entity.model.SemesterDTO;
 import com.genesiis.campus.util.ConnectionManager;
@@ -397,6 +399,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		return successStatus;
 	}
 
+	
 	/**
 	 *Insertion of semester details to application.Implementation done as a batch update.	 
 	 * @author DJ
@@ -439,5 +442,11 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			DaoHelper.cleanup(conn, stmt, null);
 		}
 		return successCount;
+	}
+
+	@Override
+	public int[] addModuleDetails(ArrayList<ModuleDTO> moduleList)throws SQLException, Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
