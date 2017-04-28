@@ -1,12 +1,15 @@
 /**
  * 20170427 JH c135-public-display-tutor-profile tutor-profile-helper.js created, added loadTutor() method
  * 20170428 JH c135-public-display-tutor-profile get tutor details from the back end, added String decoder methods to get the string tutor code, 
- * 				loadTutor() method coding to display profile details wip
+ * 				loadTutor() method coding to display profile details wip, display social media details
  */
 
 $( document ).ready(function() {
 	var code = $('#tutorCode').val();
 	loadTutor(hashDecode(code)); //decode the encoded tutor code
+	
+	// display tooltip
+	    $('[data-toggle="tooltip"]').tooltip(); 
 });
 
 function loadTutor(code){
@@ -39,19 +42,20 @@ function loadTutor(code){
 					 $('#fullName').text(fullName);
 					 $('#list-breadcrumb-item').text(fullName);
 					 $('#address').text(address);
-					 $('#facebookURL').attr('href', tutorRecord[16]);
-					 $('#twitterURL').attr('href', tutorRecord[17]);
-					 $('#linkedinURL').attr('href', tutorRecord[19]);
-					 $('#instagramURL').attr('href', tutorRecord[20]);
-					 $('#whatsappNumber').attr('href', tutorRecord[21]);
-					 $('#viberNumber').attr('href', tutorRecord[22]);
-					 $('#myspaceURL').attr('href', tutorRecord[18]);
+					 $('#facebookURL').attr({'href' : tutorRecord[16], 'title' : tutorRecord[16] });
+					 $('#twitterURL').attr({'href' : tutorRecord[17], 'title' : tutorRecord[17]});
+					 $('#linkedinURL').attr({'href' : tutorRecord[19], 'title' : tutorRecord[19]});
+					 $('#instagramURL').attr( {'href' : tutorRecord[20], 'title' : tutorRecord[20]});
+					 $('#whatsappNumber').attr('title', tutorRecord[21]);
+					 $('#viberNumber').attr('title', tutorRecord[22]);
+					 $('#myspaceURL').attr({'href' : tutorRecord[18], 'title' : tutorRecord[18]});
 				 }
 			}
 
 		},
 		error : function(x, status, error) {
 			var err = displayErrorMessage(x, status, error);
+			document.getElementById("userMessage").style.visibility = "visible";
 			document.getElementById("userMessage").style.display = "block";
 			$("#userMessage").html(err);
 		}
