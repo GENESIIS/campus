@@ -12,7 +12,7 @@
  * 20170308 PN CAM-48: modified 'cp_img_upload_btn' upload event to set selected image type back to the drop down. 
  * 					   cp_img_type on change event modified to make button enable and disable if an image exists/not exists for the selected type
  * 20170419 PN CAM-48: modified the implementation of createFileName() method, 'cp_img_type on' change event and 'cp_img_upload_btn' upload event to match the functionality with new UI.
- * 20170428 PN CAM-163: populateImageTable(details,courseProviderCode,uploadPathConf) method implemented to print all the image on the JSP page.
+ * 20170428 PN CAM-163: populateImageTable(details,courseProviderCode) method implemented to print all the image on the JSP page.
  */
 
 var dataSet = null;
@@ -57,14 +57,14 @@ $(document).ready(function() {
 				var fileName = createFileName(courseProviderCode,cp_img_type);
 				var actFileName = getActualFileName(listOfFiles,fileName);
 				if(actFileName != noImagetoDisplayErr){
-					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
-					$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
-					$('#cp_img_name').html(actFileName);
+					//$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
+					//$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
+					//$('#cp_img_name').html(actFileName);
 					document.getElementById("cp_img_upload_btn").disabled = true;
 				}else{
-					$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
-					$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
-					$('#cp_img_name').html(createFileName("default",cp_img_type)+".jpg");
+					//$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
+					//$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
+					//$('#cp_img_name').html(createFileName("default",cp_img_type)+".jpg");
 					document.getElementById("cp_img_delete_btn").disabled = true;
 					$('#img-err-lbl').show();
 					$('#cp_img_err').html(noImagetoDisplayErr);
@@ -105,7 +105,7 @@ $(document).ready(function() {
 			    success:function(response){
 			    	listOfFiles = response.listOfFiles;
 			    	listOfImageFileDetails = response.cpImageData;
-			    	populateImageTable(listOfImageFileDetails,courseProviderCode,uploadPathConf);
+			    	populateImageTable(listOfImageFileDetails,courseProviderCode);
 			    	if(response.fileUploadError != ""){
 			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileUploadError);
@@ -120,9 +120,9 @@ $(document).ready(function() {
 			    		
 			    		//Display uploaded image on img tag.
 			    		var newName = createFileName(courseProviderCode,uploadPathConf)+"."+fileExt[1];
-			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
-			    		$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
-			    		$('#cp_img_name').html(newName);
+//			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
+//			    		$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
+//			    		$('#cp_img_name').html(newName);
 			    	}
 				},
 				error : function(x, status, error) {
@@ -174,7 +174,7 @@ $(document).ready(function() {
 			    success:function(response){
 			    	listOfFiles = response.listOfFiles;
 			    	listOfImageFileDetails = response.cpImageData;
-			    	populateImageTable(listOfImageFileDetails,courseProviderCode,uploadPathConf);
+			    	populateImageTable(listOfImageFileDetails,courseProviderCode);
 			    	if(response.fileDeleteError != ""){
 			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileDeleteError);
@@ -186,9 +186,9 @@ $(document).ready(function() {
 			    		$('#cp_img_err').css('color', 'green');
 			    		
 			    		//Display uploaded image on img tag.  		
-			    		$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
-			    		$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
-			    		$('#cp_img_name').html(createFileName("default",uploadPathConf)+".jpg");
+//			    		$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
+//			    		$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
+//			    		$('#cp_img_name').html(createFileName("default",uploadPathConf)+".jpg");
 			    	}
 				},
 				error : function(x, status, error) {
@@ -231,7 +231,7 @@ function displayImgDetails() {
 				courseProviderCode = response.courseProviderCode;
 				listOfFiles = response.listOfFiles;
 				listOfImageFileDetails = response.cpImageData;
-				populateImageTable(listOfImageFileDetails,courseProviderCode,uploadPathConf);
+				populateImageTable(listOfImageFileDetails,courseProviderCode);
 				setCPImgData(response);
 			}
 		},
@@ -437,20 +437,19 @@ function displayErrorMessage(x, status, error) {
  * @param uploadPathConf -
  *            uploaded image type.
  */
-function populateImageTable(details,courseProviderCode,uploadPathConf){
+function populateImageTable(details,courseProviderCode){
 	alert(details);
 	var html = '';
 
 	$.each(details, function(index, value) {
-		var newName = createFileName(courseProviderCode,uploadPathConf)+"."+details[2].toString();
-		html += '<tr>'+
-		'<td><a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="'+diskImgPath+courseProviderCode+"/"+details[0].toString()+"?"+Math.random()+'" title=""><img id="cp_img_display" name="cp_img_display" alt="" src="'+diskImgPath+courseProviderCode+"/"+details[0].toString()+"?"+Math.random()+'"/></a></td>'+
-		'<td><span id="cp_img_name" name="cp_img_name">' + details[1].toString()+ '</span></td>'+
-		'<td><span>' + details[3].toString()+ '</span></td>'+
+		$('#cpImageData tbody').append('<tr>'+
+		'<td><a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="'+diskImgPath+courseProviderCode+"/"+value[0]+"?"+Math.random()+'" title=""><img id="cp_img_display" name="cp_img_display" alt="" /></a></td>'+
+		'<td><span>' + value[1]+ '</span></td>'+
+		'<td><span>' + value[3]+ '</span></td>'+
 		'<td><button type="button" class="btn-default btn-sm" id="cp_img_delete_btn" name="cp_img_delete_btn"><i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i></button></td>'+
-		'</tr>';
-	}
+		'</tr>');
+	});
 	
 	            
-	$('#cpImageData tr').first().after(html);
+	//$('#cpImageData tbody').append(html);
 }
