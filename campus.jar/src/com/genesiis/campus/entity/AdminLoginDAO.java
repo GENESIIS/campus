@@ -129,8 +129,6 @@ public class AdminLoginDAO implements ICrud {
 			java.util.Date utilDate = new java.util.Date();
 			java.sql.Date logoutDate = new java.sql.Date(utilDate.getTime());
 			
-		
-			log.info("MODBY : "+admin.getLoginHistoryModBy());	
 			ps.setString(1, logoutDate.toString());
 			ps.setString(2, new Timestamp(logoutTime.getTime()).toString());
 			ps.setString(3, logoutDate.toString());
