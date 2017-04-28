@@ -4,6 +4,7 @@ package com.genesiis.campus.validation;
 //20161028 PN c11-criteria-based-filter-search: added LIST_CATEGORY_DATA attribute
 //20170302 JH c96-public-list-all-tutors added PUBLIC_LIST_ALL_TUTORS enum
 //20170424 JH c135-public-display-tutor-profile added DISPLAY_PUBLIC_TUTOR_PROFILE
+//20170428 JH c135-public-display-tutor-profile changed the response type of DISPLAY_PUBLIC_TUTOR_PROFILE
 
 /**
  * Operation class facilitate in binding the CCO
@@ -14,7 +15,7 @@ public enum Operation {
 	BAD_OPERATION("BO", ResponseType.INAPPLICABLE, "commandNotFound.jsp"),
 	LIST_CATEGORY_DATA("LIST_CATEGORY_DATA", ResponseType.JSON, ""), 
 	PUBLIC_LIST_ALL_TUTORS("PUBLIC_LIST_ALL_TUTORS", ResponseType.JSON, ""),
-	DISPLAY_PUBLIC_TUTOR_PROFILE("DISPLAY_PUBLIC_TUTOR_PROFILE", ResponseType.JSP, "/dist/partials/public/display-tutor-profile.jsp");
+	DISPLAY_PUBLIC_TUTOR_PROFILE("DISPLAY_PUBLIC_TUTOR_PROFILE", ResponseType.JSON, "");
 			
 	private final String commandString;
 	private final ResponseType responseType;
