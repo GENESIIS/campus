@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170424 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified to check from the logging attempts, user already blocked or not.
 //20170425 AS CAM-154-admin-privilege-handling-as - attempts database update and findById() modified the logic. 
 //20170427 AS CAM-155-admin-logout-function-as- login details add generated PK set to the admin object, logoutDataUpdate() query modification completed 
+//20170427 AS CAM-155-admin-logout-function-as- logoutDataUpdate() date format changed.
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
@@ -129,10 +130,10 @@ public class AdminLoginDAO implements ICrud {
 			java.sql.Date logoutDate = new java.sql.Date(utilDate.getTime());
 			
 		
-			
-			ps.setDate(1, logoutDate);
+			log.info("MODBY : "+admin.getLoginHistoryModBy());	
+			ps.setString(1, logoutDate.toString());
 			ps.setString(2, new Timestamp(logoutTime.getTime()).toString());
-			ps.setDate(3, logoutDate);
+			ps.setString(3, logoutDate.toString());
 			ps.setString(4, admin.getLoginHistoryModBy());
 			ps.setInt(5, admin.getLoginHistoryCode());
 			rowInserted = ps.executeUpdate();
