@@ -9,6 +9,7 @@
  * 20170427 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill employmentCode 
  * 20170427 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill List Item conditionally
  * 20170428 CW c159-courseprovider-accept-tutor-request-cw add validations to cpCode variable in ready function
+ * 20170428 CW c159-courseprovider-accept-tutor-request-cw add Requested date value into the table & removed the commented lines
  */
 
 $(document).ready(function() {
@@ -56,13 +57,11 @@ function populateTuterData(response){
     	maxIndex = index;
     	var sequence = index + 1;
     	
-        trHTML += '<tr><td>' + sequence + '</td><td>' + value[1].toString() + '</td><td>'
+        trHTML += '<tr><td>' + sequence + '</td><td>' + value[10].toString() + '</td><td>' + value[1].toString() + '</td><td>'
         + value[2].toString() + '</td><td>' + value[3].toString() + '</td><td>' 
         + value[4].toString() + '</td><td>' + value[5].toString() + '</td><td>' + value[7].toString() + '</td><td>' 
         + '<select name=confirmationStatus'+sequence+' id=confirmationStatus'+sequence+'> <option></option></td>'
 		+ '<input type=hidden name=employmentCode'+sequence+' id=employmentCode'+sequence+' value=' + value[6].toString() + '>'
-/*		+ '<input type=checkbox id=isRemove'+sequence+' name=isRemove'+sequence+' value=1></td><td>' 
-        + '<input type=checkbox id=isApprove'+sequence+' name=isApprove'+sequence+' value=1></td></tr>';*/
         
     });
     
@@ -116,46 +115,6 @@ function fillListItems(maxIndex, response){
 		});		
 	});
 }
-
-/*
-function fillListItems(maxIndex, response){
-	for(i = 1; i <= maxIndex + 1; i++){
-		
-		listId = "confirmationStatus" + i;
-		var status = $("#" + listId);
-		status.find('option').remove();
-		
-		$('<option>').val("0").text("--- Select Status ---").appendTo(status);
-		
-		$.each(response.applicationStatusMap, function(index, value) {
-			var res = value.toString();
-			var data = res.split(",");
-			var x = index;
-			var y = data[0].toString();
-			
-			//if(z == selected){
-				$('<option>').val(x).text(y).appendTo(status);
-			//}
-		});		
-	}
-}*/
-
-/*
-function getTownData(response, selected) {
-	var categories = $("#townDetails");
-	categories.find('option').remove();
-	$('<option>').val("0").text("--- Select town ---").appendTo(categories);
-	$.each(response.result, function(index, value) {
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		var z = data[2].toString();
-		if(z == selected){
-			$('<option>').val(x).text(y).appendTo(categories);
-		}
-	});
-}*/
 
 
 
