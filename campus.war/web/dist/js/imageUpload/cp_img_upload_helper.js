@@ -12,6 +12,7 @@
  * 20170308 PN CAM-48: modified 'cp_img_upload_btn' upload event to set selected image type back to the drop down. 
  * 					   cp_img_type on change event modified to make button enable and disable if an image exists/not exists for the selected type
  * 20170419 PN CAM-48: modified the implementation of createFileName() method, 'cp_img_type on' change event and 'cp_img_upload_btn' upload event to match the functionality with new UI.
+ * 20170428 PN CAM-163: populateImageTable(details,courseProviderCode,uploadPathConf) method implemented to print all the image on the JSP page.
  */
 
 var dataSet = null;
@@ -20,6 +21,8 @@ var courseProviderCode = null;
 var extensions = [ "jpeg", "jpg", "png", "gif", "GPEG", "JPG", "PNG", "GIF" ];
 // array with file names list.
 var listOfFiles = [];
+//array with file names list.
+var listOfImageFileDetails = [];
 //Physical path of the images.
 var diskImgPath = "/education/provider/logo/";
 //Error messages to display. 
@@ -101,6 +104,8 @@ $(document).ready(function() {
 	    	    contentType : false,
 			    success:function(response){
 			    	listOfFiles = response.listOfFiles;
+			    	listOfImageFileDetails = response.cpImageData;
+			    	populateImageTable(listOfImageFileDetails,courseProviderCode,uploadPathConf);
 			    	if(response.fileUploadError != ""){
 			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileUploadError);
@@ -168,6 +173,8 @@ $(document).ready(function() {
 	    	    contentType : false,
 			    success:function(response){
 			    	listOfFiles = response.listOfFiles;
+			    	listOfImageFileDetails = response.cpImageData;
+			    	populateImageTable(listOfImageFileDetails,courseProviderCode,uploadPathConf);
 			    	if(response.fileDeleteError != ""){
 			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileDeleteError);
@@ -223,6 +230,8 @@ function displayImgDetails() {
 				dataSet = response;
 				courseProviderCode = response.courseProviderCode;
 				listOfFiles = response.listOfFiles;
+				listOfImageFileDetails = response.cpImageData;
+				populateImageTable(listOfImageFileDetails,courseProviderCode,uploadPathConf);
 				setCPImgData(response);
 			}
 		},
@@ -418,4 +427,30 @@ function displayErrorMessage(x, status, error) {
 		errorMessage = errorMessage + " Error: " + error +" Status: "+ status;
 	}
 	return errorMessage;
+}
+
+/**
+ * Print the CP image details on the table.
+ * @param details - details list of given folder containing images.
+ * @param courseProviderCode -
+ *            course provider code.
+ * @param uploadPathConf -
+ *            uploaded image type.
+ */
+function populateImageTable(details,courseProviderCode,uploadPathConf){
+	alert(details);
+	var html = '';
+
+	$.each(details, function(index, value) {
+		var newName = createFileName(courseProviderCode,uploadPathConf)+"."+details[2].toString();
+		html += '<tr>'+
+		'<td><a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="'+diskImgPath+courseProviderCode+"/"+details[0].toString()+"?"+Math.random()+'" title=""><img id="cp_img_display" name="cp_img_display" alt="" src="'+diskImgPath+courseProviderCode+"/"+details[0].toString()+"?"+Math.random()+'"/></a></td>'+
+		'<td><span id="cp_img_name" name="cp_img_name">' + details[1].toString()+ '</span></td>'+
+		'<td><span>' + details[3].toString()+ '</span></td>'+
+		'<td><button type="button" class="btn-default btn-sm" id="cp_img_delete_btn" name="cp_img_delete_btn"><i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i></button></td>'+
+		'</tr>';
+	}
+	
+	            
+	$('#cpImageData tr').first().after(html);
 }
