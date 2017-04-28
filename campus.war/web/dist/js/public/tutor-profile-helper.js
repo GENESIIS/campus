@@ -38,14 +38,17 @@ function loadTutor(code){
 					 var imagePath = response.tutorProfileImagePath;
 					 var fileSeperator = "/";
 					 var imageExtension = ".jpg";
+					 var defaultImage = "default";
 					 var tutorImagePath = fileSeperator + imagePath + fileSeperator + tutorRecord[0] + fileSeperator + tutorRecord[0] + imageExtension;
+					 var defaultImagePath = fileSeperator + imagePath + fileSeperator + defaultImage + imageExtension;
 					 var fullName = tutorRecord[3] + " " +  tutorRecord[4] + " " + tutorRecord[5];
 					 var address = tutorRecord[24] + ", " + tutorRecord[25] + ", " + tutorRecord[26];
 					 var landNumber = "+" + tutorRecord[8] + " " + tutorRecord[9] + " " + tutorRecord[10];
 					 var mobileNumber = "+" + tutorRecord[8] + " " + tutorRecord[11] + " " + tutorRecord[12];
 					 var email = "mailto:" + tutorRecord[7] + "?Subject=Contact%20Tutor%20Page%20@campus.lk";
-					 					 
+					 
 					 $('#tutorImage').attr("src", tutorImagePath);
+					 $('#tutorImage').attr("onerror", "this.src = \'' + defaultImagePath + '\'");
 					 $('#fullName').text(fullName);
 					 $('#list-breadcrumb-item').text(fullName);
 					 $('#address').text(address);
@@ -62,6 +65,8 @@ function loadTutor(code){
 					 $('#email').attr('href', email);
 					 $('#webLink').text(tutorRecord[15]);
 					 $('#webLink').attr('href', tutorRecord[15]);
+					 $('#tutorDescription').text(tutorRecord[13]);
+					 
 				 }else{ // if no tutor details are found, redirect the list tutor page
 					  var url = '/dist/partials/public/display-tutors.jsp';
 					  var form = $('<form action="' + url + '" method="post">' +
