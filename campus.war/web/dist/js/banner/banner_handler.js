@@ -43,6 +43,8 @@
  * 				when baner-view-stat persisting back-end code is triggered 			
  * 20170417 MM c128-display-banners-record-viewcount-front-end - Modified banner display code to dispatch 
  * 				banner-view-stat-update request each time a banner gets assigned the banner-shown class  			
+ * 20170428 MM c128-display-banners-record-viewcount-front-end - Modified timer-related code to determine 
+ * 				if an element is within view-port before view-stat-update request is sent; debugging is WIP		
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -61,38 +63,55 @@
  * THIS CODE PRODUCED EXPECTED BEHAVIOUR WITH JQUERY v2.2.2
  * */
 
-// Banner-rotation code 
-var bannerSlotWrappers = $('.banner-wrapper');
-var bannerSlotTimers = [];
-
-bannerSlotWrappers.each(function(index){
-	bannerSlotTimers.push(function (slotIndex) {
-		var shownBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
-		var t1 = shownBanner.data('timeout');      
-		
-		setTimeout(function () {
-			var activeBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
-			activeBanner.removeClass('banner-shown');
-			var anchor = activeBanner.parent().next();
-			var nextBanner = null;
-			if (anchor.length == 0) {
-				nextBanner = activeBanner.parents('div.banner-wrapper').children('a').first().children('img');
-			} else {
-				nextBanner = anchor.children('img');
-			}
-			nextBanner.addClass('banner-shown');
-			
-			var shownBannerCode = nextBanner.attr('data-banner-code');
-			sendBannerViewStatUpdateRequest(shownBannerCode);
-			
-			bannerSlotTimers[slotIndex](slotIndex);
-		}, t1 * 1000, slotIndex);
-	});
-});
-
-$.each(bannerSlotTimers, function(index, value) {
-	value(index);
-});
+//// Banner-rotation code 
+//var bannerSlotWrappers = $('.banner-wrapper');
+//var bannerSlotTimers = [];
+//
+//bannerSlotWrappers.each(function(index){
+//	bannerSlotTimers.push(function (slotIndex) {
+//		var shownBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
+//		var t1 = shownBanner.data('timeout');      
+//		
+//		setTimeout(function () {
+//			var activeBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
+//			activeBanner.removeClass('banner-shown');
+//			var anchor = activeBanner.parent().next();
+//			var nextBanner = null;
+//			if (anchor.length == 0) {
+//				nextBanner = activeBanner.parents('div.banner-wrapper').children('a').first().children('img');
+//			} else {
+//				nextBanner = anchor.children('img');
+//			}
+//			nextBanner.addClass('banner-shown');
+//			
+//			var shownBannerCode = nextBanner.attr('data-banner-code');
+//			
+//			if (nextBanner.length < 1) {
+//				alert("nextBanner is null");
+//			}
+//			
+//			// Send the banner-view-stat-update request only if banner-slot is in view 
+//		    var top_of_element = nextBanner.offset().top;
+//		    var bottom_of_element = nextBanner.offset().top + nextBanner.outerHeight();
+//		    var bottom_of_screen = $(window).scrollTop() + $(window).height();
+//		    var top_of_screen = $(window).scrollTop();
+//
+//		    if((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+//		        console.log("Element is visible!");
+//		    }
+//		    else {
+//		    	console.log("Element is not visible!");
+//		    }
+////			sendBannerViewStatUpdateRequest(shownBannerCode);
+//			
+//			bannerSlotTimers[slotIndex](slotIndex);
+//		}, t1 * 1000, slotIndex);
+//	});
+//});
+//
+//$.each(bannerSlotTimers, function(index, value) {
+//	value(index);
+//});
 
 
 // Event handler for sending DB add operation upon clicking of a banner
@@ -133,7 +152,7 @@ $(document).ready(function() {
 	var areBannersLoadedWithPage = bannerLoadingStatusIndicator.val();	
 	
 	if (areBannersLoadedWithPage == null || areBannersLoadedWithPage == 'false') {
-		getBanners();
+		getBanners(setBannersToPageSlots);
 	}	
 
 	// Bind event handler for click event to banner elements
@@ -153,6 +172,56 @@ $(document).ready(function() {
 	    }
 	});
 	
+	
+	// Banner-rotation code 
+	var bannerSlotWrappers = $('.banner-wrapper');
+	var bannerSlotTimers = [];
+
+	bannerSlotWrappers.each(function(index){
+		bannerSlotTimers.push(function (slotIndex) {
+			var shownBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
+			var t1 = shownBanner.data('timeout');      
+			
+			setTimeout(function () {
+				var activeBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
+				activeBanner.removeClass('banner-shown');
+				var anchor = activeBanner.parent().next();
+				var nextBanner = null;
+				if (anchor.length == 0) {
+					nextBanner = activeBanner.parents('div.banner-wrapper').children('a').first().children('img');
+				} else {
+					nextBanner = anchor.children('img');
+				}
+				nextBanner.addClass('banner-shown');
+				
+				if (nextBanner.length > 0) {				
+					// Send the banner-view-stat-update request only if banner-slot is in view 
+				    var top_of_element = nextBanner.offset().top;
+				    var bottom_of_element = nextBanner.offset().top + nextBanner.outerHeight();
+				    var bottom_of_screen = $(window).scrollTop() + $(window).height();
+				    var top_of_screen = $(window).scrollTop();
+	
+				    if((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+				        console.log("Element is visible!");					
+						var shownBannerCode = nextBanner.attr('data-banner-code');
+						sendBannerViewStatUpdateRequest(shownBannerCode);
+				    }
+				    else {
+				    	console.log("Element is not visible!");
+				    }				    
+				} else {
+					console.log("The reference nextBanner is null!");
+				}
+				
+				bannerSlotTimers[slotIndex](slotIndex);
+			}, t1 * 1000, slotIndex);
+		});
+	});
+
+	$.each(bannerSlotTimers, function(index, value) {
+		value(index);
+	});
+	
 });
 
 // Send banner-view-stat update request
@@ -170,21 +239,21 @@ function sendBannerViewStatUpdateRequest(bannerCode) {
 			var operationStatus = response.operationStatus; 			
 			if(operationStatus != undefined && operationStatus != null) {
 				if (operationStatus === 'SUCCESS') {
-					console.log('Banner-statistics successfully updated.');
+					console.log('Banner-view-statistics successfully updated.');
 				} else if (operationStatus === 'FAILURE') {
-					console.log('Banner-statistics update failed.');
+					console.log('Banner-view-statistics update failed.');
 				}
 			}
 		},
 		error : function(response) {			
-			console.log('Ajax request to update statistics failed.');
+			console.log('Ajax request to update banner-view-statistics failed.');
 		}
 	});
 }
 
 
 //Event handler for sending Ajax request to fetch banners 
-function getBanners() { 
+function getBanners(callback) { 
 	
 	var pageName = getPageName();
 	
@@ -200,7 +269,7 @@ function getBanners() {
 			async : true,
 			success : function(response) {			
 				console.log('Ajax request made to fetch banner images succeeded');
-				setBannersToPageSlots(response, pageName);
+				callback(response, pageName);
 			},
 			error : function(response) {			
 				console.log('Ajax request made to fetch banner images failed.');
