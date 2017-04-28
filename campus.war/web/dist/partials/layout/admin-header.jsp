@@ -5,6 +5,7 @@
 <!-- 20170427 AS CAM-155-admin-logout-function-as- logout button ajax call function modified  -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <script src='/dist/js/admin/admin-login.js'></script>
+<jsp:include page="/dist/partials/login/messagePopup.jsp"></jsp:include>
 <header class="header col-lg-12 col-md-12 col-sm-12 clearfix">
 
 	<div class="top">
