@@ -45,6 +45,7 @@ package com.genesiis.campus.entity;
 //20170428 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method & add CRTON to the query
 					// fixed getTutorsListOfCourseprovider method query error, add CONFIRMATIONSTATUS into the query & modify String courseProviderCode into String ...courseProviderCode
 					// create status value from String ...courseProviderCode
+//20170429 CW c159-courseprovider-accept-tutor-request-cw fixing the errors creating the status value in getTutorsListOfCourseprovider method
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -465,10 +466,10 @@ public class TutorDAO implements ICrud {
 			
 			if(courseProviderCode.length >= 2){
 				stmt.setString(1, courseProviderCode[0]);
-				String status = null;
-				
-				for(int i = 1; i <= courseProviderCode.length; i++){	
-					if(i != courseProviderCode.length){
+				String status = "";
+				int a = courseProviderCode.length;
+				for(int i = 1; i < courseProviderCode.length; i++){	
+					if(i < courseProviderCode.length - 1){
 						status = status + courseProviderCode[i] + ",";
 					}else{
 						status = status + courseProviderCode[i];
