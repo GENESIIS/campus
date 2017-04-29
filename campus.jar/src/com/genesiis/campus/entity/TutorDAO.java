@@ -46,6 +46,7 @@ package com.genesiis.campus.entity;
 					// fixed getTutorsListOfCourseprovider method query error, add CONFIRMATIONSTATUS into the query & modify String courseProviderCode into String ...courseProviderCode
 					// create status value from String ...courseProviderCode
 //20170429 CW c159-courseprovider-accept-tutor-request-cw fixing the errors creating the status value in getTutorsListOfCourseprovider method
+//20170429 CW c159-courseprovider-accept-tutor-request-cw fixing the errors creating the status value in getTutorsListOfCourseprovider method
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -448,55 +449,56 @@ public class TutorDAO implements ICrud {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-									
-		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE TUTORCODE, T.FIRSTNAME +' '+ T.MIDDLENAME +' '+ T.LASTNAME NAME, "); 
-		queryBuilder.append("CASE T.GENDER WHEN 1 then 'Male' WHEN 2 then 'Female' END GENDER, ");
-		queryBuilder.append("T.EMAIL, T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
-		queryBuilder.append("T.MOBILEPHONECOUNTRYCODE + T.MOBILEPHONENETWORKCODE + T.MOBILEPHONENUMBER MOBILENUMBER, ");
-		queryBuilder.append("EMP.CODE EMPCODE, EMP.COURSEPROVIDER CPCODE, ");
-		queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN 0 then 'Inactive' WHEN 1 then 'Active' WHEN 2 then 'Pending' WHEN 3 then 'Expired' WHEN 4 then 'Deleted' WHEN -1 then 'Undefined' END CONFIRMSTATUS, ");
-		queryBuilder.append("EMP.INITIATEDBY INITIATEDBY, EMP.CRTON CRTON ");
-		queryBuilder.append("FROM CAMPUS.TUTOR T ");
-		queryBuilder.append("INNER JOIN CAMPUS.EMPLOYMENT EMP ON T.CODE = EMP.TUTOR ");
-		queryBuilder.append("WHERE EMP.COURSEPROVIDER =  ? AND EMP.CONFIRMATIONSTATUS IN (?) ORDER BY EMP.CRTON DESC");
 		
-		try {	
-			conn = ConnectionManager.getConnection();						
-			stmt = conn.prepareStatement(queryBuilder.toString());			
-			
+		String status = "";
+		try {
 			if(courseProviderCode.length >= 2){
-				stmt.setString(1, courseProviderCode[0]);
-				String status = "";
 				int a = courseProviderCode.length;
+				
 				for(int i = 1; i < courseProviderCode.length; i++){	
 					if(i < courseProviderCode.length - 1){
 						status = status + courseProviderCode[i] + ",";
 					}else{
 						status = status + courseProviderCode[i];
 					}
-				}			
-				stmt.setString(2, status);
+				}
+											
+				StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE TUTORCODE, T.FIRSTNAME +' '+ T.MIDDLENAME +' '+ T.LASTNAME NAME, "); 
+				queryBuilder.append("CASE T.GENDER WHEN 1 then 'Male' WHEN 2 then 'Female' END GENDER, ");
+				queryBuilder.append("T.EMAIL, T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
+				queryBuilder.append("T.MOBILEPHONECOUNTRYCODE + T.MOBILEPHONENETWORKCODE + T.MOBILEPHONENUMBER MOBILENUMBER, ");
+				queryBuilder.append("EMP.CODE EMPCODE, EMP.COURSEPROVIDER CPCODE, ");
+				queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN 0 then 'Inactive' WHEN 1 then 'Active' WHEN 2 then 'Pending' WHEN 3 then 'Expired' WHEN 4 then 'Deleted' WHEN -1 then 'Undefined' END CONFIRMSTATUS, ");
+				queryBuilder.append("EMP.INITIATEDBY INITIATEDBY, EMP.CRTON CRTON ");
+				queryBuilder.append("FROM CAMPUS.TUTOR T ");
+				queryBuilder.append("INNER JOIN CAMPUS.EMPLOYMENT EMP ON T.CODE = EMP.TUTOR ");
+				queryBuilder.append("WHERE EMP.COURSEPROVIDER =  ? AND EMP.CONFIRMATIONSTATUS IN (" + status + ") ORDER BY EMP.CRTON DESC");
+					
+				conn = ConnectionManager.getConnection();						
+				stmt = conn.prepareStatement(queryBuilder.toString());			
+				
+				stmt.setString(1, courseProviderCode[0]);
+				
+				rs = stmt.executeQuery();
+	
+				while (rs.next()) {
+					final ArrayList<String> singleEmploymentTutorsList = new ArrayList<String>();		
+													
+					singleEmploymentTutorsList.add(rs.getString("TUTORCODE"));
+					singleEmploymentTutorsList.add(rs.getString("NAME"));
+					singleEmploymentTutorsList.add(rs.getString("GENDER"));
+					singleEmploymentTutorsList.add(rs.getString("EMAIL"));
+					singleEmploymentTutorsList.add(rs.getString("LANDNUMBER"));
+					singleEmploymentTutorsList.add(rs.getString("MOBILENUMBER"));
+					singleEmploymentTutorsList.add(rs.getString("EMPCODE"));
+					singleEmploymentTutorsList.add(rs.getString("CONFIRMSTATUS"));
+					singleEmploymentTutorsList.add(rs.getString("CPCODE"));
+					singleEmploymentTutorsList.add(rs.getString("INITIATEDBY"));
+					singleEmploymentTutorsList.add(rs.getString("CRTON"));
+	
+					allEmploymentTutorsList.add(singleEmploymentTutorsList);
+				}		
 			}
-			
-			rs = stmt.executeQuery();
-
-			while (rs.next()) {
-				final ArrayList<String> singleEmploymentTutorsList = new ArrayList<String>();		
-												
-				singleEmploymentTutorsList.add(rs.getString("TUTORCODE"));
-				singleEmploymentTutorsList.add(rs.getString("NAME"));
-				singleEmploymentTutorsList.add(rs.getString("GENDER"));
-				singleEmploymentTutorsList.add(rs.getString("EMAIL"));
-				singleEmploymentTutorsList.add(rs.getString("LANDNUMBER"));
-				singleEmploymentTutorsList.add(rs.getString("MOBILENUMBER"));
-				singleEmploymentTutorsList.add(rs.getString("EMPCODE"));
-				singleEmploymentTutorsList.add(rs.getString("CONFIRMSTATUS"));
-				singleEmploymentTutorsList.add(rs.getString("CPCODE"));
-				singleEmploymentTutorsList.add(rs.getString("INITIATEDBY"));
-				singleEmploymentTutorsList.add(rs.getString("CRTON"));
-
-				allEmploymentTutorsList.add(singleEmploymentTutorsList);
-			}		
 		} catch (SQLException sqlException) {
 			log.info("getTutorsListOfCourseprovider(): SQLException " + sqlException.toString());
 			throw sqlException;
