@@ -8,6 +8,7 @@ package com.genesiis.campus.command;
 //20170425 CW c159-courseprovider-accept-tutor-request-cw add applicationStatusMap errors fixing
 //20170426 CW c159-courseprovider-accept-tutor-request-cw unit testing & applicationStatusMap data filling error fixing
 //20170427 CW c159-courseprovider-accept-tutor-request-cw modified the values sending into applicationStatusMap
+//20170429 CW c159-courseprovider-accept-tutor-request-cw set parameters into getTutorsListOfCourseprovider method
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -49,9 +50,10 @@ public class CmdListTutorsForCourseProviders implements ICommand  {
 			String courseProviderCode = helper.getParameter("cpCode");
 			if(Validator.isNotEmpty(courseProviderCode)){
 				
-				final TutorDAO tutorsForCP = new TutorDAO();				
-				Collection<Collection<String>> allEmploymentTutorsList = tutorsForCP.getTutorsListOfCourseprovider(courseProviderCode);
+				final TutorDAO tutorsForCP = new TutorDAO();							
 				
+				Collection<Collection<String>> allEmploymentTutorsList = tutorsForCP.getTutorsListOfCourseprovider(courseProviderCode, 
+						String.valueOf(ApplicationStatus.ACTIVE.getStatusValue()), String.valueOf(ApplicationStatus.PENDING.getStatusValue()));				
 
 				HashMap<Integer, String> applicationStatusMap = new HashMap<Integer, String>();
 				
