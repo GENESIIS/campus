@@ -18,6 +18,7 @@ package com.genesiis.campus.entity;
 //20170420 CW c159-courseprovider-accept-tutor-request-cw Add getTutorsListOfCourseprovider method
 //20170421 CW c159-courseprovider-accept-tutor-request-cw modify getTutorsListOfCourseprovider method query & add fields into the list
 //20170421 CW c159-courseprovider-accept-tutor-request-cw removed getTutorsListOfCourseprovider method
+//20170501 CW c159-courseprovider-accept-tutor-request-cw log message changed into info from error in getFCPListForTutorToSelect
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -339,10 +340,10 @@ public class FeaturedCourseProviderDAO implements ICrud {
 				allFeaturedCourseProviderList.add(singleFeaturedCourseProviderList);
 			}		
 		} catch (SQLException sqlException) {
-			log.info("getFCPListForTutorToSelect(): SQLException " + sqlException.toString());
+			log.error("getFCPListForTutorToSelect(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getFCPListForTutorToSelect(): Exception " + e.toString());
+			log.error("getFCPListForTutorToSelect(): Exception " + e.toString());
 			throw e;
 		} finally {			
 			DaoHelper.cleanup(conn, stmt, rs);
