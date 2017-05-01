@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 // 20170427 CW c159-courseprovider-accept-tutor-request-cw completed update(Object object) method implementations
 						//modify verificationstatus to confirmationStatus
 // 20170428 CW c159-courseprovider-accept-tutor-request-cw modified the query in update(Object object) method
+//20170501 CW c159-courseprovider-accept-tutor-request-cw remove commented lines
 
 import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
 import com.genesiis.campus.entity.model.Employment;
@@ -96,7 +97,6 @@ public class EmploymentDAO implements ICrud {
 				
 				ps.setInt(1, emp.getConfirmationStatus());
 				ps.setString(2, emp.getModby());			
-				//ps.setDate(3, emp.getModon());			
 				ps.setInt(3, emp.getCode());
 				
 			    ps.addBatch();
