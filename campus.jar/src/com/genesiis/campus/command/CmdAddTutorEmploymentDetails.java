@@ -17,6 +17,7 @@ package com.genesiis.campus.command;
 //20170420 CW c158-send-email-tutor-employment-confirmation-cw modified sendTutorEmploymentConfirmEmailmethod call & add sendTutorEmploymentConfirmEmail as a parameter
 				//add gender into getListOfEmailToSendEmploymentRequest method
 //20170428 CW c159-courseprovider-accept-tutor-request-cw modify verificationstatus to confirmationStatus in setEmploymentDetails method
+//20170501 CW c159-courseprovider-accept-tutor-request-cw add user created from session in execute method & pass it into setEmploymentDetails method
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -62,9 +63,14 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 			String employerCode = helper.getParameter("employerDetails");			
 			
 			if(Validator.isNotEmpty(employerCode) && !employerCode.equals("-1")){// employer code is selected
-				if(Validator.isNotEmpty(tutorCode)){
+				if(Validator.isNotEmpty(tutorCode)){					
+
+					String crtUser = (String) helper.getSession(true).getAttribute("user");
+					if(crtUser == null){
+						crtUser = "";
+					}					
 					
-					Employment employmentDetails = setEmploymentDetails(tutorCode, employerCode);		
+					Employment employmentDetails = setEmploymentDetails(tutorCode, employerCode, crtUser);		
 					EmploymentDAO addEmployment = new EmploymentDAO();
 					status = addEmployment.add(employmentDetails);					
 				}
@@ -135,13 +141,13 @@ public class CmdAddTutorEmploymentDetails implements ICommand {
 	 * @param employerCode
 	 * @return Employment object
 	 */
-	private Employment setEmploymentDetails(String tutorCode, String employerCode){
+	private Employment setEmploymentDetails(String tutorCode, String employerCode, String crtUser){
 		
 		Employment employment = new Employment();
 		
 		if(tutorCode != null && employerCode != null){
-			employment.setConfirmationStatus(ApplicationStatus.PENDING.getStatusValue()); // initially employer verification status is pending
-			employment.setCrtby("chinthaka");
+			employment.setConfirmationStatus(ApplicationStatus.PENDING.getStatusValue()); // initially employer verification status is pending			
+			employment.setCrtby(crtUser);
 			employment.setModby("-");
 			employment.setTutor(Integer.parseInt(tutorCode));
 			employment.setCourseprovider(Integer.parseInt(employerCode));
