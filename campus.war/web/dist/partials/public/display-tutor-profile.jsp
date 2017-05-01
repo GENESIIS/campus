@@ -90,10 +90,10 @@
 					</div>
 					<div class="contact-list col-xs-12">
 						<div class="row">
-							<div class="tel col-md-3 col-sm-6 col-xs-12 clearfix" id="landPhoneNumber"><i class="fa fa-phone" aria-hidden="true"></i></div>
-							<div class="mobile col-md-3 col-sm-6 col-xs-12 clearfix" id="mobilePhoneNubmer"><i class="fa fa-mobile-phone" aria-hidden="true"></i></div>
-							<div class="email col-md-4 col-sm-6 col-xs-12 clearfix"><i class="fa fa-envelope-o" aria-hidden="true"></i> <a href="mailto:" id="email"></a></div>
-							<div class="web col-md-2 col-sm-6 col-xs-12 clearfix"><i class="fa fa-globe" aria-hidden="true"></i> <a href="javascript:" target="_blank"  id="webLink"></a></div>
+							<div class="tel col-md-3 col-sm-6 col-xs-12 clearfix" id="landPhoneNumber" alt="Land Phone number"><i class="fa fa-phone" aria-hidden="true"></i></div>
+							<div class="mobile col-md-3 col-sm-6 col-xs-12 clearfix" id="mobilePhoneNubmer" alt="Mobile phone nubmer"><i class="fa fa-mobile-phone" aria-hidden="true"></i></div>
+							<div class="email col-md-4 col-sm-6 col-xs-12 clearfix"><i class="fa fa-envelope-o" aria-hidden="true" alt="mail to"></i> <a href="mailto:" id="email"></a></div>
+							<div class="web col-md-2 col-sm-6 col-xs-12 clearfix"><i class="fa fa-globe" aria-hidden="true" alt="web site"></i> <a href="javascript:" target="_blank"  id="webLink"></a></div>
 						</div>
 					</div>
 				</div>						
