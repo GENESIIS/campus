@@ -3,6 +3,8 @@
  * 20170428 JH c135-public-display-tutor-profile get tutor details from the back end, added String decoder methods to get the string tutor code, 
  * 				loadTutor() method coding to display profile details wip, display social media details, added methods to redirect back to the tutor
  * 				list page if tutor records are empty or user tries to enter the profile url manually
+ * 20170502 JH c135-public-display-tutor-profile fixed default image error, handled empty values in social media information and check optional 
+ * 				address lines before concatenating them into a final string
  */
 
 $( document ).ready(function() {
@@ -42,23 +44,71 @@ function loadTutor(code){
 					 var tutorImagePath = fileSeperator + imagePath + fileSeperator + tutorRecord[0] + fileSeperator + tutorRecord[0] + imageExtension;
 					 var defaultImagePath = fileSeperator + imagePath + fileSeperator + defaultImage + imageExtension;
 					 var fullName = tutorRecord[3] + " " +  tutorRecord[4] + " " + tutorRecord[5];
-					 var address = tutorRecord[24] + ", " + tutorRecord[25] + ", " + tutorRecord[26];
+					 var address = tutorRecord[24]
+					 if(tutorRecord[25] !== ""){
+						 address += ", " + tutorRecord[25] ;
+					 }
+					 if(tutorRecord[26] != "" ){
+						 address += ", " + tutorRecord[26] ;
+					 }
+					 
 					 var landNumber = "+" + tutorRecord[8] + " " + tutorRecord[9] + " " + tutorRecord[10];
 					 var mobileNumber = "+" + tutorRecord[8] + " " + tutorRecord[11] + " " + tutorRecord[12];
 					 var email = "mailto:" + tutorRecord[7] + "?Subject=Contact%20Tutor%20Page%20@campus.lk";
 					 
 					 $('#tutorImage').attr("src", tutorImagePath);
-					 $('#tutorImage').attr("onerror", "this.src = \'' + defaultImagePath + '\'");
+					 $('#tutorImage').attr("onerror", 'this.src =\'' + defaultImagePath +'\' ');
 					 $('#fullName').text(fullName);
 					 $('#list-breadcrumb-item').text(fullName);
 					 $('#address').text(address);
-					 $('#facebookURL').attr({'href' : tutorRecord[16], 'title' : tutorRecord[16] });
+					 if(tutorRecord[16] !== null || tutorRecord[16] !== ""){
+						 $('#facebookURL').attr({'href' : tutorRecord[16], 'title' : tutorRecord[16] });
+					 }
+					 if(tutorRecord[16] === null || tutorRecord[16] === ""){
+						 $('#facebookURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+					 }
+					 
+					 if(tutorRecord[17] !== null || tutorRecord[17] !== ""){
 					 $('#twitterURL').attr({'href' : tutorRecord[17], 'title' : tutorRecord[17]});
+					 }
+					 if(tutorRecord[17] === null || tutorRecord[17] === ""){
+						 $('#twitterURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+					 }
+					 
+					 if(tutorRecord[19] !== null || tutorRecord[19] !== ""){
 					 $('#linkedinURL').attr({'href' : tutorRecord[19], 'title' : tutorRecord[19]});
+					 }
+					 if(tutorRecord[19] === null || tutorRecord[19] === ""){
+						 $('#linkedinURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+					 }
+					 
+					 if(tutorRecord[20] !== null || tutorRecord[20] !== ""){
 					 $('#instagramURL').attr( {'href' : tutorRecord[20], 'title' : tutorRecord[20]});
+					 }
+					 if(tutorRecord[20] === null || tutorRecord[20] === ""){
+						 $('#instagramURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+					 }
+					 
+					 if(tutorRecord[21] !== null || tutorRecord[21] !== ""){
 					 $('#whatsappNumber').attr('title', tutorRecord[21]);
+					 }
+					 if(tutorRecord[21] === null || tutorRecord[21] === ""){
+						 $('#whatsappNumber').attr({'href' : 'javascript:', 'title' : 'No data' });
+					 }
+					 
+					 if(tutorRecord[22] !== null || tutorRecord[22] !== ""){
 					 $('#viberNumber').attr('title', tutorRecord[22]);
+					 }
+					 if(tutorRecord[22] === null || tutorRecord[22] === ""){
+						 $('#viberNumber').attr({'href' : 'javascript:', 'title' : 'No data' });
+					 }
+					 
+					 if(tutorRecord[18] !== null || tutorRecord[18] !== ""){
 					 $('#myspaceURL').attr({'href' : tutorRecord[18], 'title' : tutorRecord[18]});
+					 }
+					 if(tutorRecord[18] === null || tutorRecord[18] === ""){
+						 $('#myspaceURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+					 }
 					 $('#landPhoneNumber').text(landNumber);
 					 $('#mobilePhoneNubmer').text(mobileNumber);
 					 $('#email').text(tutorRecord[7]);
