@@ -47,6 +47,7 @@ package com.genesiis.campus.entity;
 					// create status value from String ...courseProviderCode
 //20170429 CW c159-courseprovider-accept-tutor-request-cw fixing the errors creating the status value in getTutorsListOfCourseprovider method
 //20170429 CW c159-courseprovider-accept-tutor-request-cw fixing the errors creating the status value in getTutorsListOfCourseprovider method
+//20170501 CW c159-courseprovider-accept-tutor-request-cw log message changed into info from error in getFCPListForTutorToSelect
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -269,10 +270,10 @@ public class TutorDAO implements ICrud {
 			log.error("findById(): ClassCastException " + cce.toString());
 			throw cce;
 		} catch (SQLException sqlException) {
-			log.info("findById(): SQLException " + sqlException.toString());
+			log.error("findById(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(): Exception " + e.toString());
+			log.error("findById(): Exception " + e.toString());
 			throw e;
 		} finally {			
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -338,10 +339,10 @@ public class TutorDAO implements ICrud {
 				}
 			}
 		} catch (SQLException sqlException) {
-			log.info("validateUsernameEmailFields(): SQLException " + sqlException.toString());
+			log.error("validateUsernameEmailFields(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("validateUsernameEmailFields(): Exception " + e.toString());
+			log.error("validateUsernameEmailFields(): Exception " + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
