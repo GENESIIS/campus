@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20170427 CW c159-courseprovider-accept-tutor-request-cw refactor the name of the class into CmdSaveEmploymentStatusCP
 //20170428 CW c159-courseprovider-accept-tutor-request-cw modified execute method to update data, view message & view final tutor list
 //20170428 CW c159-courseprovider-accept-tutor-request-cw remove commented lines
+//20170501 CW c159-courseprovider-accept-tutor-request-cw clean the code by removing commented lines & info log messages 
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -35,10 +36,7 @@ public class CmdSaveEmploymentStatusCP implements ICommand {
 		try {
 			
 			String maxSequence = helper.getParameter("maxSequence");
-			String approveList = "";
-			String rejcetList = "";
 			int maxIndex = 0;
-			boolean bothSelected = false;
 			
 			List<Employment> employmentCollection = new ArrayList<Employment>();
 
@@ -48,10 +46,7 @@ public class CmdSaveEmploymentStatusCP implements ICommand {
 				for(int i = 1; i <= maxIndex+1; i++){
 					
 					String list = "confirmationStatus" + i;
-					String empCode = "employmentCode" + i;
-					
-					log.info(list + " " + helper.getParameter(list));
-					log.info(empCode + " " + helper.getParameter(empCode));			
+					String empCode = "employmentCode" + i;		
 					
 					String modUser = (String) helper.getSession(true).getAttribute("user");
 					
@@ -83,7 +78,6 @@ public class CmdSaveEmploymentStatusCP implements ICommand {
 				
 				String cpCode = helper.getParameter("cpCode");
 				if(cpCode == ""){
-					log.info("courseprovidercode = "+helper.getParameter("courseprovidercode"));
 					cpCode =  helper.getParameter("courseprovidercode");
 				}
 				
