@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 
 //20170428 DJ c145-add-enhanced-programme-MP-dj Initiate CmdHandleModuleDetails.java
+//20170428 DJ c145-add-enhanced-programme-MP-dj manageModuleInsertion()-modify method and command 'ADD_MODULE_DETAILS'.
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.ProgrammeICrud;
@@ -29,7 +30,7 @@ public class CmdHandleModuleDetails implements ICommand {
 			Exception {
 		String ccoString = helper.getParameter("CCO");
 		try {
-			if ("ADD_SEMESTER_DETAILS".equalsIgnoreCase(ccoString)) {
+			if ("ADD_MODULE_DETAILS".equalsIgnoreCase(ccoString)) {
 				manageModuleInsertion(helper, iView);
 			}
 		} catch (Exception exception) {
@@ -39,11 +40,13 @@ public class CmdHandleModuleDetails implements ICommand {
 		return iView;
 	}
 
+	
 	/** Manage form data(input values) for database insertion.
 	 * @author DJ dumani
 	 * @param helper 	  
 	 * @param iView 
 	 */	
+	
 	private void manageModuleInsertion(IDataHelper helper, IView iView) throws Exception{
 		final ProgrammeICrud programmeDAO = new ProgrammeDAOImpl();
 		// boolean isOkToSave = FormValidator.validateModuleDetails(helper);
@@ -66,7 +69,8 @@ public class CmdHandleModuleDetails implements ICommand {
 			moduleDTO.setCrtBy("DJ");
 			moduleDTO.setCrtOn(new Date());
 			moduleDTO.setSemester(moduleCode);
-			moduleDTO.setTutor(i);
+			moduleDTO.setTutorCode(3);
+			moduleDTO.setIsTutorRelated(i);
 			moduleList.add(moduleDTO);
 		}
 

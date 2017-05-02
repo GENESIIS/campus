@@ -1,6 +1,7 @@
 package com.genesiis.campus.entity.model;
 
 //20170428 DJ c145-add-enhanced-programme-MP-dj INT-ModuleDTO.java
+//20170502 DJ c145-add-enhanced-programme-MP-dj add- attribute 'isTutorRelated'. 
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ public class ModuleDTO {
 	private double creditValue;
 	private int compulsoryStatus;
 	private String tutoredBy;
+	private int isTutorRelated;
 	private int isActive;
 	private Date crtOn;
 	private String crtBy;
@@ -62,6 +64,13 @@ public class ModuleDTO {
 	public void setTutoredBy(String tutoredBy) {
 		this.tutoredBy = tutoredBy;
 	}
+	
+	public int getIsTutorRelated() {
+		return isTutorRelated;
+	}
+	public void setIsTutorRelated(int isTutorRelated) {
+		this.isTutorRelated = isTutorRelated;
+	}
 	public int getIsActive() {
 		return isActive;
 	}
@@ -98,12 +107,11 @@ public class ModuleDTO {
 	public void setSemester(int semester) {
 		this.semester = semester;
 	}
-	public int getTutor() {
+	public int getTutorCode() {
 		return tutorCode;
 	}
-	public void setTutor(int tutor) {
-		this.tutorCode = tutor;
+	public void setTutorCode(int tutorCode) {
+		this.tutorCode = tutorCode;
 	}
-	
 	
 }

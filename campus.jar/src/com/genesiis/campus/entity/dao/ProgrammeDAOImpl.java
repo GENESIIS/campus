@@ -10,6 +10,7 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Insert semester details as a batch update.
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Initiated addModuleDetails() method.
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Implement addModuleDetails() method, sql implementation .
+//DJ 20170428 c145-add-enhanced-programme-MP-dj addModuleDetails()-get input parameter values for module insertion.
 
 import com.genesiis.campus.entity.ProgrammeICrud;
 import com.genesiis.campus.entity.model.ModuleDTO;
@@ -444,6 +445,14 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 		}
 		return successCount;
 	}
+	
+	
+	/**
+	 *Insertion of module details to application.Implementation done as a batch update.	 
+	 * @author DJ
+	 * @param moduleList   ArrayList of ModuleDTO
+	 * @return int[] 
+	 */
 
 	@Override
 	public int[] addModuleDetails(ArrayList<ModuleDTO> moduleList)throws SQLException, Exception {
@@ -455,10 +464,26 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			conn = ConnectionManager.getConnection();
 
 			StringBuilder sb = new StringBuilder("INSERT INTO [CAMPUS].[MODULE] ([NAME] ,[DESCRIPTION],[INTERNALCODEOFMODULE] ,[CREDITVALUE] ,[COMPULSORYSTATUS],[TUTOREDBY] ,[SEMESTER] ,[ISTUTORRELATED],[TUTOR] ,[ISACTIVE],[CRTON] ,[CRTBY])");
-			sb.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?,)");
+			sb.append(" VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 			stmt = conn.prepareStatement(sb.toString());
-
+			
+			for(ModuleDTO moduleDTO:moduleList){
+				stmt.setString(1,moduleDTO.getName());
+				stmt.setString(2,moduleDTO.getDescription());	
+				stmt.setString(3,moduleDTO.getInternalCodeModule());	
+				stmt.setDouble(4,moduleDTO.getCreditValue());	
+				stmt.setInt(5,moduleDTO.getCompulsoryStatus());	
+				stmt.setString(6,moduleDTO.getTutoredBy());	
+				stmt.setInt(7,moduleDTO.getSemester());	
+				stmt.setInt(8,moduleDTO.getIsTutorRelated());	
+				stmt.setInt(9,moduleDTO.getTutorCode());	
+				stmt.setInt(10,moduleDTO.getIsTutorRelated());
+				stmt.setDate(11,new java.sql.Date(moduleDTO.getCrtOn().getTime()));
+				stmt.setString(12,moduleDTO.getCrtBy());
+				stmt.addBatch();
+			}			
 			successCount = stmt.executeBatch();
+			
 		} catch (SQLException sqlException) {
 			log.info("addModuleDetails() sqlException"
 					+ sqlException.toString());
