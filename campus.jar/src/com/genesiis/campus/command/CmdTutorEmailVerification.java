@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 				// modified execute method to send the email with hashcode 
 //20170313 CW c147-tutor-reset-password-cw tutorResetPasswordEmail variable declaration place changed
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw add comments to execute method
+//20170502 CW c149-tutor-email-confirmation-for-password-change-cw emailCollection variable declaration & value assign method
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -40,10 +41,9 @@ public class CmdTutorEmailVerification implements ICommand {
 			if (validEmail) {
 				// If email valid one proceed further
 				ICrud emailVarifyDAO = new TutorEmailVerificationDAO();
-				Collection<Collection<String>> emailCollection = new ArrayList<Collection<String>>();
 				
 				//get the details of the tutor for the given email address
-				emailCollection = emailVarifyDAO.findById(tutor);
+				Collection<Collection<String>> emailCollection = emailVarifyDAO.findById(tutor);				
 
 				for (Collection<String> collection : emailCollection) {
 					if(collection != null && !collection.isEmpty()){
