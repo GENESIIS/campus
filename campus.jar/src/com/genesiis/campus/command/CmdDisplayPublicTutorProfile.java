@@ -2,6 +2,7 @@ package com.genesiis.campus.command;
 
 //20170424 JH c135-public-display-tutor-profile INIT CmdDisplayPublicTutorProfile.java
 //20170427 JH c135-public-display-tutor-profile created getTutorDetails() method to get tutor basic details from the tutor collection 
+//20170502 JH c135-public-display-tutor-profile added doc comments 
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -19,6 +20,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * CmdDisplayPublicTutorProfile class used to get public tutor profile details. All the details required to display 
+ * in the tutor profile for public will be listed here. In this stage it will return only the tutor basic details (contact 
+ * details and social media details). 
+ * @author JH
+ *
+ */
 public class CmdDisplayPublicTutorProfile implements ICommand{
 	
 	static Logger log = Logger.getLogger(CmdDisplayPublicTutorProfile.class.getName());
@@ -59,7 +67,15 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 	}
 	
 	
-	
+	/**
+	 * getTutorDetails() method used to separate different information requirements under different categories of the 
+	 * same tutor. In this stage, only the tutor basic details are extracted from the initial tutor collection. 
+	 * But in future development this method will be changed to 
+	 * extract tutor employment, qualification, experience and etc details.
+	 * 
+	 * @param tutorCollection
+	 * @return String collection of tutor details
+	 */
 	public static Collection<String> getTutorDetails(Collection<Collection<String>> tutorCollection){
 		
 		Iterator tutorIterator = tutorCollection.iterator();
