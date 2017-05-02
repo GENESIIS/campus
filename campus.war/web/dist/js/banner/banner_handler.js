@@ -45,6 +45,12 @@
  * 				banner-view-stat-update request each time a banner gets assigned the banner-shown class  			
  * 20170428 MM c128-display-banners-record-viewcount-front-end - Modified timer-related code to determine 
  * 				if an element is within view-port before view-stat-update request is sent; debugging is WIP		
+ * 20170429 MM c128-display-banners-record-viewcount-front-end - Re-arranged code that sets timers for  
+ * 				banner-rotation (into setBannerRotationTimes function) and binds events to banner images 
+ * 				(into bindEventsToBanners function) to better organise code; added condition
+ * 				to new setBannerRotationTimes() to only proceed with processing only if banners are there 
+ * 				for a slot 
+ * 				 		
  */
 
 // Hack to enable parameter passing for setInterval() method in IE9 and below
@@ -62,57 +68,6 @@
 /* WARNING: BANNER HANDLER CODE WILL NOT WORK WITH JQUERY 3.1.1. DISABLE IT ON PAGES WHERE BANNERS APPEAR 
  * THIS CODE PRODUCED EXPECTED BEHAVIOUR WITH JQUERY v2.2.2
  * */
-
-//// Banner-rotation code 
-//var bannerSlotWrappers = $('.banner-wrapper');
-//var bannerSlotTimers = [];
-//
-//bannerSlotWrappers.each(function(index){
-//	bannerSlotTimers.push(function (slotIndex) {
-//		var shownBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
-//		var t1 = shownBanner.data('timeout');      
-//		
-//		setTimeout(function () {
-//			var activeBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
-//			activeBanner.removeClass('banner-shown');
-//			var anchor = activeBanner.parent().next();
-//			var nextBanner = null;
-//			if (anchor.length == 0) {
-//				nextBanner = activeBanner.parents('div.banner-wrapper').children('a').first().children('img');
-//			} else {
-//				nextBanner = anchor.children('img');
-//			}
-//			nextBanner.addClass('banner-shown');
-//			
-//			var shownBannerCode = nextBanner.attr('data-banner-code');
-//			
-//			if (nextBanner.length < 1) {
-//				alert("nextBanner is null");
-//			}
-//			
-//			// Send the banner-view-stat-update request only if banner-slot is in view 
-//		    var top_of_element = nextBanner.offset().top;
-//		    var bottom_of_element = nextBanner.offset().top + nextBanner.outerHeight();
-//		    var bottom_of_screen = $(window).scrollTop() + $(window).height();
-//		    var top_of_screen = $(window).scrollTop();
-//
-//		    if((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
-//		        console.log("Element is visible!");
-//		    }
-//		    else {
-//		    	console.log("Element is not visible!");
-//		    }
-////			sendBannerViewStatUpdateRequest(shownBannerCode);
-//			
-//			bannerSlotTimers[slotIndex](slotIndex);
-//		}, t1 * 1000, slotIndex);
-//	});
-//});
-//
-//$.each(bannerSlotTimers, function(index, value) {
-//	value(index);
-//});
-
 
 // Event handler for sending DB add operation upon clicking of a banner
 function sendBannerStatisticsUpdateRequest(banner) { 
@@ -153,26 +108,17 @@ $(document).ready(function() {
 	
 	if (areBannersLoadedWithPage == null || areBannersLoadedWithPage == 'false') {
 		getBanners(setBannersToPageSlots);
-	}	
+	} else {
+		bindEventsToBanners();
+		
+		setBannerRotationTimes();
+	}
+	
+});
 
-	// Bind event handler for click event to banner elements
-	$('.banner').on('click', function(e) {
-		e.preventDefault();
-		var shownBanner = $($(this).parents('.banner-wrapper').find('img.banner-shown').get(0));
-		var url = shownBanner.parents('a').attr('href');
-		sendBannerStatisticsUpdateRequest(shownBanner);
-		window.open(url, '_blank');
-	}); 
-	
-	// Trigger click upon key-down on banner
-	$('.banner').keydown(function(event){ 
-	    var keyCode = (event.keyCode ? event.keyCode : event.which);   
-	    if (keyCode == 13) {
-	        $('.banner').trigger('click');
-	    }
-	});
-	
-	
+// Sets rotations times (for how long each will be visible) to banner images
+function setBannerRotationTimes() {
+
 	// Banner-rotation code 
 	var bannerSlotWrappers = $('.banner-wrapper');
 	var bannerSlotTimers = [];
@@ -180,49 +126,49 @@ $(document).ready(function() {
 	bannerSlotWrappers.each(function(index){
 		bannerSlotTimers.push(function (slotIndex) {
 			var shownBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
-			var t1 = shownBanner.data('timeout');      
-			
-			setTimeout(function () {
-				var activeBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
-				activeBanner.removeClass('banner-shown');
-				var anchor = activeBanner.parent().next();
-				var nextBanner = null;
-				if (anchor.length == 0) {
-					nextBanner = activeBanner.parents('div.banner-wrapper').children('a').first().children('img');
-				} else {
-					nextBanner = anchor.children('img');
-				}
-				nextBanner.addClass('banner-shown');
+			if (shownBanner.length > 0) {
+				var t1 = shownBanner.data('timeout');      
 				
-				if (nextBanner.length > 0) {				
-					// Send the banner-view-stat-update request only if banner-slot is in view 
-				    var top_of_element = nextBanner.offset().top;
-				    var bottom_of_element = nextBanner.offset().top + nextBanner.outerHeight();
-				    var bottom_of_screen = $(window).scrollTop() + $(window).height();
-				    var top_of_screen = $(window).scrollTop();
-	
-				    if((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
-				        console.log("Element is visible!");					
-						var shownBannerCode = nextBanner.attr('data-banner-code');
-						sendBannerViewStatUpdateRequest(shownBannerCode);
-				    }
-				    else {
-				    	console.log("Element is not visible!");
-				    }				    
-				} else {
-					console.log("The reference nextBanner is null!");
-				}
-				
-				bannerSlotTimers[slotIndex](slotIndex);
-			}, t1 * 1000, slotIndex);
+				setTimeout(function () {
+					var activeBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
+					activeBanner.removeClass('banner-shown');
+					var anchor = activeBanner.parent().next();
+					var nextBanner = null;
+					if (anchor.length == 0) {
+						nextBanner = activeBanner.parents('div.banner-wrapper').children('a').first().children('img');
+					} else {
+						nextBanner = anchor.children('img');
+					}
+					nextBanner.addClass('banner-shown');
+					
+					if (nextBanner.length > 0) {				
+						// Send the banner-view-stat-update request only if banner-slot is in view 
+					    var top_of_element = nextBanner.offset().top;
+					    var bottom_of_element = nextBanner.offset().top + nextBanner.outerHeight();
+					    var bottom_of_screen = $(window).scrollTop() + $(window).height();
+					    var top_of_screen = $(window).scrollTop();
+		
+					    if((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
+					        console.log("Element is visible!");					
+							var shownBannerCode = nextBanner.attr('data-banner-code');
+							sendBannerViewStatUpdateRequest(shownBannerCode);
+					    } else {
+					    	console.log("Element is not visible. Not sending banner-rotation-view request");
+					    }				    
+					} else {
+						console.log("The reference nextBanner is null!");
+					}
+					
+					bannerSlotTimers[slotIndex](slotIndex);
+				}, t1 * 1000, slotIndex);
+			}
 		});
 	});
 
 	$.each(bannerSlotTimers, function(index, value) {
 		value(index);
 	});
-	
-});
+}
 
 // Send banner-view-stat update request
 function sendBannerViewStatUpdateRequest(bannerCode) {	
@@ -300,6 +246,13 @@ function setBannersToPageSlots(response) {
 		$(this).html(pageSlotHtml);
 	});
 
+	bindEventsToBanners();
+	
+	setBannerRotationTimes();
+}
+
+// Binds various handlers for multiple events of banner images
+function bindEventsToBanners() {
 	// Bind event handler for click event to banner elements
 	$('.banner').on('click', function(e) {
 		e.preventDefault();
