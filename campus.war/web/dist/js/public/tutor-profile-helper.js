@@ -18,6 +18,11 @@ $( document ).ready(function() {
 	    $('[data-toggle="tooltip"]').tooltip(); 
 });
 
+/**
+ * Load tutor profile details. This will pass the tutor code to the back end and 
+ * get the profile details. 
+ * @param code
+ */
 function loadTutor(code){
 	
 	
@@ -65,49 +70,49 @@ function loadTutor(code){
 						 $('#facebookURL').attr({'href' : tutorRecord[16], 'title' : tutorRecord[16] });
 					 }
 					 if(tutorRecord[16] === null || tutorRecord[16] === ""){
-						 $('#facebookURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+						 $('#facebookURL').attr({'href' : 'javascript:', 'title' : 'Details not shared' });
 					 }
 					 
 					 if(tutorRecord[17] !== null || tutorRecord[17] !== ""){
 					 $('#twitterURL').attr({'href' : tutorRecord[17], 'title' : tutorRecord[17]});
 					 }
 					 if(tutorRecord[17] === null || tutorRecord[17] === ""){
-						 $('#twitterURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+						 $('#twitterURL').attr({'href' : 'javascript:', 'title' : 'Details not shared' });
 					 }
 					 
 					 if(tutorRecord[19] !== null || tutorRecord[19] !== ""){
 					 $('#linkedinURL').attr({'href' : tutorRecord[19], 'title' : tutorRecord[19]});
 					 }
 					 if(tutorRecord[19] === null || tutorRecord[19] === ""){
-						 $('#linkedinURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+						 $('#linkedinURL').attr({'href' : 'javascript:', 'title' : 'Details not shared' });
 					 }
 					 
 					 if(tutorRecord[20] !== null || tutorRecord[20] !== ""){
 					 $('#instagramURL').attr( {'href' : tutorRecord[20], 'title' : tutorRecord[20]});
 					 }
 					 if(tutorRecord[20] === null || tutorRecord[20] === ""){
-						 $('#instagramURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+						 $('#instagramURL').attr({'href' : 'javascript:', 'title' : 'Details not shared' });
 					 }
 					 
 					 if(tutorRecord[21] !== null || tutorRecord[21] !== ""){
 					 $('#whatsappNumber').attr('title', tutorRecord[21]);
 					 }
 					 if(tutorRecord[21] === null || tutorRecord[21] === ""){
-						 $('#whatsappNumber').attr({'href' : 'javascript:', 'title' : 'No data' });
+						 $('#whatsappNumber').attr({'href' : 'javascript:', 'title' : 'Details not shared' });
 					 }
 					 
 					 if(tutorRecord[22] !== null || tutorRecord[22] !== ""){
 					 $('#viberNumber').attr('title', tutorRecord[22]);
 					 }
 					 if(tutorRecord[22] === null || tutorRecord[22] === ""){
-						 $('#viberNumber').attr({'href' : 'javascript:', 'title' : 'No data' });
+						 $('#viberNumber').attr({'href' : 'javascript:', 'title' : 'Details not shared' });
 					 }
 					 
 					 if(tutorRecord[18] !== null || tutorRecord[18] !== ""){
 					 $('#myspaceURL').attr({'href' : tutorRecord[18], 'title' : tutorRecord[18]});
 					 }
 					 if(tutorRecord[18] === null || tutorRecord[18] === ""){
-						 $('#myspaceURL').attr({'href' : 'javascript:', 'title' : 'No data' });
+						 $('#myspaceURL').attr({'href' : 'javascript:', 'title' : 'Details not shared' });
 					 }
 					 $('#landPhoneNumber').text(landNumber);
 					 $('#mobilePhoneNubmer').text(mobileNumber);
