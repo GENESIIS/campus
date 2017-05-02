@@ -8,9 +8,9 @@ package com.genesiis.campus.command;
 //20170223 CW c36-add-tutor-information re-organise the import statements. 
 //20170307 CW c147-tutor-reset-password-cw Class copied from c37-tutor-update-tutor-profile-cw.
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw modified the declaration of the variable tutorEmail
+//20170502 CW c149-tutor-email-confirmation-for-password-change-cw remove un wanted spaces from import statements
 
 import com.genesiis.campus.entity.ICrud;
-
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorEmailDAO;
 import com.genesiis.campus.entity.model.Tutor;
