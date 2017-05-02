@@ -1,18 +1,15 @@
 package com.genesiis.campus.entity;
 
-//20170117 JH c133-admin-list-tutors added TutorDAO.java and coding 
-//20170117 JH c133-admin-list-tutors getAll() method coding
-//20170124 JH c133-admin-list-tutors getAll() query modified
-//20170126 JH c133-admin-list-tutors getALL() concatenate name and phone numbers into one parameter
-//20170130 JH c133-admin-list-tutors getAll(): removed the combined columns back to separate array attributes
+//20170130 JH c134-admin-list-new-tutor-requests INIT TutorRequestsDAO.java
+//20170130 JH c134-admin-list-new-tutor-requests findById() method coding 
 //20170202 JH c134-admin-list-new-tutor-requests arranged imports according to the style guide document
-//20170203 JH c133-admin-list-tutors arranged imports according to the style guide
-//20170203 JH c133-admin-list-tutors removed 'TOP 1000' constraint from getAll() method query string 
-//20170206 JH c133-admin-list-tutors replaced String with String Builder implementation to create the query
 //20170315 JH c134-admin-list-new-tutor-requests added doc comments
+//20170425 JH c134-admin-list-new-tutor-requests moved findById() method implementation to getAll() method as it will list all the new tutor requests,
+//				getAll() query updated to check tutor status in the query  
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
+import com.genesiis.campus.validation.ApplicationStatus;
 
 import org.apache.log4j.Logger;
 
@@ -23,14 +20,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class TutorDAO implements ICrud {
-
-	static Logger log = Logger.getLogger(TutorDAO.class.getName());
+/**
+ * TutorRequestsDAO handles database requests related to new tutor requests. 
+ * This request is created when a tutor creates a new account.
+ * 
+ * @author JH
+ *
+ */
+public class TutorRequestsDAO implements ICrud{
+	static Logger log = Logger.getLogger(TutorRequestsDAO.class.getName());
 
 	@Override
 	public int add(Object object) throws SQLException, Exception {
 		// TODO Auto-generated method stub
-				return 0;
+		return 0;
 	}
 
 	@Override
@@ -53,21 +56,19 @@ public class TutorDAO implements ICrud {
 	}
 
 	/**
-	 * getAll() method will list all tutor records in the TUTOR table. The tutor status is
-	 * not considered in the query. Therefore status values will have all of possible 
-	 * statuses (including active, inactive, pending and etc)
-	 * 
-	 * @return Collection
+	 * getAll method lists all new tutor requests. TUTORSTATUS value for the query 
+	 * is passed as the object value using the ApplicationStatus enum ( the value for the PENDING status ). 
+	 * @param Object
+	 * @return new tutor request collection
 	 * @author JH
+	 * @exception SQLException, Exception
 	 */
 	@Override
-	public Collection<Collection<String>> getAll() throws SQLException,
-			Exception {
-
-		final String query = "SELECT TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE, LANDPHONENUMBER, MOBILEPHONENETWORKCODE, "
-				+ "MOBILEPHONENUMBER, ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3, TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY,"
-				+ " TUTORSTATUS FROM [CAMPUS].[TUTOR] INNER JOIN [CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) ORDER BY TUTOR.CODE DESC";
-
+	public Collection<Collection<String>> getAll()
+			throws SQLException, Exception {
+		final String query = "SELECT TUTOR.CODE, USERNAME, FIRSTNAME, MIDDLENAME, LASTNAME, EMAIL, LANDPHONEAREACODE, LANDPHONENUMBER, MOBILEPHONENETWORKCODE, MOBILEPHONENUMBER, "
+				+ " ISAPPROVED, ADDRESS1, ADDRESS2, ADDRESS3, TOWN.NAME as TOWNNAME, COUNTRY2.DIALCODE as DIALCODE, COUNTRY2.NAME as COUNTRY, TUTORSTATUS FROM [CAMPUS].[TUTOR] INNER JOIN "
+				+ "[CAMPUS].TOWN ON TUTOR.TOWN = TOWN.CODE INNER JOIN [CAMPUS].[COUNTRY2] ON TUTOR.LANDPHONECOUNTRYCODE = COUNTRY2.CODE AND COUNTRY2.CODE NOT IN (-1) WHERE ISAPPROVED = ? AND TUTORSTATUS = ? ORDER BY TUTOR.CODE DESC ";
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
 		Connection conn = null;
@@ -75,7 +76,10 @@ public class TutorDAO implements ICrud {
 		
 		try{
 			conn = ConnectionManager.getConnection();
-			preparedStatement = conn.prepareStatement(query.toString());
+			preparedStatement = conn.prepareStatement(query);
+			
+			preparedStatement.setInt(1, ApplicationStatus.PENDING.getStatusValue());
+			preparedStatement.setInt(2, ApplicationStatus.INACTIVE.getStatusValue());
 			
 			rs = preparedStatement.executeQuery();
 			
@@ -138,5 +142,7 @@ public class TutorDAO implements ICrud {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 }

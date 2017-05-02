@@ -11,6 +11,8 @@ package com.genesiis.campus.validation;
 
 import com.genesiis.campus.util.IDataHelper;
 
+import com.genesiis.campus.util.IDataHelper;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;

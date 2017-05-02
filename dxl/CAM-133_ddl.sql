@@ -1,6 +1,10 @@
+/*
+* 20170427 JH c134-admin-list-new-tutor-requests-MP-jh updated create table query, added scripts to update ISAPPROVED column, changed default values for ISAPPROVED and TUTORSTATUS columns
+*/
+
 
 -- ------------------------------------------------------------------
--- To create the latest TUTOR tableUSE [xeno-4]
+-- To create the latest TUTOR table
 -- ------------------------------------------------------------------
 
 GO
@@ -40,7 +44,7 @@ CREATE TABLE [CAMPUS].[TUTOR](
 	[INSTAGRAMURL] [varchar](100) NOT NULL,
 	[VIBERNUMBER] [varchar](20) NOT NULL,
 	[WHATSAPPNUMBER] [varchar](20) NOT NULL,
-	[ISAPPROVED] [bit] NOT NULL,
+	[ISAPPROVED] [int] NOT NULL,
 	[ADDRESS1] [varchar](50) NULL,
 	[ADDRESS2] [varchar](50) NULL,
 	[ADDRESS3] [varchar](50) NULL,
@@ -131,7 +135,7 @@ GO
 ALTER TABLE [CAMPUS].[TUTOR] ADD  CONSTRAINT [DF_TUTOR_WHATSAPPNUMBER]  DEFAULT ('') FOR [WHATSAPPNUMBER]
 GO
 
-ALTER TABLE [CAMPUS].[TUTOR] ADD  CONSTRAINT [DF_TUTOR_ISAPPROVED]  DEFAULT ((0)) FOR [ISAPPROVED]
+ALTER TABLE [CAMPUS].[TUTOR] ADD  CONSTRAINT [DF_TUTOR_ISAPPROVED]  DEFAULT ((2)) FOR [ISAPPROVED]
 GO
 
 ALTER TABLE [CAMPUS].[TUTOR] ADD  DEFAULT ('') FOR [ADDRESS1]
@@ -161,7 +165,7 @@ GO
 ALTER TABLE [CAMPUS].[TUTOR] ADD  CONSTRAINT [DF_TUTOR_MODBY]  DEFAULT ('') FOR [MODBY]
 GO
 
-ALTER TABLE [CAMPUS].[TUTOR] ADD  CONSTRAINT [DF_TUTOR_TUTORSTATUS]  DEFAULT ((1)) FOR [TUTORSTATUS]
+ALTER TABLE [CAMPUS].[TUTOR] ADD  CONSTRAINT [DF_TUTOR_TUTORSTATUS]  DEFAULT ((0)) FOR [TUTORSTATUS]
 GO
 
 ALTER TABLE [CAMPUS].[TUTOR]  WITH CHECK ADD  CONSTRAINT [FK_TUTOR_TOWN] FOREIGN KEY([TOWN])
@@ -194,23 +198,75 @@ ALTER TABLE CAMPUS.TUTOR
 DROP CONSTRAINT DF_TUTOR_ISACTIVE
 
 -- ------------------------------------------------------------------------
--- To drop ISACTIVE column+
+-- To drop ISACTIVE column
 -- ------------------------------------------------------------------------
 ALTER TABLE CAMPUS.TUTOR 
 DROP COLUMN ISACTIVE
 
 -- ------------------------------------------------------------------------
 -- To add TUTORSTATUS column
+
+-- It TUTOR table contains records, not null constraint is not allowed. 
+-- Then use script two
+-- If not use script one
 -- ------------------------------------------------------------------------
 ALTER TABLE CAMPUS.TUTOR 
 ADD TUTORSTATUS INT NOT NULL;
+
+/* Script two */
+ALTER TABLE CAMPUS.TUTOR 
+ADD TUTORSTATUS INT NULL;
 
 
 -- ------------------------------------------------------------------------
 -- To add the DF_TUTOR_TUTORSTATUS constraint
 -- ------------------------------------------------------------------------
-USE [xeno-4]
+USE [xeno]
 GO
 
 ALTER TABLE [CAMPUS].[TUTOR] ADD  CONSTRAINT [DF_TUTOR_TUTORSTATUS]  DEFAULT (1) FOR [TUTORSTATUS]
+GO
+
+
+-- ------------------------------------------------------------------------
+
+-- To update the tutor table column ISAPPROVED to int
+-- following queires
+-- ------------------------------------------------------------------------
+
+-- ------------------------------------------------------------------------
+-- To drop the constraint on the column
+-- ------------------------------------------------------------------------
+ALTER TABLE CAMPUS.TUTOR 
+DROP CONSTRAINT DF_TUTOR_ISAPPROVED
+
+-- ------------------------------------------------------------------------
+-- To drop ISAPPROVED column
+-- ------------------------------------------------------------------------
+ALTER TABLE CAMPUS.TUTOR 
+DROP COLUMN ISAPPROVED
+
+-- ------------------------------------------------------------------------
+-- To add ISAPPROVED column
+
+-- It TUTOR table contains records, not null constraint is not allowed. 
+-- Then use script two
+-- ------------------------------------------------------------------------
+/* Script one */
+ALTER TABLE CAMPUS.TUTOR 
+ADD ISAPPROVED INT NOT NULL;
+
+
+/* Script two */
+ALTER TABLE CAMPUS.TUTOR 
+ADD ISAPPROVED INT NULL;
+
+
+-- ------------------------------------------------------------------------
+-- To add the DF_TUTOR_ISAPPROVED constraint
+-- ------------------------------------------------------------------------
+USE [xeno]
+GO
+
+ALTER TABLE [CAMPUS].[TUTOR] ADD  CONSTRAINT [DF_TUTOR_ISAPPROVED]  DEFAULT (2) FOR [ISAPPROVED]
 GO
