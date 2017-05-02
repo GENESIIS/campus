@@ -1,6 +1,7 @@
 <!-- 20170420 c159-courseprovider-accept-tutor-request-cw - created callForCourseProviderEditTutor jsp file-->
 <!-- 20170420 c159-courseprovider-accept-tutor-request-cw - add courseProviderCode text item-->
 <!-- 20170421 c159-courseprovider-accept-tutor-request-cw - add View Tutor URL -->
+<!-- 20170502 c159-courseprovider-accept-tutor-request-cw - remove text item & button add direct link into the page to work with Firefox -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -12,13 +13,8 @@
 </head>
 <body>
 		
-	<table align="center">
-		<tr>
-			<td>Course Provider Code <span id="courseProviderCode"></span></td>
-			<td><input type="text" name="courseProviderCode"
-				id="courseProviderCode" maxlength="10"/></td>
-		</tr>
-		<td><button type="button"><a href="/dist/partials/listTutorsForCourseprovider.jsp?courseProviderCode=44">View Tutor</a></button></td>
+	<table align="center">		
+		<td><a href="/dist/partials/listTutorsForCourseprovider.jsp?courseProviderCode=44">View Tutor</a></td>
 	</table>
 	
 	<script type="text/javascript" src="\dist\bower-components\jquery\jquery.min.js"></script>
