@@ -71,7 +71,7 @@ public class CmdStudentLogout implements ICommand {
 			}
 
 		} catch (Exception e) {
-			log.error("CmdStudentLogout():  Exception" + e.toString());
+			log.error("execute():  Exception" + e.toString());
 			throw e;
 		}
 		helper.setAttribute("message", message);

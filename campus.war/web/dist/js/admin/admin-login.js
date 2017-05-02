@@ -50,13 +50,9 @@ function ALogin() {
 						if(response['message'] === "Logged successfull") {
 							window.location.href = response['pageURL'];
 						} else if(response['message'] === "User Already Logged In"){
-						
-//						}else if(){
-							
-						
+					
 						} else {
-						
-						//window.location.href = response['pageURL'];			
+							
 						document.getElementById('adminErrorMess').innerHTML = response['message'];
 						window.history.pushState('Admin-Login', 'Title', response['pageURL']);
 						}

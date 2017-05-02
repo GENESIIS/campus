@@ -35,9 +35,9 @@ public class CmdAdminLogin implements ICommand{
 	static Logger log = Logger.getLogger(CmdAdminLogin.class.getName());
 	
 	private Collection<Collection<String>> dataCollection = null;
-	String pageURL;
-	String path;
-	String message;
+	private String pageURL;
+	private String path;
+	private String message;
 	private Admin adminData;
 	private static int max =0;
 	Collection<String> privilegeList = null;

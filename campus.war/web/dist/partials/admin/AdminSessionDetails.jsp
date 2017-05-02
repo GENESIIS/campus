@@ -34,7 +34,7 @@
     
     	
    </c:if>
-
+	<!-- user valid pages handling -->
 	<c:set var="currentUrl" value="${pageContext.request.requestURI}"></c:set>
 	<!-- logged admin authenticated listed interfaces iteration -->
 	<c:if test="${sessionScope.currentUserData[2] != null }">
