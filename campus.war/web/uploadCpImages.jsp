@@ -115,23 +115,23 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>
-												<a class="thumb-img" href="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg" title="" rel="fancybox">
-													<img alt="" src ="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg"/>
-												</a>
-											</td>
-											<th>Image Name</th>
-											<th>Dimensions</th>
-											<th>Size</th>
-											<th>Type</th>
-											<th>Added</th>
-											<td class="">
-												<button type="button" class="btn-default btn-sm">
-													<i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i>
-												</button>
-											</td>
-										</tr>								
+<!-- 										<tr> -->
+<!-- 											<td> -->
+<!-- 												<a class="thumb-img" href="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg" title="" rel="fancybox"> -->
+<!-- 													<img alt="" src ="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg"/> -->
+<!-- 												</a> -->
+<!-- 											</td> -->
+<!-- 											<th>Image Name</th> -->
+<!-- 											<th>Dimensions</th> -->
+<!-- 											<th>Size</th> -->
+<!-- 											<th>Type</th> -->
+<!-- 											<th>Added</th> -->
+<!-- 											<td class=""> -->
+<!-- 												<button type="button" class="btn-default btn-sm"> -->
+<!-- 													<i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i> -->
+<!-- 												</button> -->
+<!-- 											</td> -->
+<!-- 										</tr>								 -->
 									</tbody>
 							  </table>
 							</div>

@@ -453,7 +453,7 @@ function populateImageTable(details,courseProviderCode){
 		'<td><span>' + value[2]+ '</span></td>'+
 		'<td><span>' + value[3]+ '</span></td>'+
 		'<td class="">'+
-			'<button type="button" class="btn-default btn-sm">'+
+			'<button type="button" class="btn-default btn-sm" onclick="foo()">'+
 				'<i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i>'+
 			'</button>'+
 		'</td>'+
@@ -467,4 +467,48 @@ function populateImageTable(details,courseProviderCode){
 		'speedOut'		:	200, 
 		'overlayShow'	:	false
 	});
+}
+
+function foo() {
+    alert("Not a button");
+}
+
+function deleteImage(imagePath,delete_btn){
+	event.stopPropagation(); 
+    event.preventDefault(); 
+    $('#img-err-lbl').hide();
+    $(delete_btn).prop('disabled', true);
+
+    	var formData = new FormData();    
+		formData.append("delete_cp_img", imagePath);
+		
+//		$.ajax({
+//		    url: '/AdminController?CCO=DCPI',
+//		    type: 'POST',
+//		    dataType: 'json',
+//		    data: formData,
+//            processData: false,
+//            cache : false ,
+//    	    contentType : false,
+//		    success:function(response){
+//		    	listOfFiles = response.listOfFiles;
+//		    	listOfImageFileDetails = response.cpImageData;
+//		    	populateImageTable(listOfImageFileDetails,courseProviderCode);
+//		    	if(response.fileDeleteError != ""){
+//		    		$('#img-err-lbl').show();
+//		    		$('#cp_img_err').html(response.fileDeleteError);
+//		    		$('#cp_img_err').css('color', 'red');
+//		    	}else if(response.fileDeleteSuccess != ""){
+//		    		$('#img-err-lbl').show();
+//		    		$("#cp_img_type").val(uploadPathConfId);
+//		    		$('#cp_img_err').html(response.fileDeleteSuccess);
+//		    		$('#cp_img_err').css('color', 'green');
+//		    	}
+//			},
+//			error : function(x, status, error) {
+//				//Modified the error handling.
+//				var err = displayErrorMessage(x, status, error);
+//				alert(err);
+//			}
+//		});
 }
