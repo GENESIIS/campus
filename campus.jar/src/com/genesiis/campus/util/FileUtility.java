@@ -9,6 +9,8 @@ package com.genesiis.campus.util;
 //20170224 PN CAM-48: non static logger variable changed into static.
 //20170226 PN CAM-48: implemented deleteFile(String folder, String imgName) method to delete cp image from the disk.
 //20170428 PN CAM-163: getFileDetails(String folder) method implemented to get all the image details to the JSP page.
+//20170502 PN CAM-163: getFileDetails(String folder) method implementation modified to get more details of image.
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -20,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,6 +30,8 @@ import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import javax.imageio.ImageIO;
 
 /**
  * This file handles all the file related tasks Cut, copy, paste, rename, save and delete relevant to cp image/logo uploading.
@@ -555,6 +560,7 @@ public class FileUtility {
 		Collection<Collection<String>> details = new ArrayList<Collection<String>>();
 		String[] paths;
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		DecimalFormat df = new DecimalFormat("#.###");
 		try {
 			// create new file
 			file = new File(folder);
@@ -563,9 +569,10 @@ public class FileUtility {
 			for (int i = 0; i < listOfFiles.length; i++) {
 				ArrayList<String> singleImage = new ArrayList<String>();
 				singleImage.add(listOfFiles[i].getName());
-				singleImage.add((Long.toString((listOfFiles[i].length())/100000)));
+				singleImage.add(ImageIO.read(listOfFiles[i]).getWidth()+"X"+ImageIO.read(listOfFiles[i]).getHeight()+" px");
+				singleImage.add((df.format((listOfFiles[i].length())/100000))+" MB");
 				singleImage.add(listOfFiles[i].getName().substring(listOfFiles[i].getName().lastIndexOf(".")+1));
-				singleImage.add(sdf.format(listOfFiles[i].lastModified()));
+				singleImage.add(sdf.format(listOfFiles[i].lastModified()));				
 				details.add(singleImage);
 			}		
 		} catch (Exception e) {
