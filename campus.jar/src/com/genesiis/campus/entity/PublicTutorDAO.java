@@ -8,6 +8,7 @@ package com.genesiis.campus.entity;
 //20170418 JH c135-public-display-tutor-profile findById() method coding wip
 //20170424 JH c135-public-display-tutor-profile return result set data in findById() wip, fixed index out of bound error and fixed error 'too many arguments specified' 
 //20170427 JH c135-public-display-tutor-profile findById() modified: added codes to get tutor CODE from the database
+//20170502 JH c135-public-display-tutor-profile added doc comments 
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -47,6 +48,9 @@ public class PublicTutorDAO implements ICrud {
 	/**
 	 * used to get tutor profile related all details. This call a database stored procedure 
 	 * [CAMPUS].[select-tutor-public-profile-details] to get all the details in a one database call
+	 * @param code type of Object
+	 * @return tutor details of type of collection collection
+	 * @author JH
 	 */
 	@Override
 	public Collection<Collection<String>> findById(Object code) throws SQLException, Exception {
@@ -60,6 +64,17 @@ public class PublicTutorDAO implements ICrud {
 			conn = ConnectionManager.getConnection();
 			String tutorCode = (String) code;
 
+			/*
+			 * [CAMPUS].[select-tutor-public-profile-details] procedure call queries the database
+			 * related to tutor details. This will return 
+			 * 1. tutor basic details
+			 * 2. social media details
+			 * 3. contact details
+			 * 4. qualification details
+			 * 5. experience details
+			 * 6. employment relationships with course providers
+			 * 7. program details conducted by the tutor
+			 */
 			callableStatement = conn.prepareCall("{call [CAMPUS].[select-tutor-public-profile-details](?,?,?,?)}");
 			callableStatement.setInt(1, ApplicationStatus.ACTIVE.getStatusValue());
 			callableStatement.setInt(2, ApplicationStatus.ACTIVE.getStatusValue());
