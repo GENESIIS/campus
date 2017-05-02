@@ -21,6 +21,8 @@ package com.genesiis.campus.command;
 //20170406 CW c37-tutor-update-tutor-profile-cw modified setCompareVariablesBeforeTutorUpdateTutor method & add validations for newPassword
 //20170407 CW c37-tutor-update-tutor-profile-cw modified fillTutorCollection method & remove filling password into tutorCollection
 //20170407 CW c37-tutor-update-tutor-profile-cw trim the password fields in  setCompareVariablesBeforeTutorUpdateTutor method
+//20170407 CW c37-tutor-update-tutor-profile-cw remove un wanted log messages from execute, setCompareVariablesBeforeTutorUpdateTutor methods.
+						//modified log messages from isValidUserAndEmailBeforeAddTutor, validateUsernameEmailFields methods
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -85,8 +87,6 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 					tutor.setIsApproved(false);	
 					tutor.setTutorStatus(ApplicationStatus.PENDING.getStatusValue());
 					
-					
-					log.info("before call update before sent to db :=" + tutor.getPassword());
 					result = tutorDAO.update(tutor);	
 					
 					if (result > 0) {
@@ -133,21 +133,14 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}
 			tutor.setUsername(helper.getParameter("usernameOld"));
 
-		//	log.info("setCompareVariablesBeforeTutorUpdateTutor oldPassword ="+helper.getParameter("oldPassword"));
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword")))){
 				// need to change the password
 				if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("newPassword")))){
-			//		log.info("setCompareVariablesBeforeTutorUpdateTutor newPassword ="+helper.getParameter("newPassword"));
 					
 					Encryptable passwordEncryptor = new TripleDesEncryptor((helper.getParameter("newPassword")).trim());					
 					String encryptedNewPassword = passwordEncryptor.encryptSensitiveDataToString().trim();					
 					tutor.setPassword(encryptedNewPassword);
-					updated = true;
-					
-
-			//		log.info("setCompareVariablesBeforeTutorUpdateTutor encryptedNewPassword :=" + encryptedNewPassword);
-					
-					
+					updated = true;				
 				}
 			}else{
 				// no need to change the password
@@ -637,10 +630,10 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}
 			
 		} catch (SQLException sqlException) {
-			log.info("isValidUserAndEmailBeforeAddTutor(): SQLException " + sqlException.toString());
+			log.error("isValidUserAndEmailBeforeAddTutor(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("isValidUserAndEmailBeforeAddTutor(): Exception " + e.toString());
+			log.error("isValidUserAndEmailBeforeAddTutor(): Exception " + e.toString());
 			throw e;
 		} 
 		return valid;
@@ -684,10 +677,10 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}
 			
 		} catch (SQLException sqlException) {
-			log.info("validateUsernameEmailFields(): SQLException " + sqlException.toString());
+			log.error("validateUsernameEmailFields(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("validateUsernameEmailFields(): Exception " + e.toString());
+			log.error("validateUsernameEmailFields(): Exception " + e.toString());
 			throw e;
 		}
 		return validStatus;
