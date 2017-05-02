@@ -13,6 +13,10 @@
  * 				to preventDefault where the control is transfered to the server once the onclick of the createAdvertiser element 
  * 				The method displayLabelMessage(messagePopUpId,label id,cssColour,message) created.
  * 20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn The Page clearing functionality has been implemented
+ * 20170502 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The validation function validateAdminAddingNewAdvertiserPageEmbedData().
+ * 				add script to show and hide the advertiser code label,the text box and the editAdvertiser.
+ * 				In the getPreRequisitPageData() when setting the selected Country code the "+" is avoided.
+ * 				createAdvertiser event changed to get the val() instead of text() for the textarea element.
  */
 
 
@@ -25,6 +29,19 @@ theSecondScript.src="../../dist/js/jsonDataExchanger.js";
 
 $(document).ready(function() {
 	displaySignUpPrerequisitDetails();
+	
+	var advertiserCode =$('#advertierCode').val();
+	//toggle the show and hide of elements at on load.
+	if(advertiserCode===""||advertiserCode===undefined){
+		$('#advertierCode').hide();
+		$('#advertiserLabel').hide();
+		$('#editAdvertiser').hide();
+	} else{
+		$('#advertierCode').show();
+		$('#advertiserLabel').show();
+		$('#editAdvertiser').show();
+	}
+	
 });
 
 
@@ -110,8 +127,8 @@ function getPreRequisitPageData(preRequistData){
 	//populating the town list 
 	if(status){
 		
-		$('#mobileCountryCode').val("+"+selectedCountryCode); // set the country code in the none editable field
-		$('#landCountryCode').val("+"+selectedCountryCode); // set the country code in none editable fields 20170421-DN CAM-88
+		$('#mobileCountryCode').val(selectedCountryCode); // set the country code in the none editable field
+		$('#landCountryCode').val(selectedCountryCode); // set the country code in none editable fields 20170421-DN CAM-88
 		extractRelaventTownList(selectedCountryCode);
 		}
 	});
@@ -253,7 +270,9 @@ function populateDataList(responseAttribute,elementId){
 /**
  * accepts the country code and extract the available town information
  * that belongs to the country and bring it to the client side form 
- * server end
+ * serv
+ * er
+ *  10end
  * @author dushantha DN
  * @param countryCode
  */
@@ -278,79 +297,108 @@ function extractRelaventTownList(countryCode){
 }
 
 /**
- * validateSignUpWoThirdPartyPageEmbedData() validates all the current  critical fields
- * placed on /dist/partials/signUpWoThirdParty.jsp page. It's the custom field validator
- * dedicated for the page above.
+ * validateAdminAddingNewAdvertiserPageEmbedData() validates all the current  critical fields
+ * placed on the page. It's the custom field validator
+ * dedicated for the page 'adminMangeAdvertiser.jsp'.
  * @author dushantha DN
  * @returns {Boolean}
  */
-function validateSignUpWoThirdPartyPageEmbedData(){
-	var validationPass = true;
+function validateAdminAddingNewAdvertiserPageEmbedData (){
+
+	var validationPass =true;
 	
-//	if(!(isFieldFilled(isStringHasValiCharsAndLength($('#firstName').val(),/^([a-zA-Z]+)([a-zA-Z]+){2,}$/g),"First Name Field","firstNameError"))) {
-//		return !validationPass;
-//	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#lastName').val(),/^([a-zA-Z]+)([a-zA-Z]+){2,}$/g),"Last Name Field","lastNameError"))) {
-//		return !validationPass;
-//	} else if(!(isFieldFilled(isempty($('input[type=radio][name=gender]:checked').val()),"Gender Field","genderError"))){
-//		return !validationPass;
-//	} else if (!isFieldFilled(isValidEmailFormat($('#emailAddress').val()),"Email Field","emailError")) {
-//		return !validationPass;
-//	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#country').val(),/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g),"Country Field","countryError"))) {
-//		return !validationPass;
-//	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#town').val(),/^([a-zA-Z]+)([a-zA-Z]+){0,}$/g),"Town Field","townError"))) {
-//		return !validationPass;
-//	} else if(!(isFieldFilled($('#mobileCountryCode').val(),"Phone Number Country Code Field","phoneError"))) {
-//		return !validationPass;
-//	} else if (!(isFieldFilled(isValidPhoneNumber($('#contactNumber').val()),"Phone Number Field","phoneError"))){
-//		return !validationPass;
-//	} else if(isNotvalidMobileFormat($('#contactNumber').val())){
-//		$('#phoneError').text("Leading Zero, Alpha Numeric Combination Or '+' Is Not Alloved!");
-//		return !validationPass;
-//	}  else if (!(isFieldFilled(isempty($('#userName').val()),"User Name Field","usernameError"))) {
-//		return !validationPass;
-//	} else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#userName').val(),/^([a-zA-Z]+)([a-zA-Z0-9_]+){5,}$/g),"Check Field Contains Invalid Characters Or Should Be > 5 Characters and ","usernameError"))) {
-//		return !validationPass;
-//	}else if (!(isFieldFilled(isStringHasValiCharsAndLength($('#passWord').val(),/^([a-zA-Z0-9]+)([a-zA-Z0-9_]+){7,}$/g),"Check Field Contains Invalid Characters Or Should Be > 7 Characters and ","passWordError"))) {
-//		return !validationPass;
-//	}else if (!(isFieldFilled(isempty($('#passWord').val()),"Password Field","passWordError"))) {
-//		return !validationPass;
-//	} else if (!(isFieldFilled(isempty($('#confrmpsw').val()),"Confirm Password Field","confPassWordError"))){
-//		return !validationPass;
-//	} else if(!(isFieldFilled(passwordAndConfirmPassword($('#passWord').val(),$('#confrmpsw').val()),"PassWords Does Not Match ,The Field(s)","confPassWordError"))){
-//		return !validationPass;
-//	} else if (!(isFieldFilled($('#policyConfirm').prop('checked'),"Policy Check box","policyConfirmError"))) {
-//		return !validationPass;
-//	} 
+  if(!isFieldFilled(isStringHasValiCharsAndLength($('#sCourseProviderCode')
+			.val(), /^\d+$/g), 'Course Provider Field', "courseProviderInfor")) {
+		$("#courseProvider").focus();
+		return false;
+	}	
+
+	if (!isFieldFilled(isStringHasValiCharsAndLength(
+			$('#advertiserName').val(), /^[A-Za-z]+\w+$/g), 'Advertiser Name',
+			"advertiserNameInfor")) {
+		$("#advertiserName").focus();
+		return false;
+	}
+
+	if (!isValidEmailFormat($('#advertiserEmail').val())) {
+		$('#emailInfor').html("Please provide a valid Email address.");
+		$("#advertiserEmail").focus();
+		return false;
+	}
+
+	if (!isFieldFilled(isStringHasValiCharsAndLength($('#landCountryCode')
+			.val(), /^\d{1,5}$/g), 'Land Phone Country Code', "landPhoneInfor")) {
+		$("#landCountryCode").focus();
+		return false;
+	}
+
+	if (!isFieldFilled(isStringHasValiCharsAndLength($('#landAreaCode').val(),
+			/^\d{1,5}$/g), 'Land Phone Area Code', "landPhoneInfor")) {
+		$("#landAreaCode").focus();
+		return false;
+	}
+
+	if (!isFieldFilled(isStringHasValiCharsAndLength($('#landPhoneNumber')
+			.val(), /^\d{3,}/g), 'Land Phone Number', "landPhoneInfor")) {
+		$("#landPhoneNumber").focus();
+		return false;
+	}
+
+	if (!isFieldFilled(isStringHasValiCharsAndLength($('#mobileCountryCode')
+			.val(), /^\d{1,5}$/g), 'Land Phone Country Code',
+			"mobilePhoneInfor")) {
+		$("#mobileCountryCode").focus();
+		return false;
+	}
+
+	if (!isFieldFilled(isStringHasValiCharsAndLength(
+			$('#mobileAreaCode').val(), /^\d{1,5}$/g), 'Land Phone Area Code',
+			"mobilePhoneInfor")) {
+		$("#mobileAreaCode").focus();
+		return false;
+	}
+
+	if (!isFieldFilled(isStringHasValiCharsAndLength($('#mobilePhoneNumber')
+			.val(), /^\d{3,}/g), 'Land Phone Number', "mobilePhoneInfor")) {
+		$("#mobilePhoneNumber").focus();
+		return false;
+	}
+	
+
+	if (!isFieldFilled(isStringHasValiCharsAndLength($('#address1').val(),
+			/^\w+$/g), 'Address Line 1', 'addressInfor')) {
+		$("#address1").focus();
+		return false;
+	}
+	
+	if (!isFieldFilled(isStringHasValiCharsAndLength($('#address2').val(),
+			/^\w+$/g), 'Address Line 2', 'addressInfor')) {
+		$("#address2").focus();
+		return false;
+	}
+	
+	if (!isFieldFilled(isStringHasValiCharsAndLength($('#address3').val(),
+			/^\w+$/g), 'Address Line 3', 'addressInfor')) {
+		$("#address3").focus();
+		return false;
+	}
+	
+	if(selectedCountryCode===""||selectedCountryCode===undefined){
+		$('#countryError').text("please select a correct country from the data list. ");
+		$('#country').focus();
+		return false;
+	}
+	
+	if(!isFieldFilled(isStringHasValiCharsAndLength(
+			$('#sTownCode').val(), /^\d+$/g), 'Town',
+	"townError")){
+		$('#townError').text("please select a correct town from the data list. ");
+		$('#town').focus();
+		return false;
+	}
+	
 		return validationPass;
 	
-}
-
-
-
-/**
- * the purpose of the method is to create the java script object
- * @author dushantha DN
- * @returns {___anonymous2641_2981}
- */
-//  this should be changed according to the page data.Add Advertiser.jsp
-function createJasonObject(){
-	managePhoneNumber($('#contactNumber').val(),$('#mobileCountryCode').val());
-	var jsonData ={
-			"firstName" :$('#firstName').val(),
-			"lastName"  :$('#lastName').val(),
-			"gender"	: $('input[type=radio][name=gender]:checked').val(),
-			"email"		:$('#emailAddress').val(),
-			"mobilePhoneNo":mobilePhoneNumber,
-			"mobileCountryCode":mobilePhoneCountryCode,
-			"mobileNetworkCode":mobilePhoneNetWorkCode,
-			"town"		:selectedTownCode, 
-			"userName"	:$('#userName').val(),
-			"userCode"	:$('#userTypeCode').text(),
-			"passWord"	:$('#passWord').val(),
-			"confirmPw"	:$('#confrmpsw').val(),
-			"isPolicyConfirm"	:$('#policyConfirm').prop('checked')
-	};
-	return jsonData;
 }
 
 /**
@@ -545,6 +593,8 @@ function populatePageWithAdvertisersCredential(arrayOfArray){
  */
 $(document).on("click",'#createAdvertiser',function(event){
 	event.preventDefault();
+	if(!validateAdminAddingNewAdvertiserPageEmbedData())
+		return false;
 	
 		$.ajax({
 			type:"POST",
@@ -553,7 +603,7 @@ $(document).on("click",'#createAdvertiser',function(event){
 				courseProviderCode : $('#sCourseProviderCode').val(),
 				advertiserName :$("#advertiserName").val(),
 				advertiserEmail:$("#advertiserEmail").val(),
-				advertiserDescription:$('#courseProviderDescription').text(),
+				advertiserDescription:$('#courseProviderDescription').val(),
 				landCountryCode:$('#landCountryCode').val(),
 				landAreaCode:$('#landAreaCode').val(),
 				landPhoneNumber:$('#landPhoneNumber').val(),
