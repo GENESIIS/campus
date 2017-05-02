@@ -11,6 +11,7 @@ package com.genesiis.campus.entity;
 //20170209 CW c38-view-update-tutor-profile-re modified getAll() method query to order by sort
 //20170216 CW c38-view-update-tutor-profile Add class comment & removed commented lines
 //20170223 CW c36-add-tutor-information re-organise the import statements.
+//20170502 CW c38-view-update-tutor-profile modified log messages in getAll method
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -77,10 +78,10 @@ public class TownDAO implements ICrud{
 				allTownList.add(singleTownList);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findById(Object): SQLException " + sqlException.toString());
+			log.error("findById(Object): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(Object): Exception " + e.toString());
+			log.error("findById(Object): Exception " + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -119,10 +120,10 @@ public class TownDAO implements ICrud{
 				allTownList.add(singleTownList);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll(): SQLE " + sqlException.toString());
+			log.error("getAll(): SQLE " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll(): E " + e.toString());
+			log.error("getAll(): E " + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
