@@ -1,4 +1,5 @@
 <!--20170421 DN c88-admin-manage-advertiser-add-new-advertiser-dn inital mock up of the issue has been developed  -->
+<!--20170502 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The page iss added the xxxInfor elements -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -50,8 +51,8 @@
         	<h1>Add Advertiser </h1>
     	</div>
     	<div>
-    		<label>Advertiser Code</label> 
-        	<input type="text">
+    		<label id="advertiserLabel">Advertiser Code</label> 
+        	<input type="text" id='advertierCode'>
         	<hr>
     	</div>      
       <div>
@@ -68,39 +69,45 @@
       </div>
       <!--End CourseProvider list -->
       <div>
+      <div id="advertiserNameInfor" style ="color:#C70039;"></div><br>
         <label>Advertiser Name</label>
-        <input type="text" id="advertiserName">
+        <input type="text" id="advertiserName"  onclick="clearField('advertiserNameInfor');">
          &nbsp; &nbsp;
+         <div id="emailInfor" style ="color:#C70039;"></div><br>
         <label>Email </label>
-        <input type="text" id="advertiserEmail">
+        <input type="text" id="advertiserEmail"  onclick="clearField('emailInfor');">
       </div>     
       <!-- End Advertiser Name and Email Description -->
       &nbsp; &nbsp;
        <div >
+       <div id="descriptionInfor" style ="color:#C70039;"></div><br>
        	 <label>Description</label>
-         <textarea id="courseProviderDescription" name="Text1" cols="40" rows="5" ></textarea>
+         <textarea id="courseProviderDescription" name="Text1" cols="40" rows="5" onclick="clearField('descriptionInfor');"></textarea>
          <hr>
       </div>
       <!-- End od Description div -->
       <div>
+      	<div id="landPhoneInfor" style ="color:#C70039;"></div><br>
         <label>Land Phone Number</label>
-        <input type="text" id="landCountryCode" maxlength="5" style="width:50px;">
-        <input type="text" id="landAreaCode" maxlength="5" style="width:50px;">
-        <input type="text" id="landPhoneNumber">
+        <input type="text" id="landCountryCode" maxlength="5" style="width:50px;" onclick="clearField('landPhoneInfor');">
+        <input type="text" id="landAreaCode" maxlength="5" style="width:50px;" onclick="clearField('landPhoneInfor');">
+        <input type="text" id="landPhoneNumber" onclick="clearField('landPhoneInfor');">
      &nbsp; &nbsp;
+     	<div id="mobilePhoneInfor" style ="color:#C70039;"></div><br>
         <label>Mobile Phone Number</label>
-        <input type="text" id="mobileCountryCode" maxlength="5" style="width:50px;">
-        <input type="text" id="mobileAreaCode" maxlength="5" style="width:50px;">
-        <input type="text" id="mobilePhoneNumber">
+        <input type="text" id="mobileCountryCode" maxlength="5" style="width:50px;" onclick="clearField('mobilePhoneInfor');">
+        <input type="text" id="mobileAreaCode" maxlength="5" style="width:50px;" onclick="clearField('mobilePhoneInfor');">
+        <input type="text" id="mobilePhoneNumber" onclick="clearField('mobilePhoneInfor');">
       </div><br><br>
         <!-- End of Land/Mobile Phone Number -->
        <div>
-         <label> Adrees Line 1</label>
-         <input type="text" id="address1"><br>
-         <label> Adrees Line 2</label> 
-         <input type="text" id="address2"> <br>
-         <label> Adrees Line 3</label> 
-         <input type="text" id="address3"> <br>
+       <div id="addressInfor" style ="color:#C70039;"></div><br>
+         <label> Address Line 1</label>
+         <input type="text" id="address1" onclick="clearField('addressInfor');"><br>
+         <label> Address Line 2</label> 
+         <input type="text" id="address2" onclick="clearField('addressInfor');"> <br>
+         <label> Address Line 3</label> 
+         <input type="text" id="address3" onclick="clearField('addressInfor');" > <br>
        </div>
         <br><br>
          <!-- End of Address lines -->
