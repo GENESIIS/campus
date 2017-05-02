@@ -73,11 +73,11 @@ public class AdminPrivilegeDAO implements ICrud{
 			}
 
 		} catch (SQLException e) {
-			log.info("adminPrivileges SQLException : " + e);
+			log.error("adminPrivileges SQLException : " + e);
 			throw e;
 
 		} catch (Exception e) {
-			log.info("adminPrivileges Exception : " + e);
+			log.error("adminPrivileges Exception : " + e);
 			throw e;
 		} finally {
 			if (rs != null) {

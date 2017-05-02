@@ -115,10 +115,10 @@ public class StudentLoginDAO implements ICrud {
 				rowInserted = 0;
 			}
 		} catch (SQLException e) {
-			log.info("logoutDataUpdate(): SQLexception" + e.toString());
+			log.error("logoutDataUpdate(): SQLexception" + e.toString());
 			throw e;
 		} catch (Exception ex) {
-			log.info("logoutDataUpdate(): Exception" + ex.toString());
+			log.error("logoutDataUpdate(): Exception" + ex.toString());
 			throw ex;
 		} finally {
 
@@ -172,10 +172,10 @@ public class StudentLoginDAO implements ICrud {
 				rowInserted = 0;
 			}
 		} catch (SQLException e) {
-			log.info("loginDataUpdate(): SQLexception" + e.toString());
+			log.error("loginDataUpdate(): SQLexception" + e.toString());
 			throw e;
 		} catch (Exception ex) {
-			log.info("loginDataUpdate(): Exception" + ex.toString());
+			log.error("loginDataUpdate(): Exception" + ex.toString());
 			throw ex;
 		} finally {
 

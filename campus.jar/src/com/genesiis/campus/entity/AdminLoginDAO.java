@@ -67,10 +67,10 @@ public class AdminLoginDAO implements ICrud {
 			}
 
 		} catch (SQLException e) {
-			log.info("loginDataUpdate(): SQLexception" + e.toString());
+			log.error("loginDataUpdate(): SQLexception" + e.toString());
 			throw e;
 		} catch (Exception ex) {
-			log.info("loginDataUpdate(): Exception" + ex.toString());
+			log.error("loginDataUpdate(): Exception" + ex.toString());
 			throw ex;
 		} finally {
 
@@ -127,10 +127,10 @@ public class AdminLoginDAO implements ICrud {
 			}
 
 		} catch (SQLException e) {
-			log.info("update(): SQLexception" + e.toString());
+			log.error("update(): SQLexception" + e.toString());
 			throw e;
 		} catch (Exception ex) {
-			log.info("update(): Exception" + ex.toString());
+			log.error("update(): Exception" + ex.toString());
 			throw ex;
 		} finally {
 
