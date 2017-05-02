@@ -1,7 +1,5 @@
 package com.genesiis.campus.entity;
 
-import com.genesiis.campus.command.CmdTutorUpdateTutorProfile;
-
 //20161121 CM c36-add-tutor-information INIT TutorDAO.java
 //20161121 CM c36-add-tutor-information Modified add()method. 
 //20161220 CW c36-add-tutor-information Modified findById()method.
@@ -39,7 +37,10 @@ import com.genesiis.campus.command.CmdTutorUpdateTutorProfile;
 //20170406 CW c37-tutor-update-tutor-profile-cw add getTutorPassword method
 //20170407 CW c37-tutor-update-tutor-profile-cw removed password selecting from findById
 //20170407 CW c37-tutor-update-tutor-profile-cw trim the password fields in getTutorPassword method
+//20170502 CW c37-tutor-update-tutor-profile-cw removed un wanted log messages from getTutorPassword, update methods, 
+			// modified findById, validateUsernameEmailFields, getListOfUsernameEmail, getTutorPassword log messages
 
+import com.genesiis.campus.command.CmdTutorUpdateTutorProfile;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -146,8 +147,6 @@ public class TutorDAO implements ICrud {
 			preparedStatement.setString(29, tutor.getModBy());			
 			
 			if(!Validator.isEmptyOrHavingSpace(tutor.getPassword())){
-
-				log.info("update before sent to db :=" + tutor.getPassword());
 				preparedStatement.setString(30, tutor.getPassword());
 				preparedStatement.setInt(31, tutor.getCode());
 			}else{
@@ -262,10 +261,10 @@ public class TutorDAO implements ICrud {
 			log.error("findById(): ClassCastException " + cce.toString());
 			throw cce;
 		} catch (SQLException sqlException) {
-			log.info("findById(): SQLException " + sqlException.toString());
+			log.error("findById(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(): Exception " + e.toString());
+			log.error("findById(): Exception " + e.toString());
 			throw e;
 		} finally {			
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -331,10 +330,10 @@ public class TutorDAO implements ICrud {
 				}
 			}
 		} catch (SQLException sqlException) {
-			log.info("validateUsernameEmailFields(): SQLException " + sqlException.toString());
+			log.error("validateUsernameEmailFields(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("validateUsernameEmailFields(): Exception " + e.toString());
+			log.error("validateUsernameEmailFields(): Exception " + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -371,10 +370,10 @@ public class TutorDAO implements ICrud {
 			}
 			
 		} catch (SQLException sqlException) {
-			log.info("getListOfUsernameEmail(): SQLException " + sqlException.toString());
+			log.error("getListOfUsernameEmail(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getListOfUsernameEmail(): Exception " + e.toString());
+			log.error("getListOfUsernameEmail(): Exception " + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -407,14 +406,13 @@ public class TutorDAO implements ICrud {
 			
 			while (rs.next()) {
 				password = rs.getString("PASSWORD").trim();
-				log.info("getTutorPassword password from db ="+password);
 			}
 			
 		} catch (SQLException sqlException) {
-			log.info("getTutorPassword(): SQLException " + sqlException.toString());
+			log.error("getTutorPassword(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getTutorPassword(): Exception " + e.toString());
+			log.error("getTutorPassword(): Exception " + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
