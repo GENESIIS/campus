@@ -29,6 +29,7 @@
  *20170405 DN c83-admin-manage-banner-update-banner-info-dn isStringHasValiCharsAndLength() has modified to change the OR(|) test of 'testableInput' to AND(&&).
  *20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The method ajaxCallErorMessage(response,error,errorThrown) is implemented
  *20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The Function isWholeNumber() is implemented to thest if the test passed is a whole number
+ *20170502 DN clearErrorAndTheDataField New method clearErrorAndTheDataField() has been implemented. The clearField() modified to include val() to be cleared too.
  */ 
 
  
@@ -125,8 +126,23 @@ function isPatternMatch(regularExpression, source) {
 
 function clearField(elementId){	
 	 $(document).find('#' + elementId).text('');
+	 $(document).find('#' + elementId).val('');
 }
 
+/**
+ * clearErrorAndTheDataField function meant to clear the <br>
+ * Error or the user information and the data field of which the <br>
+ * id is passed as the argument <br>
+ * @param err0rElementId : the id of the user information displaying element which should be cleared off <br>
+ * @param dataFieldId : the id of the data field which should be cleared 
+ */
+function clearErrorAndTheDataField(err0rElementId,dataFieldId){
+	if($('#'+err0rElementId).text()!=""){
+		clearField(err0rElementId);
+		clearField(dataFieldId);	
+	}
+
+}
 
 /**
  * isValidEmailFormat method validate a email address
