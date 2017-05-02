@@ -113,8 +113,8 @@
 									<tbody>
 										<tr>
 											<td>
-												<a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="" title="">
-													<img id="cp_img_display" name="cp_img_display" alt="" />
+												<a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg" title="">
+													<img id="cp_img_display" name="cp_img_display" alt="" src ="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg"/>
 												</a>
 											</td>
 											<td><span id="cp_img_name" name="cp_img_name"></span></td>

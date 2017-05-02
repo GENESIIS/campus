@@ -442,12 +442,30 @@ function populateImageTable(details,courseProviderCode){
 	var html = '';
 
 	$.each(details, function(index, value) {
+//		$('#cpImageData tbody').append('<tr>'+
+//		'<td><a class="thumb-img" href="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg" title=""><img alt="" src="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg" /></a></td>'+
+//		'<td><span>' + value[1]+ '</span></td>'+
+//		'<td><span>' + value[3]+ '</span></td>'+
+//		'<td><button type="button" class="btn-default btn-sm"><i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i></button></td>'+
+//		'</tr>');
+		
+		
 		$('#cpImageData tbody').append('<tr>'+
-		'<td><a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="'+diskImgPath+courseProviderCode+"/"+value[0]+"?"+Math.random()+'" title=""><img id="cp_img_display" name="cp_img_display" alt="" /></a></td>'+
-		'<td><span>' + value[1]+ '</span></td>'+
-		'<td><span>' + value[3]+ '</span></td>'+
-		'<td><button type="button" class="btn-default btn-sm" id="cp_img_delete_btn" name="cp_img_delete_btn"><i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i></button></td>'+
-		'</tr>');
+		'<td>'+
+			'<a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg" title="">'+
+				'<img id="cp_img_display" name="cp_img_display" alt="" src ="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg"/>'+
+			'</a>'+
+		'</td>'+
+		'<td><span id="cp_img_name" name="cp_img_name"></span></td>'+
+		'<th>Added</th>'+
+		'<td class="">'+
+			'<button type="button" class="btn-default btn-sm" id="cp_img_delete_btn" name="cp_img_delete_btn">'+
+				'<i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i>'+
+			'</button>'+
+		'</td>'+
+		'</tr>');		
+		
+		
 	});
 	
 	            
