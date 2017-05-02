@@ -11,6 +11,7 @@ package com.genesiis.campus.entity;
  * 				getAnAdvertiser() implemented and the method createNewAdvertiser() has been refactored.
  * 				The inner class GeneralAdvertiser.java has been removed favour of com.genesiis.campus.entity.model.BannerAdvertiser.java.
  * 				The method isClientInputAccordanceWithValidation() has been fully implemented.
+ * 20170502 DN c88-admin-manage-advertiser-add-new-advertiser-dn. Changed the getAnAdvertiser() ao that the Land/Mobile country code does not handle "+" sign. 
  */
 
 import com.genesiis.campus.entity.model.AdvertiserRole;
@@ -386,10 +387,10 @@ public class AdvertiserFacilitator {
 			//Inducing the advertiser with user fed data.
 			advertiser.setName(advertiserCredentialMappings.get("advertiserName")[0]);
 			advertiser.setGeneralEmail(advertiserCredentialMappings.get("advertiserEmail")[0]);
-			advertiser.setLandPhoneCountryCode(advertiserCredentialMappings.get("landCountryCode")[0].split("\\+")[1]);
+			advertiser.setLandPhoneCountryCode(advertiserCredentialMappings.get("landCountryCode")[0]); //.split("\\+")[1]);
 			advertiser.setLandPhoneAreaCode(advertiserCredentialMappings.get("landAreaCode")[0]);
 			advertiser.setLandPhoneNo(advertiserCredentialMappings.get("landPhoneNumber")[0]);
-			advertiser.setMobilePhoneCountryCode(advertiserCredentialMappings.get("mobileCountryCode")[0].split("\\+")[1]);
+			advertiser.setMobilePhoneCountryCode(advertiserCredentialMappings.get("mobileCountryCode")[0]); //.split("\\+")[1]);
 			advertiser.setMobilePhoneNetworkCode(advertiserCredentialMappings.get("mobileAreaCode")[0]);
 			advertiser.setMobilePhoneNumber(advertiserCredentialMappings.get("mobilePhoneNumber")[0]);
 			advertiser.setDescription(advertiserCredentialMappings.get("advertiserDescription")[0]);
