@@ -10,6 +10,7 @@
 <!-- 20170428 c159-courseprovider-accept-tutor-request-cw - Add courseprovidercode hidden variable -->
 <!-- 20170428 c159-courseprovider-accept-tutor-request-cw - Change courseprovidercode hidden variable declared place -->
 <!-- 20170428 c159-courseprovider-accept-tutor-request-cw - Add Requested Date into the table -->
+<!-- 20170502 c159-courseprovider-accept-tutor-request-cw - Add java script enabled check validation into the page -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -31,46 +32,59 @@
 </head>
 <body>
 	<div class="container" align="center">
-		
-		<header align="center">
-			<h1>Manage Tutors</h1>
-		</header>
-
 		<div align="center">
 			<form action="/TutorController" method="POST">
-				<tr>
-					<td>
-						<h2 id="tablemessage" style="color: red">${tablemessage}</h2>
-					</td>
-				</tr>
 				
-				<input type="hidden" name="cpCode" id="cpCode" value="${param.courseProviderCode}"/>
-								
-				<c:forEach var="cpCodeList" items="${result.collection}">		
-					<c:set var="courseprovidercode" value="${cpCodeList[0]}"/>		
-				</c:forEach>
-				
-				<input type="hidden" name="courseprovidercode" id="courseprovidercode" value="${courseprovidercode}"/>				
-								
-				<div>
-					<table id="Tutors" width="80%">
-						<tr>
-							<th></th>
-							<th>Requested Date</th>
-							<th>Name</th>
-							<th>Gender</th>
-							<th>Email</th>
-							<th>Land Number</th>
-							<th>Mobile Number</th>
-							<th>Status</th>
-							<th>Change Status</th>
-							<th></th>
-						</tr>
-					</table>
-					<div style="text-align:right">  
-    					<button type="submit" name="CCO" id="CCO" value="SAVE_EMPLOYMENT_STATUS_CP" class="pure-button pure-button-primary" align = right>Save</button>
-    					<input type="hidden" name="maxSequence" id="maxSequence"/>
+				<noscript>
+					<div class="noscriptmsg" style="color:red">
+						<h2>You don't have Javascript enabled. Please enable Javascript.</h2>
+						
+						<style type="text/css">
+							#main-content { display:none; }
+						</style>
 					</div>
+				</noscript>
+				
+				<div id="main-content">
+				
+					<header align="center">
+						<h1>Manage Tutors</h1>
+					</header>
+					<tr>
+						<td>
+							<h2 id="tablemessage" style="color: red">${tablemessage}</h2>
+						</td>
+					</tr>
+					
+					<input type="hidden" name="cpCode" id="cpCode" value="${param.courseProviderCode}"/>
+									
+					<c:forEach var="cpCodeList" items="${result.collection}">		
+						<c:set var="courseprovidercode" value="${cpCodeList[0]}"/>		
+					</c:forEach>
+					
+					<input type="hidden" name="courseprovidercode" id="courseprovidercode" value="${courseprovidercode}"/>				
+									
+					<div>
+						<table id="Tutors" width="80%">
+							<tr>
+								<th></th>
+								<th>Requested Date</th>
+								<th>Name</th>
+								<th>Gender</th>
+								<th>Email</th>
+								<th>Land Number</th>
+								<th>Mobile Number</th>
+								<th>Status</th>
+								<th>Change Status</th>
+								<th></th>
+							</tr>
+						</table>
+						<div style="text-align:right">  
+	    					<button type="submit" name="CCO" id="CCO" value="SAVE_EMPLOYMENT_STATUS_CP" class="pure-button pure-button-primary" align = right>Save</button>
+	    					<input type="hidden" name="maxSequence" id="maxSequence"/>
+						</div>
+					</div>
+				
 				</div>
 			</form>
 		</div>
