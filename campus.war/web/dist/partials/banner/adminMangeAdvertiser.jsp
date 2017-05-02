@@ -1,5 +1,6 @@
 <!--20170421 DN c88-admin-manage-advertiser-add-new-advertiser-dn inital mock up of the issue has been developed  -->
 <!--20170502 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The page iss added the xxxInfor elements -->
+<!--20170502 DN c88-admin-manage-advertiser-add-new-advertiser-dn.  clearErrorAndTheDataField() is implemented -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -60,7 +61,7 @@
     		<label>Course Provider</label>
     		<input id="courseProvider" name="page" value=""
 							list="courseProviderList" class="text-field" type="text"
-							placeholder="-- Select an Advertiser --" onclick="clearField('courseProviderInfor');">
+							placeholder="-- Select an Advertiser --" onclick="clearErrorAndTheDataField('courseProviderInfor','courseProvider');">
 			<datalist id="courseProviderList" name="courseProviderList"> </datalist>
 			<input type="hidden" id="sCourseProviderCode" name="sCourseProviderCode" />
           		&nbsp; &nbsp;
@@ -71,50 +72,50 @@
       <div>
       <div id="advertiserNameInfor" style ="color:#C70039;"></div><br>
         <label>Advertiser Name</label>
-        <input type="text" id="advertiserName"  onclick="clearField('advertiserNameInfor');">
+        <input type="text" id="advertiserName"  onclick="clearErrorAndTheDataField('advertiserNameInfor','advertiserName');">
          &nbsp; &nbsp;
          <div id="emailInfor" style ="color:#C70039;"></div><br>
         <label>Email </label>
-        <input type="text" id="advertiserEmail"  onclick="clearField('emailInfor');">
+        <input type="text" id="advertiserEmail"  onclick="clearErrorAndTheDataField('emailInfor','advertiserEmail');">
       </div>     
       <!-- End Advertiser Name and Email Description -->
       &nbsp; &nbsp;
        <div >
        <div id="descriptionInfor" style ="color:#C70039;"></div><br>
        	 <label>Description</label>
-         <textarea id="courseProviderDescription" name="Text1" cols="40" rows="5" onclick="clearField('descriptionInfor');"></textarea>
+         <textarea id="courseProviderDescription" name="Text1" cols="40" rows="5" onclick="clearErrorAndTheDataField('descriptionInfor','courseProviderDescription');"></textarea>
          <hr>
       </div>
       <!-- End od Description div -->
       <div>
       	<div id="landPhoneInfor" style ="color:#C70039;"></div><br>
         <label>Land Phone Number</label>
-        <input type="text" id="landCountryCode" maxlength="5" style="width:50px;" onclick="clearField('landPhoneInfor');">
-        <input type="text" id="landAreaCode" maxlength="5" style="width:50px;" onclick="clearField('landPhoneInfor');">
-        <input type="text" id="landPhoneNumber" onclick="clearField('landPhoneInfor');">
+        <input type="text" id="landCountryCode" maxlength="5" style="width:50px;" onclick="clearErrorAndTheDataField('landPhoneInfor','landCountryCode');">
+        <input type="text" id="landAreaCode" maxlength="5" style="width:50px;" onclick="clearErrorAndTheDataField('landPhoneInfor','landAreaCode');">
+        <input type="text" id="landPhoneNumber" onclick="clearErrorAndTheDataField('landPhoneInfor','landPhoneNumber');">
      &nbsp; &nbsp;
      	<div id="mobilePhoneInfor" style ="color:#C70039;"></div><br>
         <label>Mobile Phone Number</label>
-        <input type="text" id="mobileCountryCode" maxlength="5" style="width:50px;" onclick="clearField('mobilePhoneInfor');">
-        <input type="text" id="mobileAreaCode" maxlength="5" style="width:50px;" onclick="clearField('mobilePhoneInfor');">
-        <input type="text" id="mobilePhoneNumber" onclick="clearField('mobilePhoneInfor');">
+        <input type="text" id="mobileCountryCode" maxlength="5" style="width:50px;" onclick="clearErrorAndTheDataField('mobilePhoneInfor','mobileCountryCode');">
+        <input type="text" id="mobileAreaCode" maxlength="5" style="width:50px;" onclick="clearErrorAndTheDataField('mobilePhoneInfor','mobileAreaCode');">
+        <input type="text" id="mobilePhoneNumber" onclick="clearErrorAndTheDataField('mobilePhoneInfor','mobilePhoneNumber');">
       </div><br><br>
         <!-- End of Land/Mobile Phone Number -->
        <div>
        <div id="addressInfor" style ="color:#C70039;"></div><br>
          <label> Address Line 1</label>
-         <input type="text" id="address1" onclick="clearField('addressInfor');"><br>
+         <input type="text" id="address1" onclick="clearErrorAndTheDataField('addressInfor','address1');"><br>
          <label> Address Line 2</label> 
-         <input type="text" id="address2" onclick="clearField('addressInfor');"> <br>
+         <input type="text" id="address2" onclick="clearErrorAndTheDataField('addressInfor','address2');"> <br>
          <label> Address Line 3</label> 
-         <input type="text" id="address3" onclick="clearField('addressInfor');" > <br>
+         <input type="text" id="address3" onclick="clearErrorAndTheDataField('addressInfor','address3');" > <br>
        </div>
         <br><br>
          <!-- End of Address lines -->
         <div>
 	      <label>Country :</label><label id="countryError" style="color:#C70039;"></label>             
 	      <input list="countryList" id="country" name="country" class="text-field" 
-              type="text" placeholder="-- Select City --" onclick="clearField('countryError');" >
+              type="text" placeholder="-- Select City --" onclick="clearErrorAndTheDataField('countryError','country');" >
 	      <datalist id="countryList" name="countryist">
 	      </datalist>
 		</div>
@@ -122,7 +123,7 @@
        <div>
            <label>Town :</label><label id="townError" style="color:#C70039;"></label>
            <input id="town" name="town" list="townList" class="text-field" 
-                   type="text" placeholder="-- Select Town --" onclick="clearField('townError')" >
+                   type="text" placeholder="-- Select Town --" onclick="clearErrorAndTheDataField('townError','town')" >
            <datalist id="townList" name="townList">
            </datalist>
            <input type="hidden"  id="sTownCode" name="sTownCode"/>
