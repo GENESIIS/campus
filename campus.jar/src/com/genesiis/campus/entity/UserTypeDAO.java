@@ -7,6 +7,7 @@ package com.genesiis.campus.entity;
 //20170130 CW c36-add-tutor-information re-organise the import statements.
 //20170216 CW c38-view-update-tutor-profile Add class comment
 //20170225 CW c38-view-update-tutor-profile modified getCode method to use USERTYPESTRING instead of NAME column in the query 
+//20170502 CW c38-view-update-tutor-profile modified log messages in getCode method
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -144,10 +145,10 @@ public class UserTypeDAO implements ICrud {
 				code = res.getInt("CODE");
 			} 
 		} catch (SQLException sqle) {
-			log.info("getCode() : SQLException :"+ sqle.getErrorCode()+ ": "+sqle.toString());
+			log.error("getCode() : SQLException :"+ sqle.getErrorCode()+ ": "+sqle.toString());
 			throw sqle;
 		} catch (Exception ex) {
-			log.info("getCode() : Exception :"+ ex.toString());
+			log.error("getCode() : Exception :"+ ex.toString());
 		} finally {			
 			DaoHelper.cleanup(conn, preparedStatement, res);
 		}
