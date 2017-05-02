@@ -53,6 +53,7 @@ function isHumanTestPassed(){
  * flag is false else the method acts void
  * @param flag expression that evaluates to a boolean
  * @param elementName  string to be append to the produced message
+ * @param errorLabelId : component id where the user related information is passed ti
  */
 
 function isFieldFilled(flag, elementName, errorLabelId){		
