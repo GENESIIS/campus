@@ -13,6 +13,7 @@
  * 					   cp_img_type on change event modified to make button enable and disable if an image exists/not exists for the selected type
  * 20170419 PN CAM-48: modified the implementation of createFileName() method, 'cp_img_type on' change event and 'cp_img_upload_btn' upload event to match the functionality with new UI.
  * 20170428 PN CAM-163: populateImageTable(details,courseProviderCode) method implemented to print all the image on the JSP page.
+ * 20170502 PN CAM-163: populateImageTable(details,courseProviderCode) method implementation modified to populate more details on the table.
  */
 
 var dataSet = null;
@@ -438,36 +439,32 @@ function displayErrorMessage(x, status, error) {
  *            uploaded image type.
  */
 function populateImageTable(details,courseProviderCode){
-	alert(details);
 	var html = '';
-
+	$('#cpImageData tbody').find('tr').remove();
 	$.each(details, function(index, value) {
-//		$('#cpImageData tbody').append('<tr>'+
-//		'<td><a class="thumb-img" href="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg" title=""><img alt="" src="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg" /></a></td>'+
-//		'<td><span>' + value[1]+ '</span></td>'+
-//		'<td><span>' + value[3]+ '</span></td>'+
-//		'<td><button type="button" class="btn-default btn-sm"><i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i></button></td>'+
-//		'</tr>');
-		
-		
 		$('#cpImageData tbody').append('<tr>'+
 		'<td>'+
-			'<a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg" title="">'+
-				'<img id="cp_img_display" name="cp_img_display" alt="" src ="http://www.gettyimages.com/gi-resources/images/Embed/new/embed2.jpg"/>'+
+			'<a class="thumb-img" href="'+diskImgPath+courseProviderCode+"/"+value[0]+"?"+Math.random()+'" title="" rel="fancybox">'+
+				'<img alt="" src ="'+diskImgPath+courseProviderCode+"/"+value[0]+"?"+Math.random()+'"/>'+
 			'</a>'+
 		'</td>'+
-		'<td><span id="cp_img_name" name="cp_img_name"></span></td>'+
-		'<th>Added</th>'+
+		'<td><span>' + value[0]+ '</span></td>'+
+		'<td><span>' + value[1]+ '</span></td>'+
+		'<td><span>' + value[2]+ '</span></td>'+
+		'<td><span>' + value[3]+ '</span></td>'+
 		'<td class="">'+
-			'<button type="button" class="btn-default btn-sm" id="cp_img_delete_btn" name="cp_img_delete_btn">'+
+			'<button type="button" class="btn-default btn-sm">'+
 				'<i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i>'+
 			'</button>'+
 		'</td>'+
 		'</tr>');		
-		
-		
 	});
 	
-	            
-	//$('#cpImageData tbody').append(html);
+	$("a.thumb-img").fancybox({
+		'transitionIn'	:	'elastic',
+		'transitionOut'	:	'elastic',
+		'speedIn'		:	600, 
+		'speedOut'		:	200, 
+		'overlayShow'	:	false
+	});
 }
