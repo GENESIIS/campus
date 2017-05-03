@@ -9,6 +9,7 @@ package com.genesiis.campus.command;
 //20170221 JH c141-add-course-provider-issue-improvements added doc comments
 //20170402 JH c141-ui-integration-for-add-course-provider case DISPLAY_TOWN_DATA: validate country id before parsing
 //20170403 JH c141-ui-integration-for-add-course-provider fixed validation error in case DISPLAY_TOWN_DATA
+//20170503 JH c141-ui-integration-for-add-course-provider added doc comments 
 
 import com.genesiis.campus.entity.Country2DAO;
 import com.genesiis.campus.entity.CourseProviderTypeDAO;
@@ -29,8 +30,9 @@ import java.util.Collection;
 
 /**
  * CmdListCourseProviderRegisterPage used to load data to the course provider
- * registration page
- * @author Madu
+ * registration page. This will load the page on load data as well as the data
+ * required on form changes like town list for a selected country
+ * @author JH
  *
  */
 public class CmdListCourseProviderRegisterPage implements ICommand {
@@ -47,15 +49,27 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 		try {
 			Operation op = Operation.getOperation(helper.getCommandCode());
 			switch (op) {
+			/*  
+			 * Here it loads the data required to crate the initial course provider registration page.
+			 * Country list, course provider type list, account list will  be collected
+			 */
 			case LIST_PROVIDER_REGISTRATION_PAGE:
+				
+				//get country list
 				ICrud country2Dao = new Country2DAO();
 				countryCollection = country2Dao.getAll();
 				helper.setAttribute("countryArrayList", countryCollection);
-				ICrud providerTypeDAO = new CourseProviderTypeDAO();
-
+				
+				
 				//get course provider types
+				ICrud providerTypeDAO = new CourseProviderTypeDAO();
 				providerTypeCollection = providerTypeDAO.getAll();
 				
+				
+				/*
+				 * course provider account has only Active and Inactive status. 
+				 * Those two enum values are collected and put to an array
+				 */
 				ArrayList<String> activeAccountStatus = new ArrayList<String>();
 				ArrayList<String> inactiveAccountStatus = new ArrayList<String>();
 				
@@ -74,6 +88,11 @@ public class CmdListCourseProviderRegisterPage implements ICommand {
 				break;
 
 			case DISPLAY_TOWN_DATA:
+				
+				/*
+				 * DISPLAY_TOWN_DATA case queries the database to get the towns 
+				 * of a particular country
+				 */
 
 				ICrud townDao = new TownDAO();
 				String country = helper.getParameter("country");
