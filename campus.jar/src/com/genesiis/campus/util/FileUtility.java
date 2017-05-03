@@ -10,6 +10,7 @@ package com.genesiis.campus.util;
 //20170226 PN CAM-48: implemented deleteFile(String folder, String imgName) method to delete cp image from the disk.
 //20170428 PN CAM-163: getFileDetails(String folder) method implemented to get all the image details to the JSP page.
 //20170502 PN CAM-163: getFileDetails(String folder) method implementation modified to get more details of image.
+//20170503 PN CAM-163: deleteFile(String folder, String imgName) method implementation modified.
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
@@ -521,7 +522,7 @@ public class FileUtility {
 	/**
 	 * This method is to delete files from given name, from given folder.
 	 * @param folder - disk path name
-	 * @param imgName - image name to be deleted.
+	 * @param imgName - cp code and image name to be deleted.
 	 * @return true, if image deleted, else false
 	 */
 	public boolean deleteFile(String folder, String imgName) throws IOException {
@@ -532,11 +533,8 @@ public class FileUtility {
 				// Check if the content inside folder is a file (not a
 				// directory)
 				if (listOfFiles[i].isFile()) {
-					String fileNameWithOutExt = FilenameUtils.removeExtension(listOfFiles[i].getName());
-					if (imgName.equals(fileNameWithOutExt)) {
-						FileUtils.forceDelete(new File(folder + listOfFiles[i].getName()));
-						return true;
-					}
+					FileUtils.forceDelete(new File(folder + listOfFiles[i].getName()));
+					return true;
 				}
 			}
 		} catch (IOException e) {
