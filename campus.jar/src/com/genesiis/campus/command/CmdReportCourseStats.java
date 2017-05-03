@@ -13,6 +13,7 @@ package com.genesiis.campus.command;
  *20170426 DJ c54-report-course-stats-MP-dj Method:populateDates() -to populate dates to searhDTO.
  *20170426 DJ c54-report-course-stats-MP-dj if no date is not selected configure application to list result for 30 days back.
  *20170427 DJ c54-report-course-stats-MP-dj organized imports.
+ *20170503 DJ c54-report-course-stats-MP-dj mx-removed commented out code line..
   * */
 
 import com.genesiis.campus.entity.IView;
@@ -129,9 +130,7 @@ public class CmdReportCourseStats implements ICommand{
 	private void generateReportResults(IDataHelper helper)throws Exception {
 		try {			
 			final List<String> msgList = new ArrayList<String>();			
-			final CourseStatSearchDTO searchDTO = new CourseStatSearchDTO();
-			
-			//boolean flag=isCourseStatFormValidate(msgList,searchDTO,helper);			
+			final CourseStatSearchDTO searchDTO = new CourseStatSearchDTO();						
 			
 			if(isCourseStatFormValidate(msgList,searchDTO,helper)){
 				final  Collection<Collection<String>> courseStatList = new AdminReportDAOImpl().getProgrammeStatsReport(searchDTO);

@@ -1,6 +1,6 @@
 package com.genesiis.campus.entity;
 
-//20170420 DJ c54-report-course-stats-MP-dj Initiated CourseProviderDAOImpl.java , getLightAllCourseProviders method.
+//20170420 DJ c54-report-course-stats-MP-dj Initiated CourseProviderICrud.java , getLightAllCourseProviders method.
 
 import com.genesiis.campus.entity.model.CourseProviderSearchDTO;
 
