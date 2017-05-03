@@ -25,6 +25,7 @@ package com.genesiis.campus.command;
 //20170406 JH c141-ui-integration-for-add-course-provider build contact number and web link hint messages
 //20170407 JH c141-ui-integration-for-add-course-provider removed commented old expiration date implementation and added codes to get web link prefix
 //20170417 JH c141-ui-integration-for-add-course-provider added "http://" as the webLinkPrefix value and build the last weblink
+//20170502 JH c141-ui-integration-for-add-course-provider added checkUsername(IDataHelper, CourseProviderAccount, String)() method for username validation
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -328,4 +329,64 @@ public class CmdAddFeaturedProvider implements ICommand {
 		return view;
 	}
 
+	
+	
+	/**
+	 * username validation method
+	 * @param helper
+	 * @param courseProviderAccount
+	 * @return
+	 */
+	public static IDataHelper checkUsername(IDataHelper helper, CourseProviderAccount courseProviderAccount, String systemMessage)
+	throws SQLException, Exception {
+		// validate username
+		ICrud usernameDAO = new CourseProviderUsernameDAO();
+		String username = helper.getParameter("providerUsername");
+		String email = helper.getParameter("providerEmail");
+		courseProviderAccount.setUsername(username);
+		courseProviderAccount.setEmail(email);
+		Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
+
+		/**
+		 * checks the username availability and email. If the email
+		 * exist,
+		 */
+		usernameCollection = usernameDAO
+				.findById(courseProviderAccount);
+		if (usernameCollection.size() > 0) {
+			String accountUsername = null;
+			String accountEmail = null;
+
+			if (usernameCollection.size() == 1) {
+
+				for (Collection<String> accountCollection : usernameCollection) {
+					Object[] accountData = accountCollection.toArray();
+					accountUsername = (String) accountData[2];
+					accountEmail = (String) accountData[4];
+				}
+
+				if (username.equalsIgnoreCase(accountUsername)) {
+
+					systemMessage = SystemMessage.USERNAME_INVALID.message();
+					helper.setAttribute("errorUsername",
+							SystemMessage.USERNAME_INVALID.message());
+				} else if (email.equalsIgnoreCase(accountEmail)) {
+					systemMessage = SystemMessage.EMAIL_EXIST.message();
+					helper.setAttribute("errorPrivateEmail",
+							SystemMessage.EMAIL_EXIST.message());
+				}
+			} else {
+				systemMessage = SystemMessage.USERNAME_INVALID
+						.message()
+						+ " and "
+						+ SystemMessage.EMAIL_EXIST.message();
+				helper.setAttribute("errorUsername",
+						SystemMessage.USERNAME_INVALID.message());
+				helper.setAttribute("errorPrivateEmail",
+						SystemMessage.EMAIL_EXIST.message());
+			}
+		
+	}
+		return helper;
+}
 }
