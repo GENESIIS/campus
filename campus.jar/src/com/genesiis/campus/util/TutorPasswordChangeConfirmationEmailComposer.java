@@ -1,6 +1,7 @@
 package com.genesiis.campus.util;
 
 //20170316 CW c149-tutor-email-confirmation-for-password-change-cw TutorPasswordChangeConfirmationEmailComposer class created.
+//20170503 CW c149-tutor-email-confirmation-for-password-change-cw modified setGeneralEmail, setEmailDispenser methods & add brackets into the if conditions
 
 import com.genesiis.campus.util.mail.EmailContentCreator;
 import com.genesiis.campus.util.mail.EmailDispenser;
@@ -157,15 +158,16 @@ public class TutorPasswordChangeConfirmationEmailComposer implements IEmailCompo
 	@Override
 	public void setGeneralEmail(IEmail generalEmail) throws IllegalArgumentException {
 		try{
-			if(generalEmail==null)
-				throw new IllegalArgumentException("generalEmail is undefined must be set");	
+			if(generalEmail==null){
+				throw new IllegalArgumentException("generalEmail is undefined must be set");
+			}
 			this.generalEmail = generalEmail;
 		}catch (IllegalArgumentException ilexp){
 			log.error("setGeneralEmail(): IllegalArgumentException"+ ilexp.toString());
 			throw ilexp;
 		}
 	}
-
+	
 	@Override
 	public EmailDispenser getEmailDispenser() {
 		return emailDispenser;
@@ -174,8 +176,9 @@ public class TutorPasswordChangeConfirmationEmailComposer implements IEmailCompo
 	@Override
 	public void setEmailDispenser(EmailDispenser emailDispenser) throws IllegalArgumentException {
 		try{
-			if(emailDispenser==null)
-				throw new IllegalArgumentException("emailDispenser is undefined must be set");	
+			if(emailDispenser==null){
+				throw new IllegalArgumentException("emailDispenser is undefined must be set");
+			}
 			this.emailDispenser = emailDispenser;
 		}catch (IllegalArgumentException ilexp){
 			log.error("setEmailDispenser(): IllegalArgumentException"+ ilexp.toString());
