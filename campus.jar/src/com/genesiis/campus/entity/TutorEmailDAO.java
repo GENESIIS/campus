@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20170223 CW c36-add-tutor-information re-organise the import statements.
 //20170226 CW c36-add-tutor-information modify DOC comments in findById().
 //20170307 CW c147-tutor-reset-password-cw class copied from c37-tutor-update-tutor-profile-cw.
+//20170503 CW c149-tutor-email-confirmation-for-password-change-cw modified log message from info message to error message in findById(Object object) method. 
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -79,13 +80,13 @@ public class TutorEmailDAO implements ICrud {
 				allTutorEmailList.add(singleTutorEmailList);
 			}
 		} catch (ClassCastException cce) {
-			log.info("findById(): ClassCastException " + cce.toString());
+			log.error("findById(): ClassCastException " + cce.toString());
 			throw cce;
 		} catch (SQLException sqlException) {
-			log.info("findById(): SQLException " + sqlException.toString());
+			log.error("findById(): SQLException " + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findById(): Exception " + e.toString());
+			log.error("findById(): Exception " + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
