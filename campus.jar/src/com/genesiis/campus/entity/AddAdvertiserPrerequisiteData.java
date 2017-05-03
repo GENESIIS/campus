@@ -5,6 +5,7 @@ package com.genesiis.campus.entity;
  * 			execute() modified to retrieve all the registered active course providers.
  * 20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The method getAddAdvertiserPageOnLoadData() changed to 
  *             include AllPurposeDAO class, when calls to Database.
+ * 20170503 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The typo in the method getAddAdvertiserPageOnLoadData() has been corrected according to the CREV comments.
  */
 
 import java.sql.Connection;
@@ -137,7 +138,7 @@ public class AddAdvertiserPrerequisiteData {
 			log.error("getAddAdvertiserPagOnLoadData():SQLException"+sqle.toString());
 			throw sqle;
 		} catch (Exception exp){
-			log.error("etAddAdvertiserPagOnLoadData() : Exception"+exp.toString());
+			log.error("AddAdvertiserPagOnLoadData() : Exception"+exp.toString());
 			throw exp;			
 		} finally{
 			this.setResponseCridentials(helper);;
