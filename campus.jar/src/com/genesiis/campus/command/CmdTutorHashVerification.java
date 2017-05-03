@@ -4,6 +4,8 @@ package com.genesiis.campus.command;
 //20170313 CW c148-tutor-verify-hashcode-reset-password-cw CmdTutorHashVerification class modified to validate hashcode properly & set messages correctly
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw add comments to execute method
 //20170317 CW c149-tutor-email-confirmation-for-password-change-cw modify variable declarations & execute method to improve code performance
+//20170503 CW c149-tutor-email-confirmation-for-password-change-cw modified tutorEmailvarification variable name into tutorEmailVarification, 
+					// add length validation into collectionArr array, Remove validation for the message variable for the VALIDHASHCODE message
 
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.TutorEmailVerificationDAO;
@@ -39,11 +41,11 @@ public class CmdTutorHashVerification implements ICommand {
 			tutor.setEmailAddress(helper.getParameter("email"));
 			tutor.setHashCode(helper.getParameter("hashCode"));
 			
-			TutorEmailVerificationDAO tutorEmailvarification = new TutorEmailVerificationDAO();
+			TutorEmailVerificationDAO tutorEmailVarification = new TutorEmailVerificationDAO();
 			
 			//checking the entered hashcode is matching with the generated hash code
 			//if the hash code is a valid one get the details of the tutor 
-			Collection<Collection<String>> dataCollection = tutorEmailvarification.verifyHashCode(tutor);
+			Collection<Collection<String>> dataCollection = tutorEmailVarification.verifyHashCode(tutor);
 			
 			if(dataCollection == null || dataCollection.isEmpty()){
 				message = SystemMessage.INVALID_HASHCODE.message();
@@ -55,7 +57,7 @@ public class CmdTutorHashVerification implements ICommand {
 						//Validating the hash code expiration details
 						Object [] collectionArr = collection.toArray();
 						
-						if(collectionArr != null && collectionArr[5] != null && Integer.parseInt((String)collectionArr[5]) > 30){
+						if(collectionArr != null && collectionArr.length > 5 && collectionArr[5] != null && Integer.parseInt((String)collectionArr[5]) > 30){
 							message = SystemMessage.VERIFICATION_CODEEXPIRED.message();
 						} else {
 							
@@ -68,10 +70,6 @@ public class CmdTutorHashVerification implements ICommand {
 						message = SystemMessage.INVALID_HASHCODE.message();
 					}
 				}
-			}
-			
-			if(message == SystemMessage.VALIDHASHCODE.message()){
-				view.setCollection(dataCollection);
 			}
 		} catch (SQLException sexp) {
 			log.error("execute(): SQLException " + sexp.toString());
