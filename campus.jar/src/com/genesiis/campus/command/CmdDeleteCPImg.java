@@ -57,9 +57,8 @@ public class CmdDeleteCPImg implements ICommand{
 			}else{
 				fileDeleteError = SystemMessage.FILEDELETEFAILED.message();
 			}
-			// This code value given here can be any SYSTEMCONFIGCODE given for for CP images.
-			listOfFiles = FileUtility.getFileNames(fileUploadedPath+"/"+fileData[0].toString()+"/");
-			details = FileUtility.getFileDetails(fileUploadedPath+"/"+fileData[0].toString()+"/");
+			listOfFiles = FileUtility.getFileNames(fileUploadedPath+"/"+fileData[0].toString()+"/");	//File name list only.
+			details = FileUtility.getFileDetails(fileUploadedPath+"/"+fileData[0].toString()+"/");		//All the details inside the folder.
 		} catch (Exception e) {
 			log.error("execute() : e" + e.toString());
 			throw e;

@@ -112,8 +112,8 @@ public class CmdUploadCPImg implements ICommand {
 		}
 		helper.setAttribute("fileUploadSuccess", fileUploadSuccess);
 		helper.setAttribute("fileUploadError", fileUploadError);
-		helper.setAttribute("listOfFiles", listOfFiles);
-		helper.setAttribute("cpImageData", details);
+		helper.setAttribute("listOfFiles", listOfFiles);	//File name list only.
+		helper.setAttribute("cpImageData", details);		//All the details inside the folder.
 		return view;
 	}
 	

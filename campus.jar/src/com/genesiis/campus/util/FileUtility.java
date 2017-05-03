@@ -498,7 +498,7 @@ public class FileUtility {
 	}
 	
 	/**
-	 * This method is to get all the files given folder.
+	 * This method is to get all the file names inside given folder.
 	 * @param folder - disk path name
 	 * @return String[] - file names inside given folder.
 	 * @throws IOException
@@ -548,7 +548,7 @@ public class FileUtility {
 	}
 	
 	/**
-	 * 
+	 * This method is to get all the file details inside the given folder.
 	 * @param folder - disk path name
 	 * @return Collection<Collection<String>> - collection contains all the details of images.
 	 * @throws IOException
