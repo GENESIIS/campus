@@ -26,6 +26,7 @@ package com.genesiis.campus.command;
 //20170407 JH c141-ui-integration-for-add-course-provider removed commented old expiration date implementation and added codes to get web link prefix
 //20170417 JH c141-ui-integration-for-add-course-provider added "http://" as the webLinkPrefix value and build the last weblink
 //20170502 JH c141-ui-integration-for-add-course-provider added checkUsername(IDataHelper, CourseProviderAccount, String)() method for username validation
+//20170503 JH c141-ui-integration-for-add-course-provider use checkUsername() method to validate the email and the username
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -107,52 +108,17 @@ public class CmdAddFeaturedProvider implements ICommand {
 			if (errorMessages.size() == 0) {
 
 				// validate username
-				ICrud usernameDAO = new CourseProviderUsernameDAO();
 				String username = helper.getParameter("providerUsername");
 				String email = helper.getParameter("providerEmail");
 				courseProviderAccount.setUsername(username);
 				courseProviderAccount.setEmail(email);
-				Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
 
 				/**
 				 * checks the username availability and email. If the email
-				 * exist,
 				 */
-				usernameCollection = usernameDAO
-						.findById(courseProviderAccount);
-				if (usernameCollection.size() > 0) {
-					String accountUsername = null;
-					String accountEmail = null;
-
-					if (usernameCollection.size() == 1) {
-
-						for (Collection<String> accountCollection : usernameCollection) {
-							Object[] accountData = accountCollection.toArray();
-							accountUsername = (String) accountData[2];
-							accountEmail = (String) accountData[4];
-						}
-
-						if (username.equalsIgnoreCase(accountUsername)) {
-
-							systemMessage = SystemMessage.USERNAME_INVALID
-									.message();
-							helper.setAttribute("errorUsername",
-									SystemMessage.USERNAME_INVALID.message());
-						} else if (email.equalsIgnoreCase(accountEmail)) {
-							systemMessage = SystemMessage.EMAIL_EXIST.message();
-							helper.setAttribute("errorPrivateEmail",
-									SystemMessage.EMAIL_EXIST.message());
-						}
-					} else {
-						systemMessage = SystemMessage.USERNAME_INVALID
-								.message()
-								+ " and "
-								+ SystemMessage.EMAIL_EXIST.message();
-						helper.setAttribute("errorUsername",
-								SystemMessage.USERNAME_INVALID.message());
-						helper.setAttribute("errorPrivateEmail",
-								SystemMessage.EMAIL_EXIST.message());
-					}
+//				
+				if ( !checkUsername(helper, courseProviderAccount, systemMessage)) { 
+					/* username or the email is not valid */
 
 				} else {
 					// valdate prefix
@@ -332,28 +298,27 @@ public class CmdAddFeaturedProvider implements ICommand {
 	
 	
 	/**
-	 * username validation method
+	 * username validation method used to validate the username and the course provider contact email 
+	 * address
 	 * @param helper
 	 * @param courseProviderAccount
-	 * @return
+	 * @return true if valid, else return false
 	 */
-	public static IDataHelper checkUsername(IDataHelper helper, CourseProviderAccount courseProviderAccount, String systemMessage)
+	public static boolean checkUsername(IDataHelper helper, CourseProviderAccount courseProviderAccount, String systemMessage)
 	throws SQLException, Exception {
 		// validate username
 		ICrud usernameDAO = new CourseProviderUsernameDAO();
-		String username = helper.getParameter("providerUsername");
-		String email = helper.getParameter("providerEmail");
-		courseProviderAccount.setUsername(username);
-		courseProviderAccount.setEmail(email);
 		Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
+		boolean isValid = true;
 
 		/**
-		 * checks the username availability and email. If the email
-		 * exist,
+		 * checks the username availability and email. 
 		 */
 		usernameCollection = usernameDAO
 				.findById(courseProviderAccount);
 		if (usernameCollection.size() > 0) {
+			
+			isValid = false;
 			String accountUsername = null;
 			String accountEmail = null;
 
@@ -365,13 +330,25 @@ public class CmdAddFeaturedProvider implements ICommand {
 					accountEmail = (String) accountData[4];
 				}
 
-				if (username.equalsIgnoreCase(accountUsername)) {
+				if (courseProviderAccount.getUsername().equalsIgnoreCase(accountUsername)) {
 
 					systemMessage = SystemMessage.USERNAME_INVALID.message();
 					helper.setAttribute("errorUsername",
 							SystemMessage.USERNAME_INVALID.message());
-				} else if (email.equalsIgnoreCase(accountEmail)) {
+				} 
+				if (courseProviderAccount.getEmail().equalsIgnoreCase(accountEmail)) {
 					systemMessage = SystemMessage.EMAIL_EXIST.message();
+					helper.setAttribute("errorPrivateEmail",
+							SystemMessage.EMAIL_EXIST.message());
+				}
+				if((courseProviderAccount.getUsername().equalsIgnoreCase(accountUsername)) &&
+						courseProviderAccount.getEmail().equalsIgnoreCase(accountEmail)){
+					systemMessage = SystemMessage.USERNAME_INVALID
+							.message()
+							+ " and "
+							+ SystemMessage.EMAIL_EXIST.message();
+					helper.setAttribute("errorUsername",
+							SystemMessage.USERNAME_INVALID.message());
 					helper.setAttribute("errorPrivateEmail",
 							SystemMessage.EMAIL_EXIST.message());
 				}
@@ -387,6 +364,17 @@ public class CmdAddFeaturedProvider implements ICommand {
 			}
 		
 	}
-		return helper;
+		helper.setAttribute("userMessage", systemMessage);
+		return isValid;
 }
+	
+	
+	public static boolean checkPrefix(IDataHelper helper, CourseProviderAccount courseProviderAccount, String systemMessage)
+			throws SQLException, Exception{
+		
+		boolean isValid = true;
+		
+		
+		return false;
+	}
 }
