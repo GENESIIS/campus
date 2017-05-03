@@ -22,19 +22,12 @@ package com.genesiis.campus.validation;
 //20170407 JH c141-ui-integration-for-add-course-provider change validation messages due to phone number max length changes, password validation methods changed, email address
 //				validation pattern changed, added method validNumber() to validate a string parameter for numbers
 //20170420 JH c141-ui-integration-for-add-course-provider validateCourseProvider(): fax number validation method changed to separately validate for null and integer
+//20170503 JH c141-ui-integration-for-add-course-provider removed unwanted imports, user SystemMessage enum class to set error messages wip
 
-import com.genesiis.campus.command.CmdAddFeaturedProvider;
-import com.genesiis.campus.entity.model.CourseProvider;
-import com.genesiis.campus.entity.model.CourseProviderAccount;
-import com.genesiis.campus.entity.model.CourseProviderTown;
 import com.genesiis.campus.util.IDataHelper;
-import com.sun.org.apache.regexp.internal.recompile;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -155,57 +148,63 @@ public class Validator {
 		ArrayList<String> errorString = new ArrayList<String>();
 		
 		if(isEmptyString(helper.getParameter("courseProvider"))){
-			helper.setAttribute("errorCourseProvider", "Please select the course provider type");
+			helper.setAttribute("errorCourseProvider", SystemMessage.EMPTY_PROVIDER_TYPE.message());
+			errorString.add("Course Provider type ");
 		}
 		
 		if(!isValidLength(helper.getParameter("providerName"), 200, 1 )){
-			helper.setAttribute("errorProviderName", "Name is empty or too long");
+			helper.setAttribute("errorProviderName", SystemMessage.EMPTY_OR_TOO_LONG.message());
 			errorString.add("Provider Name ");
 		}
 		
 		if(!isValidLength(helper.getParameter("shortName"), 30, 0)){
-			helper.setAttribute("errorShortName", "Short name is empty or too long");
+			helper.setAttribute("errorShortName", SystemMessage.EMPTY_OR_TOO_LONG.message());
 			errorString.add("Short Name ");
 		}	
 		
 		if(!isValidLength(helper.getParameter("uniquePrefix"), 20, 2)){
-				helper.setAttribute("errorUniquePrefix", "Unique name is empty or too long");
+				helper.setAttribute("errorUniquePrefix", SystemMessage.EMPTY_OR_TOO_LONG.message());
 		}
 		
 		if(isEmptyString(helper.getParameter("aboutMe"))){
-			helper.setAttribute("errorAboutMe", "Say something about you");
+			helper.setAttribute("errorAboutMe", SystemMessage.ABOUT_ME.message());
 			errorString.add("About Me ");
 		}
 		
 		if(!isValidLength(helper.getParameter("specialFeatures"), 100, 0)){
-			helper.setAttribute("errorSpecialFeatures", "Description is too long.");
+			helper.setAttribute("errorSpecialFeatures", SystemMessage.TOO_LONG_FIELD.message());
 			errorString.add("About Me ");
 		}
 		
 		if(isEmptyString(helper.getParameter("selectedCountry"))){
-			helper.setAttribute("errorSelectedCountry", "Select a country");
+			helper.setAttribute("errorSelectedCountry", SystemMessage.EMPTY_COUNTRY.message());
 			errorString.add("Country ");
 		}
 		
 		if(isEmptyString(helper.getParameter("selectedTown"))){
-			helper.setAttribute("errorSelectedTown", "Select a town");
+			helper.setAttribute("errorSelectedTown", SystemMessage.EMPTY_TOWN.message());
 			errorString.add("Town ");
 		}
 		
 		if(isEmptyString(helper.getParameter("providerStatus"))){
-			helper.setAttribute("errorProviderStatus", "Select a status");
+			helper.setAttribute("errorProviderStatus", SystemMessage.EMPTY_OPTION.message());
 			errorString.add("Course Provider status ");
 		}
 		
 		if(!isValidLength(helper.getParameter("areaCode"), 4, 1) || !validNumber(helper.getParameter("areaCode")) ){
 			
-			helper.setAttribute("errorLand1", "Area code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
-			helper.setAttribute("errorLand2", "Area code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
+			helper.setAttribute("errorLand1", SystemMessage.INVALID_AREA_CODE.message());
 			
 			if(isValidLength(helper.getParameter("fax"), 12, 0) ){
 				
 				if(!isEmptyString(helper.getParameter("fax"))){
-					helper.setAttribute("errorFax", "Area code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
+					helper.setAttribute("errorFax", SystemMessage.INVALID_AREA_CODE.message());
+				}
+			}
+			if (isValidLength(helper.getParameter("land2"), 12, 0)) {
+
+				if (!isEmptyString(helper.getParameter("land2"))) {
+					helper.setAttribute("errorLand2",SystemMessage.INVALID_AREA_CODE.message());
 				}
 			}
 			
@@ -219,7 +218,7 @@ public class Validator {
 			int land2 = helper.getParameter("land2").length();
 			int land3 = helper.getParameter("fax").length();
 			if((!isValidLength(helper.getParameter("land1"), 12, 1)) || !validNumber(helper.getParameter("land1"))){
-				helper.setAttribute("errorLand1", "Phone number 1 is empty, too long(max 12 characters) or invalid. Only numbers allowed.");
+				helper.setAttribute("errorLand1", SystemMessage.EMPTY_LANDPHONE_NUMBER.message());
 				errorString.add("Land number 1 ");
 			}
 			
@@ -229,34 +228,34 @@ public class Validator {
 //			}
 			
 			if( !isValidLength(helper.getParameter("land2"), 12, 0)){
-				helper.setAttribute("errorLand2", "Phone number 2 is too long(max 12 characters).");
+				helper.setAttribute("errorLand2", SystemMessage.TOO_LONE_PHONE_NUMBER.message());
 				errorString.add("land number 2");
 			}
 			if(isValidLength(helper.getParameter("land2"), 12, 1) && !validNumber(helper.getParameter("land2"))){
-				helper.setAttribute("errorLand2", "Phone number 2 is invalid. Only numbers allowed");
+				helper.setAttribute("errorLand2", SystemMessage.INVALID_PHONE_NUMBER.message());
 				errorString.add("land number 2");
 			}
 			
 			if(isValidLength(helper.getParameter("fax"), 12, 1) && !validNumber(helper.getParameter("fax"))){
-				helper.setAttribute("errorFax", "Fax number is invalid. Only numbers allowed.");
+				helper.setAttribute("errorFax", SystemMessage.INVALID_PHONE_NUMBER.message());
 				errorString.add("fax number");
 			}
 			if(!isValidLength(helper.getParameter("fax"), 12, 0)){
-				helper.setAttribute("errorFax", "Fax number is too long (max 12 characters).");
+				helper.setAttribute("errorFax", SystemMessage.TOO_LONE_PHONE_NUMBER.message());
 				errorString.add("fax number");
 			}
 			
 		}
 	
 		if(!isValidLength(helper.getParameter("networkCode"), 4, 1) || !validNumber(helper.getParameter("networkCode"))){
-			helper.setAttribute("errorMobile", "Network code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
+			helper.setAttribute("errorMobile", SystemMessage.INVALID_NETWORK_CODE.message());
 			errorString.add("Network code ");
 		}
 		//if network code is valid, validate the mobile number
 		if(isValidLength(helper.getParameter("networkCode"), 4, 1) && validNumber(helper.getParameter("networkCode"))){
 			
 			if(!isValidLength(helper.getParameter("mobile"), 12, 1) || !validNumber(helper.getParameter("mobile"))){
-				helper.setAttribute("errorMobile", "Mobile number is empty or invalid. Only numbers allowed.");
+				helper.setAttribute("errorMobile", SystemMessage.EMPTY_LANDPHONE_NUMBER.message());
 				errorString.add("Mobile code ");
 			}
 		}
