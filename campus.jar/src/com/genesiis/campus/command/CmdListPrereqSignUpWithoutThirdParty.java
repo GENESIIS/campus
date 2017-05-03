@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20161209 DN C18: code refactor execute() to add usertype logic
 //20161214 DN CAMP:18 setTempdata(int USERTYPE) temporary method created to by pass the USERTYPE table data issue
 //20161229 DN CAMP18: removed unnecessary imports.
+//20170503 DN c88-admin-manage-advertiser-add-new-advertiser-dn. Removed the commented code as per the crev comment. 
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -62,30 +63,5 @@ public class CmdListPrereqSignUpWithoutThirdParty implements ICommand {
 		}
 		return view;
 	}
-	
-	
-	
-//	/**
-//	 * extractDumyObjectFrom helps extract the json data to a
-//	 * row object with the same field name similar to the fields json data 
-//	 * contains
-//	 * @param gsonData
-//	 * @param infaltingtype Class<?> the class type that the gson data to be inflated in to
-//	 * @return
-//	 */
-//
-//	public Object extractDumyObjectFrom(String gsonData,Class<?> infaltingtype) {
-//		Gson gson = new Gson();
-//		Object rowObj = null;
-//		try {
-//			rowObj = gson.fromJson(gsonData,
-//					infaltingtype);
-//
-//		} catch (Exception exception) {
-//			log.error("extractDumyObjectFrom(): " + exception.toString());
-//			throw exception;
-//		}
-//		return rowObj;
-//	}
 
 }
