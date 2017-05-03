@@ -3,7 +3,11 @@ package com.genesiis.campus.factory;
 //20161205 DJ c51-report-courses-by-course-provider-MP-dj Implemented ReportCmdFactory
 //20161205 DJ c51-report-courses-by-course-provider-MP-dj by inserting SEARCH_VIEW_COURSES_BY_COURSE_PROVIDER entry to the map
 //20161205 DJ c51-report-courses-by-course-provider-MP-dj by inserting REPORT_COURSES_BY_COURSE_PROVIDER entry to the map
+//20170418 DJ c54-report-course-stats-MP-dj add REPORT_COURSE_STATS entry
+//20170420 DJ c54-report-course-stats-MP-dj add SEARCH_VIEW_COURSE_STATS entry
+//20170420 DJ c54-report-course-stats-MP-dj add LIST_COURSE_PROVIDER_WISE_PROGRAMME entry
 
+import com.genesiis.campus.command.CmdReportCourseStats;
 import com.genesiis.campus.command.CmdReportRegisteredStudents;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
@@ -19,6 +23,9 @@ public class ReportCmdFactory implements ICmdFactory{
 	static {		
 		map.put(Operation.SEARCH_VIEW_REGISTERED_STUDENTS, new CmdReportRegisteredStudents());
 		map.put(Operation.REPORT_REGISTERED_STUDENTS, new CmdReportRegisteredStudents());
+		map.put(Operation.SEARCH_VIEW_COURSE_STATS, new CmdReportCourseStats());
+		map.put(Operation.LIST_COURSE_PROVIDER_WISE_PROGRAMME, new CmdReportCourseStats());
+		map.put(Operation.REPORT_COURSE_STATS, new CmdReportCourseStats());
 		
 	}
 	
@@ -31,6 +38,15 @@ public class ReportCmdFactory implements ICmdFactory{
 			command = map.get(o);
 			break;
 		case REPORT_REGISTERED_STUDENTS:
+			command = map.get(o);
+			break;
+		case SEARCH_VIEW_COURSE_STATS:
+			command = map.get(o);
+			break;
+		case LIST_COURSE_PROVIDER_WISE_PROGRAMME:
+			command = map.get(o);
+			break;
+		case REPORT_COURSE_STATS:
 			command = map.get(o);
 			break;
 		default:
