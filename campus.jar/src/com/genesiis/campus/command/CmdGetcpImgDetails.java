@@ -34,11 +34,12 @@ public class CmdGetcpImgDetails implements ICommand {
 		int courseProviderCode = 1; // This needs to be assign from the request later.
 		ICrud sysConf = new SystemConfigDAO();
 		Collection<Collection<String>> sysConfCollection = new ArrayList<Collection<String>>();
+		String fileUploadedPath = "";
 		try {
 			sysConfCollection = sysConf.getAll();
 			view.setCollection(sysConfCollection);
 			// This code value given here can be any SYSTEMCONFIGCODE given for for CP images.
-			String fileUploadedPath = getImageDiskPath(3, sysConfCollection);
+			fileUploadedPath = getImageDiskPath(3, sysConfCollection);
 			listOfFiles = FileUtility.getFileNames(fileUploadedPath + "/" + Integer.toString(courseProviderCode) + "/");
 			details = FileUtility.getFileDetails(fileUploadedPath + "/" + Integer.toString(courseProviderCode) + "/");
 		} catch (SQLException sqle) {
@@ -51,6 +52,7 @@ public class CmdGetcpImgDetails implements ICommand {
 		helper.setAttribute("courseProviderCode", courseProviderCode);
 		helper.setAttribute("listOfFiles", listOfFiles);
 		helper.setAttribute("cpImageData", details);
+		helper.setAttribute("fileUploadedPath", fileUploadedPath);
 		return view;
 	}
 
