@@ -39,6 +39,7 @@
 //				use resetAccordion()
 //20170424 JH c141-ui-integration-for-add-course-provider coding wip to send the focus to the next accordion from the last input of the previous accordion
 //20170425 JH c141-ui-integration-for-add-course-provider send input focus to the next accordion first input
+//20170503 JH c141-ui-integration-for-add-course-provider country and town display methods changed, removed commented lines 
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
@@ -268,10 +269,8 @@ function displayProviderCountries() {
 	
 	if(document.createElement("datalist").options) {
 
-		$("#countries").on('click', function(e) {
 			$("#countries").val("");
 			$('#selectedCountry').val("");
-			$('#selectedTown').val("");
 			 
 			if (countryCollection !== undefined & countryCollection !== null) {
 				var dataList = $("#countryresults");
@@ -285,7 +284,6 @@ function displayProviderCountries() {
 				}
 			}
 			
-		});
 	}else{
 		alert("Does not support.");
 	}
@@ -305,6 +303,7 @@ $('#countries').on('input', function() {
     	window.selectedCountry = country;
         getDataOnCountrySelection();
         $("#towns").val("");
+        $('#selectedTown').val("");
         $('#selectedCountry').val(window.selectedCountry);
     }
 });
@@ -375,13 +374,11 @@ function displayProviderTownList() {
 	var townCollection = window.townCollection;
 	
 	if(document.createElement("datalist").options) {
-		$("#towns").on("click", function(e) {
 			$("#towns").val("");
 			
 			if (townCollection !== undefined & townCollection !== null) {
 				var dataList = $("#townresults");
 				dataList.empty();
-				
 				if(townCollection.length) {
 					for(var i=0; i<townCollection.length; i++) {
 						var opt = $("<option></option>").attr({"data-town": townCollection[i][0], "value" : townCollection[i][1] });
@@ -389,21 +386,11 @@ function displayProviderTownList() {
 					}
 				}
 			}
-			
-		});
+		
 	}
 	
 }
 
-
-$('#towns').bind('click change',function(){
-
-	if(window.selectedCountry === "" || window.selectedCountry === null ){
-	   	$("#towns").val("");
-	}
-	
-
-});
 
 /**
  * select town code 
