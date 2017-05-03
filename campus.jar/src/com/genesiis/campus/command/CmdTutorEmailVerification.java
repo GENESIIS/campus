@@ -7,6 +7,8 @@ package com.genesiis.campus.command;
 //20170313 CW c147-tutor-reset-password-cw tutorResetPasswordEmail variable declaration place changed
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw add comments to execute method
 //20170502 CW c149-tutor-email-confirmation-for-password-change-cw emailCollection variable declaration & value assign method
+//20170503 CW c149-tutor-email-confirmation-for-password-change-cw add isTutorFilled boolean value.
+					// removed HASHCODES, HASHCODEUNS messages
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -44,7 +46,8 @@ public class CmdTutorEmailVerification implements ICommand {
 				
 				//get the details of the tutor for the given email address
 				Collection<Collection<String>> emailCollection = emailVarifyDAO.findById(tutor);				
-
+				boolean isTutorFilled = false;
+				
 				for (Collection<String> collection : emailCollection) {
 					if(collection != null && !collection.isEmpty()){
 						//Filling the tutor details with the data found
@@ -57,14 +60,15 @@ public class CmdTutorEmailVerification implements ICommand {
 						String code = (String) array[4];
 						if(code != null){
 							tutor.setCode(Integer.parseInt(code));
-						}						
+						}	
+						isTutorFilled = true;
 					}else{
 						//if the collection is empty then the email address is invalid 
 						message = SystemMessage.INVALID_EMAIL.message();
 					}
 				}
 
-				if (message == null){
+				if (isTutorFilled){
 					//if the message still null then the email an valid one
 					//Creating the hash code & assign to the tutor
 					HashCodeBuilder hashBuilder = new HashCodeBuilder();
@@ -77,11 +81,8 @@ public class CmdTutorEmailVerification implements ICommand {
 					if (updateData > 0) {
 						// if the data updated successfully then sending the email to the given email address
 						GenerateEmail tutorResetPasswordEmail = new GenerateEmail();
-						message = SystemMessage.HASHCODES.message();
 						status = tutorResetPasswordEmail.sendTutorResetPasswordVerificationEmail(tutor.getFirstName(), 
 								tutor.getLastName()	, tutor.getEmailAddress(), tutor.getUsername(), tutor.getHashCode());
-					} else {
-						message = SystemMessage.HASHCODEUNS.message();
 					}
 					message = systemMessage(status);
 				}
