@@ -8,6 +8,9 @@
 				Ajax call to fetch banners if the slots remain empty after page load --%>
 <%-- 20170404 MM c117-display-banners-record-viewcount-back-end - Added test button to trigger 
 				sending of Ajax requests for banner-view-stat-adding --%>
+<%-- 20170502 MM c128-display-banners-record-viewcount-front-end - Added image element to aid testing 
+				of when banners go out of view horizontally (when user may scroll to extreme left/right 
+				of screen) --%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -79,6 +82,10 @@
 			</c:otherwise>
 		</c:choose>
 	</c:if>		
+	</div>
+	
+	<div class="pull-right" style="margin-left: 400px">
+		<img src="https://www.wired.com/wp-content/uploads/2015/09/google-logo-1200x630.jpg"/>	
 	</div>
 	
 	<div class="banner-wrapper" id="SLOT_BANNER_TEST_3"> 
