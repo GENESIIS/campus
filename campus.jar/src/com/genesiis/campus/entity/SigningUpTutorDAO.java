@@ -4,6 +4,7 @@ package com.genesiis.campus.entity;
 //20170314 CW c148-tutor-verify-hashcode-reset-password-cw query error fixed
 //20170316 CW c149-tutor-email-confirmation-for-password-change-cw add doc comments & modified method comment
 //20170317 CW c149-tutor-email-confirmation-for-password-change-cw Add & modify comments to improve readability
+//20170503 CW c149-tutor-email-confirmation-for-password-change-cw modified log message from info message to error message in update(Object object) method. 
 
 import com.genesiis.campus.command.CmdTutorPasswordChange;
 import com.genesiis.campus.entity.model.Tutor;
@@ -52,10 +53,10 @@ public class SigningUpTutorDAO implements ICrud  {
 				rowInserted = 0;
 			}
 		} catch (SQLException e) {
-			log.info("update(Object object): SQLexception" + e.toString());
+			log.error("update(Object object): SQLexception" + e.toString());
 			throw e;
 		} catch (Exception ex) {
-			log.info("update(Object object): Exception" + ex.toString());
+			log.error("update(Object object): Exception" + ex.toString());
 			throw ex;
 		} finally {
 			DaoHelper.cleanup(conn, ps, null);
