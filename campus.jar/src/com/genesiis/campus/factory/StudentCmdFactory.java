@@ -1,17 +1,21 @@
 package com.genesiis.campus.factory;
-
 //20161123 PN c27-upload-user-image: INIT StudentCmdFactory.java
+//20161128 DN C18-student-signup-without-using-third-party-application-dn add SIGN_UP_WO_THRD_PARTY
+// 	to the class and bound with CmdSignUpWithoutThirdParty.java
+//20161205 DN C18-student-signup-without-using-third-party-application-dn add DISPLAY_PREREQUISITE_DATA
+//and bind CmdListPrereqSignUpWithoutThirdParty()
+//20161205 DN C18-student-signup-without-using-third-party-application-dn DISPLAY_TOWN_DATA added
 
-import com.genesiis.campus.command.CmdGetProfileImg;
-import com.genesiis.campus.command.CmdUploadProfileImg;
+import com.genesiis.campus.command.CmdListPrereqSignUpWithoutThirdParty;
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.validation.Operation;
 
 public class StudentCmdFactory implements ICmdFactory{
 	private ICommand command = null;
-	static {	
-		map.put(Operation.UPLOAD_USER_PROFILE, new CmdUploadProfileImg());
-		map.put(Operation.GET_USER_PROFILE, new CmdGetProfileImg());	
+	static {
+	
+	map.put(Operation.DISPLAY_PREREQUISITE_DATA, new CmdListPrereqSignUpWithoutThirdParty());
+	map.put(Operation.DISPLAY_TOWN_DATA,new CmdListPrereqSignUpWithoutThirdParty());
 	}
 
 	@Override
@@ -19,10 +23,10 @@ public class StudentCmdFactory implements ICmdFactory{
 		Operation o = Operation.BAD_OPERATION;
 		o = Operation.getOperation(cco);
 		switch (o) {
-		case UPLOAD_USER_PROFILE:
+		case DISPLAY_PREREQUISITE_DATA:
 			command = map.get(o);
 			break;
-		case GET_USER_PROFILE:
+		case DISPLAY_TOWN_DATA:
 			command = map.get(o);
 			break;
 		default:

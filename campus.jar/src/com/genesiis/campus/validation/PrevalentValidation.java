@@ -20,6 +20,8 @@ package com.genesiis.campus.validation;
 //			   isNotEmpty(String text) method.
 //         compareDates() corrected to use the secodDate instead of using the current date in compareTo method
 //20170403 DN c86-admin-manage-banner-search-banner-dn boolean isNumeric(String, String) throws Exception is added.
+//20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn The method isDouble(String value, String errorMessage)
+//		   has been implemented.
  
 
 import org.apache.commons.validator.routines.UrlValidator;
@@ -271,6 +273,28 @@ public class PrevalentValidation implements Validatory {
 		throwCustomError(validEmail,errorMessage);
 		return validEmail;
 	}
+	
+	/**
+	 * isValidWholeNumber method test for whole Numbers.<br>
+	 * If the argument in test is confirm to valid whole Number<br>
+	 *  method successfully passes the test<br>
+	 * @author DN
+	 * @param number String 
+	 * @return boolean if number confirms to be a whole number
+	 * return true else false.
+	 * @throws Exception
+	 */
+	@Override
+	public boolean isValidWholeNumber(String number, String errorMessage)
+			throws Exception {
+		boolean validWholeNumber = false;
+		Pattern VALID_WHOLE_NUMBER = Pattern.compile(
+				"^\\d+$");
+		Matcher matcher = VALID_WHOLE_NUMBER.matcher(number.trim());
+		validWholeNumber = matcher.find();
+		throwCustomError(validWholeNumber,errorMessage);
+		return validWholeNumber;
+	}
 
 	/**
 	 * isInteger() tests if the passed parameter is an Integer
@@ -298,6 +322,31 @@ public class PrevalentValidation implements Validatory {
 		}
 	}
 
+	/**
+	 * isDouble() tests if the passed parameter is an Integer
+	 * @author DN
+	 * @param value String value representing the Integer and
+	 * required to validate
+	 * @param errorMessage message to be supplied in a case validation fails.
+	 * @return true if the parameter passed in is an Integer
+	 * @throws Exception
+	 */
+	@Override
+	public boolean isDouble(String value, String errorMessage)
+			throws Exception {
+		boolean isTestPassed = false;
+		try {
+			Double.parseDouble(value);
+			isTestPassed = true;
+		} catch (NumberFormatException e) {
+			isTestPassed= false;
+		} catch (NullPointerException e) {
+			isTestPassed= false;
+		} finally {
+			throwCustomError(isTestPassed,errorMessage);
+			return isTestPassed;
+		}
+	}
 	/**
 	 * isFloat() tests if the passed parameter is an Float
 	 * @author DN
@@ -386,7 +435,7 @@ public class PrevalentValidation implements Validatory {
 			}
 	}
 	 
-	/*
+	/**
 	 * throwCustomError class accepts two parameters and based on the test falsity Exception
 	 * will be thrown. 
 	 * @author DN

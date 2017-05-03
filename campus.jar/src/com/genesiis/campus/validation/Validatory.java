@@ -9,6 +9,8 @@ package com.genesiis.campus.validation;
 //20170306 DN c131-admin-manage-banner-upload-banner-image-dn changed the signature of method 
 //         compareDates(Date firstDAte,Date secodDate,String dateFormat,String errorMessage).
 //20170403 DN c86-admin-manage-banner-search-banner-dn boolean isNumeric(String, String) throws Exception is added.
+//20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn The method isDouble(String value, String errorMessage)
+//            and the method signature isValidWholeNumber(String number, String errorMessage) have been declared
 
 
 
@@ -181,6 +183,30 @@ public interface Validatory {
 	 * @throws Exception
 	 */
 	boolean isNumeric(String value, String errorMessage) throws Exception;
+
+	/**
+	 * isDouble() tests if the passed parameter is an Integer
+	 * @author DN
+	 * @param value String value representing the Integer and
+	 * required to validate
+	 * @param errorMessage message to be supplied in a case validation fails.
+	 * @return true if the parameter passed in is an Integer
+	 * @throws Exception
+	 */
+	boolean isDouble(String value, String errorMessage) throws Exception;
+
+	/**
+	 * isValidWholeNumber method test for whole Numbers.<br>
+	 * If the argument in test is confirm to valid whole Number<br>
+	 *  method successfully passes the test<br>
+	 * @author DN
+	 * @param number String 
+	 * @return boolean if number confirms to be a whole number
+	 * return true else false.
+	 * @throws Exception
+	 */
+	boolean isValidWholeNumber(String number, String errorMessage)
+			throws Exception;
 		
 	
 }

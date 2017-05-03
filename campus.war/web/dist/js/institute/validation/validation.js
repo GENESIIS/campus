@@ -27,6 +27,9 @@
  *20170315 DN c81-admin-manage-banner-add-and-view-banner-dn isDate() method has been implemented. compareDates() doc commented re structured 
  *20170321 DN c131-admin-manage-banner-upload-banner-image-dn urlTest() method an the comment amended. add \/{0,1} to the end of regex.
  *20170405 DN c83-admin-manage-banner-update-banner-info-dn isStringHasValiCharsAndLength() has modified to change the OR(|) test of 'testableInput' to AND(&&).
+ *20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The method ajaxCallErorMessage(response,error,errorThrown) is implemented
+ *20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The Function isWholeNumber() is implemented to thest if the test passed is a whole number
+ *20170502 DN clearErrorAndTheDataField New method clearErrorAndTheDataField() has been implemented. The clearField() modified to include val() to be cleared too.
  */ 
 
  
@@ -51,6 +54,7 @@ function isHumanTestPassed(){
  * flag is false else the method acts void
  * @param flag expression that evaluates to a boolean
  * @param elementName  string to be append to the produced message
+ * @param errorLabelId : component id where the user related information is passed ti
  */
 
 function isFieldFilled(flag, elementName, errorLabelId){		
@@ -122,8 +126,23 @@ function isPatternMatch(regularExpression, source) {
 
 function clearField(elementId){	
 	 $(document).find('#' + elementId).text('');
+	 $(document).find('#' + elementId).val('');
 }
 
+/**
+ * clearErrorAndTheDataField function meant to clear the <br>
+ * Error or the user information and the data field of which the <br>
+ * id is passed as the argument <br>
+ * @param err0rElementId : the id of the user information displaying element which should be cleared off <br>
+ * @param dataFieldId : the id of the data field which should be cleared 
+ */
+function clearErrorAndTheDataField(err0rElementId,dataFieldId){
+	if($('#'+err0rElementId).text()!=""){
+		clearField(err0rElementId);
+		clearField(dataFieldId);	
+	}
+
+}
 
 /**
  * isValidEmailFormat method validate a email address
@@ -215,6 +234,23 @@ function urlTest(urlInputTextid){
 }
 
 /**
+ * Test if the supplying parameter is a whole number
+ * @param testingNumber
+ * @returns {Boolean}
+ */
+function isWholeNumber(testingNumber){
+	var isWholeNumber= false;
+	if(testingNumber===""|testingNumber===null){
+		return isWholeNumber;
+	}
+	var testingNumberPattern = /^\d+$/g;
+	if( isPatternMatch(testingNumberPattern,testingNumber))
+		isWholeNumber =true;
+	return isWholeNumber;
+}
+
+
+/**
  * compareDates() accept two string dates which separated by given 
  * delimiter , compares those and returns 
  * date1 > date2 --> 1 <br>
@@ -274,4 +310,21 @@ function isDate(valueToBeTested){
          return true;
      }
 	
+}
+
+/**
+ * ajaxCallErorMessage
+ * @author DJ,DN re engineered 
+ * @param response response that comes from the server
+ * @error error  error message comes from the server when ajax call fails
+ * @errorThrown actual error thrown once ajax response fails
+ */
+function ajaxCallErorMessage(response,error,errorThrown){
+	  var msg = '';
+  if (response.status === 0) {
+      msg = 'The XMLHttpRequest client has been created, but the open() method hasn\'t been called yet.';
+  }else{
+  	msg = error +": "+errorThrown;
+  }
+ return msg;
 }

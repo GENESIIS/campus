@@ -22,6 +22,7 @@ package com.genesiis.campus.entity;
  * 20170407 DN c83-admin-manage-banner-update-banner-info-dn isClientInputAccordanceWithValidation() method has been modified 
  * 				to check nullability and empty string value for banner code
  * 20170419 DN c86-admin-manage-banner-search-banner-dn. made the field IDataHelper private.
+ * 20170424 DN c88-admin-manage-advertiser-add-new-advertiser-dn made int successCode a volatile field.
  */
 
 
@@ -56,7 +57,7 @@ import java.util.regex.PatternSyntaxException;
 public class ListBanner {
 	private static final Logger log = Logger.getLogger(ListBanner.class.getName());
 	private IDataHelper helper;
-	private int successCode =0;
+	private volatile int successCode =0;
 	private String message="";
 	
 	/**

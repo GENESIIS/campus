@@ -3,6 +3,7 @@ package com.genesiis.campus.entity.model;
 /*
  * 20170203 DN c131-admin-manage-banner-upload-banner-image-dn created the initial class stub
  * 20140207 DN c131-admin-manage-banner-upload-banner-image-dn implements AdvertiserRole.
+ * 20170428 DN c88-admin-manage-advertiser-add-new-advertiser-dn changed the townCode to type string from int
  */
 
 
@@ -31,6 +32,8 @@ public class BannerAdvertiser implements AdvertiserRole {
 	private String address3;
 	private String crtBy;
 	private String modBy;
+	private int activeStatus;
+	private String townCode ;
 	
 	public int getCode() {
 		return code;
@@ -122,6 +125,26 @@ public class BannerAdvertiser implements AdvertiserRole {
 	public void setModBy(String modBy) {
 		this.modBy = modBy;
 	}
+	@Override
+	public int getActiveStatus() {
+		return activeStatus;
+	}
+	@Override
+	public void setActiveStatus(int status) {
+		this.activeStatus =status;
+		
+	}
+	@Override
+	public String getTownCode() {
+		return townCode;
+	}
+
+	@Override
+	public void setTownCode(String townCode) {
+		this.townCode = townCode;
+		
+	}
+	
 	
 	
 	
