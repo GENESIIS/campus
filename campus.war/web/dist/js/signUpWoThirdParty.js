@@ -20,6 +20,9 @@
 //20170131 DN CAM:18 add logic to exclude operators and separators been accepted as legitimate strings from front end fields first name,city,town and last name
 //				adds function to refrain entering invalid country and town to input fields
 //20170207 DN CAM:18 clearAllFields() modified to check the password make visible and depend on the out put make the text field password.
+//20170503 DN CAM:18 manageTownListing() modified to include populateDataList() to populate the town data list and include the same function getPreRequisitPageData()
+//            to populate the Country data list so that the EI browser displays actual values rather than the code(numbers).
+//			The populateDataList(responseAttribute,elementId) method has been implemented to populate the data list.(in order to modularise the code that populate the data list)
 
 var theNewScript = document.createElement("script");
 var theSecondScript = document.createElement("script");
@@ -62,6 +65,57 @@ function displaySignUpPrerequisitDetails(){
 	});
 	
 }
+
+/**
+ * Populates the data list, The data list to be populate must accept a response 
+ * which is of the form {[a,b],[a1,b1],[a2,b2]} where first element being the code which
+ * is the text of the <option> and second 
+ * element being the value of the <option> part of the data list.
+ * @param response what comes as the ajax success call
+ * @param elementId data list 'id'.
+ */
+
+function populateDataList(responseAttribute,elementId){
+	
+	// get the  data list element wrapper set
+	var elementWrapperSet = $('#'+elementId);
+	// visually remove all the option element
+	elementWrapperSet.find('option').remove();
+	// visually remove all the input element
+	elementWrapperSet.find('input').remove();
+	
+	/* use the response and process the banner slot list
+	* this brings the collection that contains the Collection<collection<String>>
+	*which sends from the server as an Array, then iterate over, the array gets the form 
+	* {[a,b],[a1,b1],[a2,b2]}
+	*/
+	$.each(responseAttribute,function(index,value){
+		var record= value.toString();
+		var recordArray =record.split(","); // convert the string to an Array
+		
+		
+		var recordCode = recordArray[0].toString();
+		var recordName = recordArray[1].toString();
+		
+		/*
+		 * 	create option list on the fly and attach to the data list 
+		 	create a new custom attribute called data-code and data-value then attach the code and treated name to the option list as attributes
+		 	later these values can be used to extract the code
+		 	e.g. <option data-code="1" value="Advertiser 0" data-value="Advertiser0"></option>
+		 */
+		$("<option></option>")
+								.attr({
+									 "data-code": recordCode,
+									 "value" : recordName ,
+									 "data-value":recordName.replace(/\s+/g, "").split(".")
+									 })
+									 .appendTo(elementWrapperSet);	
+	});
+}
+
+
+
+
 /**
  * getPreRequisitPageData() suppose to manage the page view
  * and decide on what content should be displayed on page load time.
@@ -70,17 +124,23 @@ function displaySignUpPrerequisitDetails(){
  * @param preRequistData response send from the server side
  */
 function getPreRequisitPageData(preRequistData){
-	// Set Country details 
-	var countryList = $('#countryList');
-	countryList.find('option').remove();
-	$.each(preRequistData.result, function(index, value){
-		var res = value.toString();
-		var data = res.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		$('<option>').val(y).text(x).appendTo(countryList);
-		
-	});
+	
+	
+	
+ // populating the  Country details list.
+	populateDataList(preRequistData.result,'countryList');
+	
+//// Set Country details 
+//	var countryList = $('#countryList');
+//	countryList.find('option').remove();
+//	$.each(preRequistData.result, function(index, value){
+//		var res = value.toString();
+//		var data = res.split(",");
+//		var x = data[0].toString();
+//		var y = data[1].toString();
+//		$('<option>').val(y).text(x).appendTo(countryList);
+//		
+//	});
 	
 	
 	// set the USERTYPE CODE to the hidden field
@@ -96,7 +156,7 @@ function getPreRequisitPageData(preRequistData){
 													status = true;
 													return $(this).val();
 												}
-									 		}).text();
+									 		}).attr("data-code");
 	selectedCountryCode = dValue;
 	//populating the town list 
 	if(status){
@@ -120,7 +180,7 @@ function getPreRequisitPageData(preRequistData){
 													status = true;
 													return $(this).val();
 												}
-									 		}).text();
+									 		}).attr("data-code");
 		selectedTownCode = dValue;
 		//setting the hidden field with the town value in the input field
 	if(status){
@@ -219,15 +279,8 @@ function extractRelaventTownList(countryCode){
  * from the response sent from the server
  * @param townObject the response received from the server.
  */
-function manageTownListing(townObject){
-	$('#townList').find('option').remove();
-	$.each(townObject.result,function(index,town){
-		var townString = town.toString();
-		var data = townString.split(",");
-		var x = data[0].toString();
-		var y = data[1].toString();
-		$('<option>').val(y).text(x).appendTo($('#townList'));
-	});
+function manageTownListing(townObject){	
+	populateDataList(townObject.result,'townList');
 	
 }
 
