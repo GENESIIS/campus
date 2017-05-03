@@ -14,7 +14,7 @@
  * 20170419 PN CAM-48: modified the implementation of createFileName() method, 'cp_img_type on' change event and 'cp_img_upload_btn' upload event to match the functionality with new UI.
  * 20170428 PN CAM-163: populateImageTable(details,courseProviderCode) method implemented to print all the image on the JSP page.
  * 20170502 PN CAM-163: populateImageTable(details,courseProviderCode) method implementation modified to populate more details on the table.
- * 20170503 PN CAM-163: deleteImage(imagePath,delete_btn) method implementation completed to perform image deletion.
+ * 20170503 PN CAM-163: deleteImage(imagePath,delete_btn) method implementation completed to perform image deletion. 'no images found inside folder' condition check inside methods.
  *  */
 
 var dataSet = null;
@@ -99,8 +99,12 @@ $(document).ready(function() {
 	    	    contentType : false,
 			    success:function(response){
 			    	listOfFiles = response.listOfFiles;
-			    	listOfImageFileDetails = response.cpImageData;
+			    	listOfImageFileDetails = response.cpImageData;		    	
 			    	populateImageTable(listOfImageFileDetails,courseProviderCode);
+			    	if(listOfImageFileDetails.length <= 0){
+			    		alert("No images inside the folder to display.");
+			    		return;
+			    	}
 			    	if(response.fileUploadError != ""){
 			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileUploadError);
@@ -156,8 +160,12 @@ function displayImgDetails() {
 				listOfFiles = response.listOfFiles;
 				listOfImageFileDetails = response.cpImageData;
 				fileUploadedPath = fileUploadedPath;
+				setCPImgData(response);				
 				populateImageTable(listOfImageFileDetails,courseProviderCode);
-				setCPImgData(response);
+				if(listOfImageFileDetails.length <= 0){
+		    		alert("No images inside the folder to display.");
+		    		return;
+		    	}
 			}
 		},
 		error : function(x, status, error) {
@@ -420,6 +428,10 @@ function deleteImage(imagePath,delete_btn){
 		    	listOfFiles = response.listOfFiles;
 		    	listOfImageFileDetails = response.cpImageData;
 		    	populateImageTable(listOfImageFileDetails,imagePath.substr(0,imagePath.indexOf("/")));
+		    	if(listOfImageFileDetails.length <= 0){
+		    		alert("No images inside the folder to display.");
+		    		return;
+		    	}
 		    	if(response.fileDeleteError != ""){
 		    		$('#img-err-lbl').show();
 		    		$('#cp_img_err').html(response.fileDeleteError);
