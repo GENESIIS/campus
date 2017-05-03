@@ -7,6 +7,7 @@ package com.genesiis.campus.command;
 							// Add method comments to execute & fillTutorRequiredFields methods, add systemMessage method
 //20170317 CW c149-tutor-email-confirmation-for-password-change-cw modify variable declarations to improve code performance & add comments to improve readability
 //20170405 CW c149-tutor-email-confirmation-for-password-change-cw remove systemMessage method & systemMessage method call from execute method
+//20170503 CW c149-tutor-email-confirmation-for-password-change-cw modified the allTutorDetailList variable initialization.
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -95,8 +96,7 @@ public class CmdTutorPasswordChange implements ICommand {
 
 		try {
 			ICrud tutorDaoObj = new TutorDAO();
-			Collection<Collection<String>> allTutorDetailList = new ArrayList<Collection<String>>();
-			allTutorDetailList = tutorDaoObj.findById(tutor);
+			Collection<Collection<String>> allTutorDetailList = tutorDaoObj.findById(tutor);
 			
 			for (Collection<String> tutorCollection : allTutorDetailList) {
 				if(tutorCollection != null && !tutorCollection.isEmpty()){
