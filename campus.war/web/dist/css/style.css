@@ -13,6 +13,7 @@
 @import 'https://fonts.googleapis.com/css?family=Lato';
 @import 'https://fonts.googleapis.com/css?family=Open+Sans';
 @import url(../../bower-components/faw/css/font-awesome.min.css);
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -870,7 +871,8 @@ body.admin .header {
   margin-bottom: 25px; }
 
 .course-registration {
-  padding-bottom: 50px; }
+  padding-bottom: 50px;
+  position: relative; }
   .course-registration h2.form-title {
     color: #2f66c2;
     font-family: "Open Sans", sans-serif;
@@ -1026,6 +1028,56 @@ body.admin .header {
   position: absolute;
   left: 0;
   top: 0; }
+
+.add-program-screen {
+  display: block;
+  position: relative;
+  min-height: 1220px; }
+
+#programmeForm fieldset {
+  position: relative; }
+
+#programmeForm fieldset:not(:first-of-type) {
+  display: none; }
+
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  /*CSS counters to number the steps */
+  counter-reset: step; }
+  #progressbar li {
+    list-style-type: none;
+    color: white;
+    text-transform: uppercase;
+    font-size: 9px;
+    width: 33.33%;
+    float: left;
+    position: relative; }
+    #progressbar li:before {
+      content: counter(step);
+      counter-increment: step;
+      width: 20px;
+      line-height: 20px;
+      display: block;
+      font-size: 10px;
+      color: #333;
+      background: white;
+      border-radius: 3px;
+      margin: 0 auto 5px auto; }
+    #progressbar li:after {
+      content: "";
+      width: 100%;
+      height: 2px;
+      background: white;
+      position: absolute;
+      left: -50%;
+      top: 9px;
+      z-index: -1; }
+    #progressbar li:first-child:after {
+      content: none; }
+  #progressbar li.active:after, #progressbar li.active:before {
+    background: #27AE60;
+    color: white; }
 
 /* Modules */
 .btn-submit {
