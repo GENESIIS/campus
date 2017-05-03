@@ -50,6 +50,9 @@
  * 				(into bindEventsToBanners function) to better organise code; added condition
  * 				to new setBannerRotationTimes() to only proceed with processing only if banners are there 
  * 				for a slot 
+ * 20170503 MM c128-display-banners-record-viewcount-front-end - Modified setBannerRotationTimes() to 
+ * 				prevent view-stat-update request from being sent when banners go out of view as result of 
+ * 				horizontal scrolling (when scrolled to extreme left/right of screen)
  * 				 		
  */
 
@@ -69,38 +72,6 @@
  * THIS CODE PRODUCED EXPECTED BEHAVIOUR WITH JQUERY v2.2.2
  * */
 
-// Event handler for sending DB add operation upon clicking of a banner
-function sendBannerStatisticsUpdateRequest(banner) { 
-	
-	var bannerCode = banner.attr('data-banner-code');
-	var callerPage = getPageName();
-	
-	$.ajax({
-		url : '/PublicController',
-		method : 'POST',
-		data : {
-			'CCO' : 'ADD_BANNER_STAT',
-			'banner' : bannerCode,
-			'callerPage' : callerPage
-		},
-		dataType : "json",
-		async : true,
-		success : function(response) {			
-			var operationStatus = response.operationStatus; 			
-			if(operationStatus != undefined && operationStatus != null) {
-				if (operationStatus === 'SUCCESS') {
-					console.log('Banner-statistics successfully updated.');
-				} else if (operationStatus === 'FAILURE') {
-					console.log('Banner-statistics update failed.');
-				}
-			}
-		},
-		error : function(response) {			
-			console.log('Ajax request to update statistics failed.');
-		}
-	});
-}
-
 $(document).ready(function() {
 	
 	var bannerLoadingStatusIndicator = $('#areBannersDeliveredWithPage');	
@@ -115,88 +86,6 @@ $(document).ready(function() {
 	}
 	
 });
-
-// Sets rotations times (for how long each will be visible) to banner images
-function setBannerRotationTimes() {
-
-	// Banner-rotation code 
-	var bannerSlotWrappers = $('.banner-wrapper');
-	var bannerSlotTimers = [];
-
-	bannerSlotWrappers.each(function(index){
-		bannerSlotTimers.push(function (slotIndex) {
-			var shownBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
-			if (shownBanner.length > 0) {
-				var t1 = shownBanner.data('timeout');      
-				
-				setTimeout(function () {
-					var activeBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
-					activeBanner.removeClass('banner-shown');
-					var anchor = activeBanner.parent().next();
-					var nextBanner = null;
-					if (anchor.length == 0) {
-						nextBanner = activeBanner.parents('div.banner-wrapper').children('a').first().children('img');
-					} else {
-						nextBanner = anchor.children('img');
-					}
-					nextBanner.addClass('banner-shown');
-					
-					if (nextBanner.length > 0) {				
-						// Send the banner-view-stat-update request only if banner-slot is in view 
-					    var top_of_element = nextBanner.offset().top;
-					    var bottom_of_element = nextBanner.offset().top + nextBanner.outerHeight();
-					    var bottom_of_screen = $(window).scrollTop() + $(window).height();
-					    var top_of_screen = $(window).scrollTop();
-		
-					    if((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element)){
-					        console.log("Element is visible!");					
-							var shownBannerCode = nextBanner.attr('data-banner-code');
-							sendBannerViewStatUpdateRequest(shownBannerCode);
-					    } else {
-					    	console.log("Element is not visible. Not sending banner-rotation-view request");
-					    }				    
-					} else {
-						console.log("The reference nextBanner is null!");
-					}
-					
-					bannerSlotTimers[slotIndex](slotIndex);
-				}, t1 * 1000, slotIndex);
-			}
-		});
-	});
-
-	$.each(bannerSlotTimers, function(index, value) {
-		value(index);
-	});
-}
-
-// Send banner-view-stat update request
-function sendBannerViewStatUpdateRequest(bannerCode) {	
-	$.ajax({
-		url : '/PublicController',
-		method : 'POST',
-		data : {
-			'CCO' : 'ADD_BANNER_VIEW_STAT',
-			'banner' : bannerCode
-		},
-		dataType : "json",
-		async : true,
-		success : function(response) {			
-			var operationStatus = response.operationStatus; 			
-			if(operationStatus != undefined && operationStatus != null) {
-				if (operationStatus === 'SUCCESS') {
-					console.log('Banner-view-statistics successfully updated.');
-				} else if (operationStatus === 'FAILURE') {
-					console.log('Banner-view-statistics update failed.');
-				}
-			}
-		},
-		error : function(response) {			
-			console.log('Ajax request to update banner-view-statistics failed.');
-		}
-	});
-}
-
 
 //Event handler for sending Ajax request to fetch banners 
 function getBanners(callback) { 
@@ -251,7 +140,7 @@ function setBannersToPageSlots(response) {
 	setBannerRotationTimes();
 }
 
-// Binds various handlers for multiple events of banner images
+//Binds various handlers for multiple events of banner images
 function bindEventsToBanners() {
 	// Bind event handler for click event to banner elements
 	$('.banner').on('click', function(e) {
@@ -269,6 +158,125 @@ function bindEventsToBanners() {
 	    	alert("banner keypress");
 	        $('.banner').trigger('click');
 	    }
+	});
+}
+
+// Sets rotation times (for how long each will be visible) to banner images
+function setBannerRotationTimes() {
+
+	// Banner-rotation code 
+	var bannerSlotWrappers = $('.banner-wrapper');
+	var bannerSlotTimers = [];
+
+	bannerSlotWrappers.each(function(index){
+		bannerSlotTimers.push(function (slotIndex) {
+			var shownBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
+			if (shownBanner.length > 0) {
+				var t1 = shownBanner.data('timeout');      
+				
+				setTimeout(function () {
+					var activeBanner = $(bannerSlotWrappers.get(slotIndex)).find('.banner-shown');
+					activeBanner.removeClass('banner-shown');
+					var anchor = activeBanner.parent().next();
+					var nextBanner = null;
+					if (anchor.length == 0) {
+						nextBanner = activeBanner.parents('div.banner-wrapper').children('a').first().children('img');
+					} else {
+						nextBanner = anchor.children('img');
+					}
+					nextBanner.addClass('banner-shown');
+					
+					if (nextBanner.length > 0) {				
+						// Send the banner-view-stat-update request only if banner-slot is in view 
+						var top_of_element = nextBanner.offset().top;
+						var bottom_of_element = nextBanner.offset().top + nextBanner.outerHeight();
+					    var left_edge_of_element = nextBanner.offset().left;
+					    var right_edge_of_element = nextBanner.offset().left + nextBanner.outerWidth();
+					    
+					    var bottom_of_screen = $(window).scrollTop() + $(window).height();
+					    var top_of_screen = $(window).scrollTop();
+					    var left_edge_of_screen = $(window).scrollLeft();
+					    var right_edge_of_screen = $(window).scrollLeft() + $(window).width();
+		
+					    if((bottom_of_screen > top_of_element) && (top_of_screen < bottom_of_element) && 
+					    		(right_edge_of_screen > left_edge_of_element) && (left_edge_of_screen < right_edge_of_element)){
+					        console.log("Element is visible!");					
+							var shownBannerCode = nextBanner.attr('data-banner-code');
+							sendBannerViewStatUpdateRequest(shownBannerCode);
+					    } else {
+					    	console.log("Element is not visible. Not sending banner-rotation-view request");
+					    }				    
+					} else {
+						console.log("The reference nextBanner is null!");
+					}
+					
+					bannerSlotTimers[slotIndex](slotIndex);
+				}, t1 * 1000, slotIndex);
+			}
+		});
+	});
+
+	$.each(bannerSlotTimers, function(index, value) {
+		value(index);
+	});
+}
+
+//Event handler for sending DB add operation upon clicking of a banner
+function sendBannerStatisticsUpdateRequest(banner) { 
+	
+	var bannerCode = banner.attr('data-banner-code');
+	var callerPage = getPageName();
+	
+	$.ajax({
+		url : '/PublicController',
+		method : 'POST',
+		data : {
+			'CCO' : 'ADD_BANNER_STAT',
+			'banner' : bannerCode,
+			'callerPage' : callerPage
+		},
+		dataType : "json",
+		async : true,
+		success : function(response) {			
+			var operationStatus = response.operationStatus; 			
+			if(operationStatus != undefined && operationStatus != null) {
+				if (operationStatus === 'SUCCESS') {
+					console.log('Banner-statistics successfully updated.');
+				} else if (operationStatus === 'FAILURE') {
+					console.log('Banner-statistics update failed.');
+				}
+			}
+		},
+		error : function(response) {			
+			console.log('Ajax request to update statistics failed.');
+		}
+	});
+}
+
+//Send banner-view-stat update request
+function sendBannerViewStatUpdateRequest(bannerCode) {	
+	$.ajax({
+		url : '/PublicController',
+		method : 'POST',
+		data : {
+			'CCO' : 'ADD_BANNER_VIEW_STAT',
+			'banner' : bannerCode
+		},
+		dataType : "json",
+		async : true,
+		success : function(response) {			
+			var operationStatus = response.operationStatus; 			
+			if(operationStatus != undefined && operationStatus != null) {
+				if (operationStatus === 'SUCCESS') {
+					console.log('Banner-view-statistics successfully updated.');
+				} else if (operationStatus === 'FAILURE') {
+					console.log('Attempt to update banner-view-statistics failed.');
+				}
+			}
+		},
+		error : function(response) {			
+			console.log('Ajax request to update banner-view-statistics failed.');
+		}
 	});
 }
 
