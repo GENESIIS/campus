@@ -412,7 +412,7 @@
 											<label for="whatsapp-no">WhatsApp Number</label>
 											<div class="input-wrapper" id="whatsappDiv">
 												<input name="whatsapp" type="tel" class="form-control"
-													id="whatsapp" placeholder="">
+													id="whatsapp" placeholder="" maxlength="16" size="16">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorWhatsapp"
 													title="Error! "></a>
 											</div>
@@ -421,7 +421,7 @@
 											<label for="viber-no">Viber Number</label>
 											<div class="input-wrapper" id="viberDiv">
 												<input name="viber" type="tel" class="form-control"
-													id="viber" placeholder="">
+													id="viber" placeholder="" maxlength="16" size="16">
 													<a class="error-info" href="#" data-toggle="tooltip" id="errorViber"
 													title="Error! "></a>
 											</div>
