@@ -9,6 +9,8 @@ package com.genesiis.campus.command;
 //20170426 CW c159-courseprovider-accept-tutor-request-cw unit testing & applicationStatusMap data filling error fixing
 //20170427 CW c159-courseprovider-accept-tutor-request-cw modified the values sending into applicationStatusMap
 //20170429 CW c159-courseprovider-accept-tutor-request-cw set parameters into getTutorsListOfCourseprovider method
+//20170504 CW c159-courseprovider-accept-tutor-request-cw moved map creation code into ApplicationStatus enum & 
+					//use getapplicationStatusMap method to get the applicationStatusMap
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -55,13 +57,7 @@ public class CmdListTutorsForCourseProviders implements ICommand  {
 				Collection<Collection<String>> allEmploymentTutorsList = tutorsForCP.getTutorsListOfCourseprovider(courseProviderCode, 
 						String.valueOf(ApplicationStatus.ACTIVE.getStatusValue()), String.valueOf(ApplicationStatus.PENDING.getStatusValue()));				
 
-				HashMap<Integer, String> applicationStatusMap = new HashMap<Integer, String>();
-				
-				for (ApplicationStatus statusValues : ApplicationStatus.values()) {
-					int statusValueInt = ApplicationStatus.getApplicationStatus(statusValues.toString());
-					applicationStatusMap.put(statusValueInt, ApplicationStatus.getApplicationStatus(statusValueInt));
-				}
-
+				HashMap<Integer, String> applicationStatusMap = ApplicationStatus.getapplicationStatusMap();
 				helper.setAttribute("applicationStatusMap", applicationStatusMap);
 				
 				view.setCollection(allEmploymentTutorsList);		
