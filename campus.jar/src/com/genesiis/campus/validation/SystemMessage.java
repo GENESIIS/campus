@@ -34,7 +34,16 @@ public enum SystemMessage {
 	EMPTY_LANDPHONE_NUMBER("Phone number is empty, too long(max 12 characters) or invalid. Only numbers allowed."),
 	TOO_LONE_PHONE_NUMBER("Phone number is too long(max 12 characters)."),
 	INVALID_PHONE_NUMBER("Invalid number. Only numbers allowed"),
-	INVALID_NETWORK_CODE("Network code is empty, too long(max 4 characters) or invalid. Only numbers allowed.");
+	INVALID_NETWORK_CODE("Network code is empty, too long(max 4 characters) or invalid. Only numbers allowed."),
+	EMPTY_OR_INVALID_EMAIL("Empty or invalid email address. (only 255 characters allowed)."),
+	INVALID_SOCIAL_MEDIA_NUMBER( "Maximum length exceed or invalid."),
+	ERROR_CONTACT_NAME("Contact name is empty or too long. (only 100 characters)."),
+	INVALID_EMAIL("Invalid contact Email address"),
+	TOO_LONG_USERNAME("Username too small or exceed the max length. It must have min 5 and max 100 characters"),
+	ERROR_ONLY_NUMBERS( "Only numbers are not allowed. "),
+	PASSWORD_NOT_MATCH("Password fields does not match"),
+	WEAK_PASSWORD("Password filed(s) should have 6 to 100 characters."),
+	INVALID_URL(" URL invalid.");
 	
 	
 	private String message;
