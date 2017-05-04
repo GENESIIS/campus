@@ -35,6 +35,7 @@
  * 20170419 DN c86-admin-manage-banner-search-banner-dn. implemented toggle show of activate and Deactivate banners buttons based on the selected radio button
  * 20170420 DN c86-admin-manage-banner-search-banner-dn. the success property of the method passSelectedBannersToServer() user message has been added. inactiveBanner on click if no records are selected add an exist statement.
  * 20170420 DN c83-admin-manage-banner-update-banner-info-dn . onclick event on adminAddNewBanner element opens a page on new tab -initialized.
+ * 20170504 DN 83-admin-manage-banner-update-banner-info-dn. The field tool tip comment have been enabled by implementing an event trigger.
  */
 
 var theNewScript = document.createElement("script");
@@ -515,4 +516,12 @@ $(document).on('change','#all-delete',function(event){
 	//if all-delete selected select all records else deselect all
 	var isCheckBoxSelected = $('#all-delete').is(':checked');
 	$('.check-one-by-one').prop('checked',isCheckBoxSelected);		
+});
+
+/**
+ * this event triggers and manages the tool tips 
+ * available on the page.
+ */
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
 });
