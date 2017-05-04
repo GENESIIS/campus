@@ -10,6 +10,7 @@ import java.util.HashMap;
 //20170426 CW c159-courseprovider-accept-tutor-request-cw add getApplicationStatus method
 //20170427 CW c159-courseprovider-accept-tutor-request-cw command DELETED modified into DELETE
 //20170504 CW c159-courseprovider-accept-tutor-request-cw add getapplicationStatusMap method
+//20170504 CW c159-courseprovider-accept-tutor-request-cw command UNDEFINED added
 
 /**
 * ApplicationStatus enum created to manage all the status values
@@ -18,7 +19,8 @@ import java.util.HashMap;
 *
 */
 public enum ApplicationStatus {
-	
+
+	UNDEFINED(-1),
 	INACTIVE(0),
 	ACTIVE(1),	
 	PENDING(2),
@@ -48,11 +50,15 @@ public enum ApplicationStatus {
 	public static int getApplicationStatus(String statusValue){
 		int applicationStatus=0; 
 		if (Validator.isNotEmpty(statusValue)) {
-			if (statusValue.equalsIgnoreCase("ACTIVE")) {
-				applicationStatus = ACTIVE.getStatusValue();
+			
+			if (statusValue.equalsIgnoreCase("UNDEFINED")) {
+				applicationStatus = UNDEFINED.getStatusValue();
 			}
 			if (statusValue.equalsIgnoreCase("INACTIVE")) {
 				applicationStatus = INACTIVE.getStatusValue();
+			}
+			if (statusValue.equalsIgnoreCase("ACTIVE")) {
+				applicationStatus = ACTIVE.getStatusValue();
 			}
 			if (statusValue.equalsIgnoreCase("PENDING")) {
 				applicationStatus = PENDING.getStatusValue();
@@ -77,12 +83,15 @@ public enum ApplicationStatus {
 	 */
 	public static String getApplicationStatus(int statusValue){
 		String applicationStatus="";				
-		
-		if(statusValue ==ACTIVE.statusValue){
-			applicationStatus = "Active";
+
+		if(statusValue==UNDEFINED.statusValue){
+			applicationStatus = "Undefined";
 		}
 		if(statusValue==INACTIVE.statusValue){
 			applicationStatus = "InActive";
+		}
+		if(statusValue ==ACTIVE.statusValue){
+			applicationStatus = "Active";
 		}
 		if(statusValue==PENDING.statusValue ){
 			applicationStatus = "Pending";
