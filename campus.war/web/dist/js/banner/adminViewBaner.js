@@ -33,7 +33,10 @@
  * 20170418 DN c86-admin-manage-banner-search-banner-dn. The function that selecting / deselecting the check box on 'Select All'check box change has been coded
  * 			Added on click function to activate / deactivate banner records and implemented passSelectedBannersToServer().
  * 20170419 DN c86-admin-manage-banner-search-banner-dn. implemented toggle show of activate and Deactivate banners buttons based on the selected radio button
- * 20170420 DN c86-admin-manage-banner-search-banner-dn. the success property of the method passSelectedBannersToServer() user message has been added. inactiveBanner on click if no records are selected add an exist statement.
+ * 20170420 DN c86-admin-manage-banner-search-banner-dn. the success property of the method passSelectedBannersToServer() user message has been added.
+ * 			inactiveBanner on click if no records are selected add an exist statement.
+ * 20170504 DN c86-admin-manage-banner-search-banner-dn. $(document).on('click','#activeBanner',function(event) included the return null section to give the controll
+ * 			to the callee if none of the records exists for activation
  */
 
 var theNewScript = document.createElement("script");
@@ -451,6 +454,7 @@ $(document).on('click','#activeBanner',function(event){
 	if(selectedBanners.length===0){
 		var msg = "None of the records have been selected. Please select one or more records ";
 		displayLabelMessage('messagePopUp','displayLabel','red',msg);
+		return null;
 	}
 		
  // ajax call to transfer the data to server 
