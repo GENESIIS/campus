@@ -48,6 +48,7 @@ package com.genesiis.campus.entity;
 //20170429 CW c159-courseprovider-accept-tutor-request-cw fixing the errors creating the status value in getTutorsListOfCourseprovider method
 //20170429 CW c159-courseprovider-accept-tutor-request-cw fixing the errors creating the status value in getTutorsListOfCourseprovider method
 //20170501 CW c159-courseprovider-accept-tutor-request-cw log message changed into info from error in getFCPListForTutorToSelect
+//20170504 CW c159-courseprovider-accept-tutor-request-cw removed un used varisble declarations from getTutorsListOfCourseprovider method
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
@@ -454,7 +455,6 @@ public class TutorDAO implements ICrud {
 		String status = "";
 		try {
 			if(courseProviderCode.length >= 2){
-				int a = courseProviderCode.length;
 				
 				for(int i = 1; i < courseProviderCode.length; i++){	
 					if(i < courseProviderCode.length - 1){
