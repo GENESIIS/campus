@@ -10,14 +10,12 @@
  * 20170427 CW c159-courseprovider-accept-tutor-request-cw modify fillListItems method to fill List Item conditionally
  * 20170428 CW c159-courseprovider-accept-tutor-request-cw add validations to cpCode variable in ready function
  * 20170428 CW c159-courseprovider-accept-tutor-request-cw add Requested date value into the table & removed the commented lines
+ * 20170504 CW c159-courseprovider-accept-tutor-request-cw removed validation for cpCode in ready function
  */
 
 $(document).ready(function() {
 
 	var cpCode = $("#cpCode").val();
-	if(cpCode == ""){
-		cpCode = $("#courseprovidercode").val();
-	}
 	displayTutorList(cpCode);  
 });
 
