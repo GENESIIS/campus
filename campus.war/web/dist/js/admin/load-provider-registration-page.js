@@ -11,59 +11,88 @@
 //20170223 JH c141-add-course-provider-issue-improvements landPhoneNubmerHelper(): change hints to error messages when they show errors 
 //20170224 JH c141-add-course-provider-issue-improvements landPhoneNubmerHelper(): show error messages on error
 //20170301 JH c141-add-course-provider-issue-improvements saveCourseProvider(): AJAX error handling, show error message on error
+//20170316 JH c141-ui-integration-add-course-provider getDataOnCountrySelection(), displayProviderCountries(), getDataOnCountrySelection() changed to add
+//			  	css styles
+//20170320 JH c141-ui-integration-for-add-course-provider added isempty() method to validate input for whitespaces
+//20170321 JH c141-ui-integration-for-add-course-provider display error messages on country selection wip
+//20170324 JH c141-ui-integration-for-add-course-provider added clearErrorMessage(), setErrorMessage(), setSuccessMessage() methods
+//20170327 JH c141-ui-integration-for-add-course-provider saveCourseProvider() added error message, saveCourseProvider():changed to clear has-error style class
+//20170328 JH c141-ui-integration-for-add-course-provider saveCourseProvider() methods used to clear error messages modified, added clearToolTip() method to 
+//				clear error and success message		
+//20170329 JH c141-ui-integration-for-add-course-provider added displyPhoneNumber() method to display given phone number or the information message to the user related to the phone number,
+//				landPhoneNubmerHelper() method changed to match new UI elements
+//20170330 JH c141-ui-integration-for-add-course-provider landPhoneNubmerHelper() modified to show country code and display area code wip, isempty() method refactored as isValidNumber()
+//20170331 JH c141-ui-integration-for-add-course-provider datalist implementation for country list wip
+//20170702 JH c141-ui-integration-for-add-course-provider displayProviderTypes() modified: removed select tag and load data to selectedProviderType element, displayProviderCountries(): clear input values for search 
+//				,errorSelectedTown(): used clearToolTip() method to clear error message
+//20170403 JH c141-ui-integration-for-add-course-provider datalist implementation to list towns wip, landPhoneNubmerHelper() fixed errors in mobile phone number fields and remvoed
+//				commented unwanted codes, load country code from the country list, added methods to select country code and call functions to display town list, removed clearErrorMessage(),
+//				implemented datalist function to display town list
+//20170404 JH c141-ui-integration-for-add-course-provider clear success messages before validating username and the prefix
+//20170405 JH c141-ui-integration-for-add-course-provider added successAlert() and errorAlert() to display alerts,saveCourseProvider() modified to pass account type value
+//				to front end validation methods, show back end validation error messages wip
+//20170407 JH c141-ui-integration-for-add-course-provider successAlert(): removed code used to add css styles to user message block, clear error messages when the course provider is registered
+//20170417 JH c141-ui-integration-for-add-course-provider saveCourseProvider(): removed repeating codes used to add accordion styles, modified error message codes and added commented front end validation methods, 
+//				modified event on town input methods, clear success tool tip styles if the course provider registered, added error alert on AJAX call errors
+//20170420 JH c141-ui-integration-for-add-course-provider landPhoneNumberHelper() modified to clear previous error tooltips due to invalid area code when a valid area code is given,
+//				removed unrelated comments in country and town display methods, added resetAccordion() method to reset the accordion color to default color and saveCourseProvider() method edited to 
+//				use resetAccordion()
+//20170424 JH c141-ui-integration-for-add-course-provider coding wip to send the focus to the next accordion from the last input of the previous accordion
+//20170425 JH c141-ui-integration-for-add-course-provider send input focus to the next accordion first input
+//20170503 JH c141-ui-integration-for-add-course-provider country and town display methods changed, removed commented lines 
 
 window.countryCollection = null;
 window.courseProviderTypes = null;
 window.accountType = null;
 window.courseProviderAcoountStatus = null;
 window.responseErrorMessage = null;
+window.selectedCountry = null;
 
 /**
  * load data, arrange elements when the document is ready
  */
 $(document).ready(function() {
+	/*commented until the logo panel confirms*/
 	arrangeUI();
 });
 
+
+/* this will be removed in the final stages */
 /*
  * hides the logo panel and clear the user message
  */
 function arrangeUI() {
-	document.getElementById("logoPanel").style.display = "none";
 	
 	publishPrograms();
-	
-	var message =	$('#userMessage').val();
-	
-	if (!isempty(message)) {
-		document.getElementById("userMessage").style.display = "none";
-	}else{
-		document.getElementById("userMessage").style.display = "block";
-	}
-
 }
 
 
 /**
- * this method used to show or hide the expiration date depending on whether the
- * course provider will publish programs or not.
+ * this method used to show or hide the account information section depending on whether the
+ * course provider is provided with the login function.
  */
 function publishPrograms(){
-	var publishProgram = $('input[name=publishProgram]:checked').val();
+	var publishProgram = $('input[name=courseProvider]:checked').val();
 	
-	if(publishProgram == 0){
-		var d = new Date();
-		$('#expirationDate').val(d);
-		document.getElementById("expire-date").style.display = "block";
+	
+	if(publishProgram === "FEATURED_COURSE_PROVIDER"){
+	    $("#accountInfoSection").accordion({		 
+			collapsible: false
+		});
+		
+		document.getElementById("accountInfoSection").style.visibility = "visible";
+		document.getElementById("accountInfoSection").style.display = "block";
 
-	}else if(publishProgram == 1){
-		document.getElementById("expire-date").style.display = "none";
+	}else if(publishProgram === "ONE_OFF_COURSE_PROVIDER"){
+		
+		document.getElementById("accountInfoSection").style.visibility = "hidden";
+		document.getElementById("accountInfoSection").style.display = "none";
 		
 		/**
 		 * this assigned value is not used in the application to save the data. but to avoid the JavaScript 
 		 * warning message of invalid date format.
 		 */
-		$('#expirationDate').val("2040-12-31");
+	//	$('#expirationDate').val("2040-12-31");
 	}
 }
 
@@ -79,13 +108,14 @@ function clearField(elementId) {
 }
 
 function changeRequiredData(typeValue) {
+	publishPrograms();
 	window.accountType = typeValue;
 
 	/**
 	 * here methods are created to hidden input fields that are not needed for
 	 * the the of the course provider
 	 */
-	if (window.accountType == 1) {
+	if (window.accountType === "FEATURED_COURSE_PROVIDER") {
 
 		$('#providerPrivateName').val("");
 		$('#providerContactNumber').val("");
@@ -96,12 +126,8 @@ function changeRequiredData(typeValue) {
 		$('#accountStatus').val("");
 		$('#accountDescription').val("");
 
-		document.getElementById("accountInfo").style.display = "block";
-
 	}
-	if (window.accountType == 2) {
-
-		document.getElementById("accountInfo").style.display = "none";
+	if (window.accountType === "ONE_OFF_COURSE_PROVIDER") {
 
 		$('#providerPrivateName').val("common name");
 		$('#providerContactNumber').val("common contact number");
@@ -143,6 +169,7 @@ function getCourseProviderTypes() {
 		error : function(x, status, error) {
 			var err = displayErrorMessage(x, status, error);
 			document.getElementById("userMessage").style.display = "block";
+			errorAlert("#userMessage");
 			$("#userMessage").html(err);
 		}
 	});
@@ -155,7 +182,7 @@ function displayProviderTypes() {
 	var providerTypeCollection = window.courseProviderTypes;
 	var singleTypeElement = '';
 
-	singleTypeElement += '<select id="selectedProviderType" name="selectedProviderType" ><option value="">--Default--</option>';
+	singleTypeElement += '<option value="">--Default--</option>';
 	if (providerTypeCollection !== undefined & providerTypeCollection !== null) {
 		$.each(providerTypeCollection, function(index, value) {
 			singleTypeElement += '<option value="' + value[0] + '">';
@@ -165,7 +192,7 @@ function displayProviderTypes() {
 		});
 	}
 	singleTypeElement += '';
-	var providerTypeNames = $("#providerTypeList");
+	var providerTypeNames = $("#selectedProviderType");
 	providerTypeNames.html(singleTypeElement);
 
 }
@@ -183,10 +210,10 @@ function displayAccountStatusList() {
 				.each(
 						accountList,
 						function(index, value) {
-							singleTypeElement += '<input type="radio" name="accountStatus" id="accountStatus" value="'
-									+ value[0] + '"/>';
+							singleTypeElement += '<label class="radio-inline radio-lbl">';
+							singleTypeElement += '<input type="radio" name="accountStatus" id="accountStatus" value="' + value[0] + '">';
 							singleTypeElement += value[1];
-							singleTypeElement += '&nbsp;&nbsp;';
+							singleTypeElement += '</label>&nbsp;&nbsp;';
 
 						});
 	}
@@ -222,11 +249,13 @@ function getProviderPageLoadData() {
 						displayProviderTypes();
 						getProviderTownListData();
 						displayAccountStatusList();
+						landPhoneNubmerHelper();
 					}
 				},
 				error : function(x, status, error) {
 					var err = displayErrorMessage(x, status, error);
 					document.getElementById("userMessage").style.display = "block";
+					errorAlert("#userMessage");
 					$("#userMessage").html(err);
 				},
 			});
@@ -237,34 +266,58 @@ function getProviderPageLoadData() {
  */
 function displayProviderCountries() {
 	var countryCollection = window.countryCollection;
-	var singleCountryElement = '';
+	
+	if(document.createElement("datalist").options) {
 
-	singleCountryElement += '<select id="selectedCountry" name="selectedCountry" onchange="getDataOnCountrySelection()"><option value="">--Default--</option>';
-	if (countryCollection !== undefined & countryCollection !== null) {
-		$.each(countryCollection, function(index, value) {
-			singleCountryElement += '<option value="' + value[0] + '">';
-			singleCountryElement += value[1];
-			singleCountryElement += '</option>';
-
-		});
+			$("#countries").val("");
+			$('#selectedCountry').val("");
+			 
+			if (countryCollection !== undefined & countryCollection !== null) {
+				var dataList = $("#countryresults");
+				dataList.empty();
+				
+				if(countryCollection.length) {
+					for(var i=0; i<countryCollection.length; i++) {
+						var opt = $("<option></option>").attr({"data-country": countryCollection[i][0], "value" : countryCollection[i][1] });
+						dataList.append(opt);
+					}
+				}
+			}
+			
+	}else{
+		alert("Does not support.");
 	}
-	singleCountryElement += '';
-	var countryNames = $("#country-List");
-	countryNames.html(singleCountryElement);
 
 }
+
+
+/**
+ * select country code 
+ */
+$('#countries').on('input', function() {
+    var value = $(this).val();
+    var country = $('#countryresults [value="' + value + '"]').data('country');
+    
+    //check if the country name changed, if yes clear town list and load the new list
+    if(country !== window.selectedCountry){
+    	window.selectedCountry = country;
+        getDataOnCountrySelection();
+        $("#towns").val("");
+        $('#selectedTown').val("");
+        $('#selectedCountry').val(window.selectedCountry);
+    }
+});
 
 /**
  * display country code and list town data
  */
 function getDataOnCountrySelection() {
 
-	if (!isempty(document.getElementById('selectedCountry').value)) {
-		document.getElementById('errorSelectedCountry').innerHTML = "**Select a country to proceed.";
-		document.getElementById('selectedCountry').focus();
-		document.getElementById('landNumber1').innerHTML = "";
-		document.getElementById('landNumber2').innerHTML = "";
-		document.getElementById('lastMobileNumber').innerHTML = "";
+	clearToolTip("#countries");
+	if (!isempty(window.selectedCountry)) {
+		
+		$("#errorSelectedCountry").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
+		$("#country-List").addClass("has-error");
 
 	} else {
 		landPhoneNubmerHelper();
@@ -277,12 +330,16 @@ function getDataOnCountrySelection() {
  * get course provider town list for the selected country
  */		
 function getProviderTownListData() {
-	var selectedCountry = document.getElementById('selectedCountry').value;
+	clearErrorMessage("#country-List");
+	var selectedCountry = window.selectedCountry;
+
 
 	if (selectedCountry == '' || selectedCountry == null) {
-		document.getElementById('errorSelectedTown').innerHTML = "**Select your country first.";
+		$("#errorSelectedTown").attr({ "title" : "Select a country to proceed.","data-original-title" : "Select a country to proceed."});
+		$("#town-List").addClass("has-error");
 	} else {
-		document.getElementById('errorSelectedTown').innerHTML = "";
+
+		clearErrorMessage("#town-List");
 		$.ajax({
 			url : '/AdminController',
 			method : 'POST',
@@ -302,6 +359,7 @@ function getProviderTownListData() {
 			error : function(x, status, error) {
 				var err = displayErrorMessage(x, status, error);
 				document.getElementById("userMessage").style.display = "block";
+				errorAlert("#userMessage");
 				$("#userMessage").html(err);
 			}
 		});
@@ -313,100 +371,189 @@ function getProviderTownListData() {
  */
 function displayProviderTownList() {
 
-	var countryCollection = window.townCollection;
-	var singleTownElement = '';
-
-	singleTownElement += '<select id="selectedTown" name="selectedTown"><option value="">--Default--</option>';
-	if (townCollection !== undefined & townCollection !== null) {
-		$.each(townCollection, function(index, value) {
-			singleTownElement += '<option value="' + value[0] + '">';
-			singleTownElement += value[1];
-			singleTownElement += '</option>';
-
-		});
+	var townCollection = window.townCollection;
+	
+	if(document.createElement("datalist").options) {
+			$("#towns").val("");
+			
+			if (townCollection !== undefined & townCollection !== null) {
+				var dataList = $("#townresults");
+				dataList.empty();
+				if(townCollection.length) {
+					for(var i=0; i<townCollection.length; i++) {
+						var opt = $("<option></option>").attr({"data-town": townCollection[i][0], "value" : townCollection[i][1] });
+						dataList.append(opt);
+					}
+				}
+			}
+		
 	}
-	singleTownElement += '</select>';
-	var townNames = $("#town-List");
-	townNames.html(singleTownElement);
+	
 }
+
+
+/**
+ * select town code 
+ */
+$('#towns').on('input', function() {
+    var value = $(this).val();
+    var selectedTown = $('#townresults [value="' + value + '"]').data('town');
+    $('#selectedTown').val(selectedTown);
+});
+
 
 /**
  * landPhoneNubmerHelper() method will show relevant error messages. 
  * It will display the last telephone number for  compulsory phone number fields. 
  */
 function landPhoneNubmerHelper() {
-	var country = $("#country-List :selected").val();
+	
+	var country = window.selectedCountry ;
 	var areaCode = $("#areaCode").val();
 	var land1 = $("#land1").val();
 	var land2 = $("#land2").val();
 	var networkCode = $("#networkCode").val();
+	var fax = $("#fax").val();
 	var mobile = $("#mobile").val();
+	
+	var lastLandNumber1 = null;
+	var lastLandNumber2 = null;
+	var lastFaxNumber = null;
+	var lastMobileNumber = null;
 	
 	var integerPattern = /^[0-9]+$/;
 
-	var errorMessageList = document.getElementsByClassName('number-helper');
+	var errorMessageList = document.getElementsByClassName('phone-no-hint');
 
 	// clear all previous error messages related to phone number
 	for (var i = 0; i < errorMessageList.length; i++) {
-		errorMessageList[i].innerHTML = "";
+		var varId = $(errorMessageList[i]).attr('id');
+		varId = '#' + varId;
+		$(varId).text("");
+		$(varId).parent().removeClass("has-error");
+		
 	}
-	
+
 	if (!isempty(country)) {
 		
-		document.getElementById('errorLand1').innerHTML = "**Please select your country.";
-		document.getElementById('errorLastMobileNumber').innerHTML = "**Please select your country.";
+		displyPhoneNumber('#landNumber1',"Please select your country." );
+		displyPhoneNumber('#landNumber2',"Please select your country." );
+		displyPhoneNumber('#lastMobileNumber',"Please select your country." );
+		displyPhoneNumber('#lastFaxNumber',"Please select your country." );
 		
+
 	}else{
-		 if (!isempty(areaCode)) {
-			document.getElementById('errorLand1').innerHTML = "**Area code is empty.";
-
-		}if(!isempty(networkCode)){
-			document.getElementById('errorNetworkCode').innerHTML = "**Network code is empty.";
-			document.getElementById('errorLastMobileNumber').innerHTML = "**Network code is empty.";
-		
-		} if (isempty(areaCode)) {
-			if (isPatternMatch(integerPattern, areaCode)) {
-				var lastLandNumber1 = "+" + country + " " + areaCode + " "
-						+ land1;
-				var lastLandNumber2 = "+" + country + " " + areaCode + " "
-						+ land2;
-
-				document.getElementById('landNumber1').innerHTML = lastLandNumber1;
-				document.getElementById('landNumber2').innerHTML = lastLandNumber2;
-
-				if (isempty(land1) && !isPatternMatch(integerPattern, land1)) {
-					document.getElementById('landNumber1').innerHTML = "";
-					document.getElementById('errorLand1').innerHTML = "Phone number 1 is invalid.";
-				}
-				if (isempty(land2) && !isPatternMatch(integerPattern, land2)) {
-					document.getElementById('landNumber2').innerHTML = "";
-					document.getElementById('errorLand2').innerHTML = "Phone number 2 is invalid.";
-
-				}
-			} else {
-				document.getElementById('errorLand1').innerHTML = "Area code invalid.";
-			}
-
-
-		} if(isempty(networkCode)){
-			 if(!isPatternMatch(integerPattern, networkCode)){
-
-				document.getElementById('errorNetworkCode').innerHTML = "**Only numbers allowed.";
-				document.getElementById('errorLastMobileNumber').innerHTML = "**Invlide network code.";
-
-							
-			 } else if (isPatternMatch(integerPattern, networkCode)) {
-
-				var lastMobilNumber = "+" + country + " " + networkCode + " "
-						+ mobile;
-
-				document.getElementById('lastMobileNumber').innerHTML = lastMobilNumber;
-				if (isempty(mobile) && !isPatternMatch(integerPattern, mobile)) {
-					document.getElementById('lastMobileNumber').innerHTML = "**Invalid mobile number.";
-				}
-			}
-
+		// set country code for the phone number fields
+		var numbers = jQuery("[id=countryCode]");//set country code
+		for (var i = 0; i< numbers.length; i++){
+			$(numbers[i]).val("+" + country);
 		}
+	// set country code value for the course provider account contact number
+		$("#countryCode2").html("+" + country);
+		
+
+		lastLandNumber1 = "+" + country;
+		lastLandNumber2 = "+" + country;
+		lastMobileNumber = "+" + country;
+		lastFaxNumber = "+" + country;
+
+		 if (!isValidNumber(areaCode, integerPattern)) {
+			 
+			displyPhoneNumber('#landNumber1', "Area code is empty or invalid.");
+			displyPhoneNumber('#landNumber2', "Area code is empty or invalid.");
+			displyPhoneNumber('#lastFaxNumber', "Area code is empty or invalid.");
+			setErrorMessage('#land1Div', '#errorLand1', "Area code is empty or invalid.");		
+			if(isValidMinMaxLength(fax, 1, 20)){ // show error message if fax number is not empty
+				setErrorMessage('#faxDiv', '#errorFax', "Area code is empty or invalid.");
+			}
+			if(isValidMinMaxLength(land2, 1, 20)){ // show error message if land phone number 2 is not empty
+				setErrorMessage('#land2Div', '#errorLand2', "Area code is empty or invalid.");
+			}
+			
+			var areaCodeSet = jQuery("[id=areaCode2]");//set area codes
+			for (var i = 0; i< areaCodeSet.length; i++){
+				$(areaCodeSet[i]).val("");
+			}
+			
+
+		}if(!isValidNumber(networkCode, integerPattern)){
+			
+			displyPhoneNumber('#lastMobileNumber', "Network code is empty or invalid.");
+			setErrorMessage('#mobileDiv', '#errorMobile', "Network code is empty or invalid.");
+			
+		} if (isValidNumber(areaCode, integerPattern)) {
+			
+			//clearErrorMessage('#land1Div');
+			clearToolTip('#land1Div');
+			clearToolTip('#land2Div');
+			clearToolTip('#faxDiv');
+			
+			var areaCodeSet = jQuery("[id=areaCode2]");//set area codes
+			for (var i = 0; i< areaCodeSet.length; i++){
+				$(areaCodeSet[i]).val(areaCode);
+			}
+			
+			lastLandNumber1 += " " + areaCode;
+			lastLandNumber2 += " " + areaCode;
+			lastFaxNumber += " " + areaCode;
+		
+			// check phone number fields and set error messages or hints
+				if (isValidNumber(land1, integerPattern)) {
+					
+					clearToolTip('#land1Div');
+					lastLandNumber1 += " " + land1;
+					
+				}if(isempty(land1) && (!isValidNumber(land1, integerPattern))){
+					
+					lastLandNumber1 = "Phone number 1 is invalid.";
+					setErrorMessage('#land1Div', '#errorLand1', "Phone number 1 is invalid.");
+					
+				}if (isValidNumber(land2, integerPattern)) {
+					
+					clearToolTip('#land2Div');
+					lastLandNumber2 += " " + land2;
+					
+				}if(isempty(land2) && (!isValidNumber(land2, integerPattern))){
+					
+					lastLandNumber2 = "Phone number 2 is invalid.";
+					setErrorMessage('#land2Div', '#errorLand2', "Phone number 2 is invalid.");
+					
+				}if (isValidNumber(fax, integerPattern)) {
+					
+					clearToolTip('#faxDiv');
+					lastFaxNumber += " " + fax;
+					
+				}if(isempty(fax) && (!isValidNumber(fax, integerPattern))){
+					
+					lastFaxNumber = "Fax number is invalid.";
+					setErrorMessage('#faxDiv', '#errorFax', "Fax number is invalid.");
+					
+				}
+				
+				displyPhoneNumber('#landNumber1', lastLandNumber1);
+				displyPhoneNumber('#landNumber2', lastLandNumber2);
+				displyPhoneNumber('#lastFaxNumber',lastFaxNumber );
+			
+
+		} if(isValidNumber(networkCode, integerPattern)){
+			
+			clearToolTip('#mobileDiv');		
+			lastMobileNumber += " " + networkCode;
+			
+			if (isValidNumber(mobile, integerPattern)) {
+				
+				clearToolTip('#mobileDiv');
+				lastMobileNumber += " " + mobile;
+				
+			}if(isempty(mobile) && (!isValidNumber(mobile, integerPattern))){
+				
+				lastMobileNumber = "Mobile number is invalid.";
+				setErrorMessage('#mobileDiv', '#errorMobile', "Mobile number is invalid.");
+				
+			}
+			
+			displyPhoneNumber('#lastMobileNumber',lastMobileNumber );
+	}
 		
 	}
 
@@ -417,23 +564,51 @@ function landPhoneNubmerHelper() {
  */
 function saveCourseProvider() {
 
-	var errorMessageList = document.getElementsByClassName('error-message');
+	// get error message list
+	var errorMessageList = document.getElementsByClassName('has-error');
+	var message = null; 
 	var flag = true;
 
 	// clear all previous error messages
 	for (var i = 0; i < errorMessageList.length; i++) {
-		errorMessageList[i].innerHTML = "";
+		var varId = $(errorMessageList[i]).attr('id');
+		varId = '#' + varId;
+		clearToolTip(varId);
+	
+	}
+
+	clearToolTip('#uniquePrefixDiv');
+	clearToolTip('#usernameDiv');
+	
+	
+	//reset the accodion styles to default color
+	resetAccordion("#accountInfoSection");
+	resetAccordion("#generalInfoSection");
+	resetAccordion("#contactInfoSection");
+	resetAccordion("#socialMedialSection");
+	resetAccordion("#adminInfoSection");	
+	
+	// validation course provider username only for featured course provider
+	var courseProvider = $("#courseProvider").val();
+	if (courseProvider === "FEATURED_COURSE_PROVIDER") {
+		
+		if (providerUsernameValidation() === false) {
+			message = "Invalid Username";
+			flag = false;
+		}
 	}
 
 	if (providerPrefixValidation() === false) {
-		flag = false;
-	}
-	if (providerUsernameValidation() === false) {
+		if(flag === false){
+			message += " and Prefix";
+		}else{
+			message = "Invalid Prefix";
+		}
 		flag = false;
 	}
 
 	if (flag === true) {
-		if (vaidateCourseProviderDeatils() === true) {
+		if (vaidateCourseProviderDeatils(window.accountType) === true) {
 
 			var form = $('#basicForm');
 			var formData = $(form).serialize();
@@ -453,39 +628,281 @@ function saveCourseProvider() {
 									
 									if (response['userMessage'] !== null) {
 										document.getElementById("userMessage").style.display = "block";
+										errorAlert("#userMessage");
 										$("#userMessage").html(response.userMessage);
-
+										
 										for ( var key in response) {
 											if (response.hasOwnProperty(key)) {
 												var val = response[key];
-												var attributeName = "#" + key;
-												$(attributeName).html(val);
+												var attributeName = "#" + key;									
+												$(attributeName).attr({ "title" : val,"data-original-title" : val});
+												$(attributeName).closest(".input-wrapper").addClass("has-error");
 											}
 										}
 									}
 								} else if (response['registerId'] !== 0) {
-									
+								
+									// show user message with success styles
 									if (response['userMessage'] !== null) {
-										$("#userMessage").html(response.userMessage);
+										document.getElementById("userMessage").style.display = "block";	
+										successAlert("#userMessage");
+										$("#userMessage").html(response.userMessage );
+									}
+									$("#registeredId").val(response['registerId']);
+									jQuery('#upload-logo-modal').modal('show');
+									$("#basicForm").trigger('reset');
+									
+									// clear all previous error messages
+									var errorMessageList = document.getElementsByClassName('has-error');
+									
+									for (var i = 0; i < errorMessageList.length; i++) {
+										var varId = $(errorMessageList[i]).attr('id');
+										varId = '#' + varId;
+										clearToolTip(varId);
+																			
+									}
+									clearToolTip("#uniquePrefixDiv");
+									clearToolTip("#usernameDiv");
+									publishPrograms();
+									
+									//clear accordions to reset the page
+									changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
+									changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
+									changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
+									changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
+									changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
+									
 									}
 								
-									
-									window.responseErrorMessage = response.userMessage;
-
-									$('#userMessage').val(response.userMessage);
-									$('#generatedId').val(response.registerId);
-							       	$( "#basicForm" ).submit();
-									
-									}
 							}
 						},
 						error : function(x, status, error) {
 							var err = displayErrorMessage(x, status, error);
 							document.getElementById("userMessage").style.display = "block";
+							errorAlert("#userMessage");
 							$("#userMessage").html(err);
 						}
 					});
+		}else{
+			document.getElementById("userMessage").style.display = "block";
+			errorAlert("#userMessage");
+			$("#userMessage").html("One or more fields are invalid.");
+			
+			//highlight accordions
+			changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
+			changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
+			changeAccordion("#contactInfoSection", "#contactInfoSectionDiv");
+			changeAccordion("#socialMedialSection", "#socialMedialSectionDiv");
+			changeAccordion("#adminInfoSection", "#adminInfoSectionDiv");
 		}
+	}else{
+		document.getElementById("userMessage").style.display = "block";
+		errorAlert("#userMessage");
+		$("#userMessage").html(message);
+		
+		// highlight accordions
+		changeAccordion("#accountInfoSection", "#accountInfoSectionDiv");
+		changeAccordion("#generalInfoSection", "#generalInfoSectionDiv");
+		resetAccordion("#contactInfoSection");
+		resetAccordion("#socialMedialSection");
+		resetAccordion("#adminInfoSection");
+	}
+	
+}
+
+/**
+ * Checks the input value is empty or is not a number
+ * @author JH
+ * @param fieldValue
+ *            it is the value of a document element
+ * @returns true if has content else false. (used to validate string values)
+ */
+function isValidNumber(fieldValue, integerPattern) {
+	flag = true;
+	if(($.trim(fieldValue) === "") || (fieldValue === null) || (!isPatternMatch(integerPattern, fieldValue))){
+		flag = false;
+	}
+	return flag;
+}
+
+/**
+ * clear error message styles in tooltip
+ * @param toolTipElement
+ * @author JH
+ */
+function clearErrorMessage(toolTipElement){
+	$(toolTipElement).removeClass("has-error");
+}
+
+/**
+ * clear both success or error message tooltip styles
+ * @param element
+ * @author JH
+ */
+function clearToolTip(element){
+	$(element).removeClass("has-error");
+	$(element).removeClass("has-success");
+}
+
+/**
+ * add styles to display a success alert
+ * @param element
+ * @author JH
+ */
+function successAlert(element){
+
+	$(element).removeClass("alert-danger");
+	$(element).addClass("alert-success");
+}
+
+/**
+ * add styles to display an error alert
+ * @param element
+ * @author JH
+ */
+function errorAlert(element){
+	$(element).removeClass("alert-success");
+	$(element).addClass("alert-danger");
+}
+
+/**
+ * used to display the last phone number as a hint to the user.
+ * Then the user can check the final phone number and do any changes to 
+ * get the correct final phone number
+ * @param hintSpan
+ * @param phoneNumber
+ * @author JH
+ */
+function displyPhoneNumber(hintSpan, phoneNumber){
+	$(hintSpan).text(phoneNumber);
+}
+
+/**
+ * Used to set error message
+ * @param errorElement
+ * @param errorToolTip
+ * @param message
+ * @author JH
+ */
+
+function setErrorMessage(errorElement, errorToolTip, message){	
+	$(errorToolTip).attr({ "title" : message,"data-original-title" : message});
+	$(errorElement).addClass("has-error");
+	$(errorElement).removeClass("has-success");
+}
+
+/**
+ * Used to set success messages
+ * @param errorElement
+ * @param errorToolTip
+ * @param message
+ */
+
+function setSuccessMessage(successElement, successToolTip, message){
+	//has-error style class is used until a style class is created for success messages	
+	$(successToolTip).attr({ "title" : message,"data-original-title" : message});
+	$(successElement).addClass("has-success");
+	$(successElement).removeClass("has-error");
+	
+	//$(successElement).css("border", "1px solid green !important");
+}
+
+/**
+ * check if an accordion contains an error. if contains : change the
+ * accodion color
+ * @param element
+ * @param accordion
+ */
+function changeAccordion(element, accordion){
+	var errorList = $(accordion).find(".has-error");
+	
+	if (errorList.length !== 0) {
+		$(element).css("background", "#e4aaaa");
+	}else{
+		$(element).css("background", "#adc8e8");
 	}
 }
-	
+
+/**
+ * Created to reset the accordion styles to default color. 
+ * @param element
+ * @author JH
+ */
+function resetAccordion(element){
+	$(element).css("background", "#adc8e8");
+}
+
+/**
+ * used to send the foucus to the next accordion from the last input of the 
+ * previous accordion
+ */
+$('body').on('keydown', function(e) {
+    if (e.which == 9) {
+
+        var currentElement = $(':focus').attr('id');
+        
+        if(currentElement === undefined){
+        	return;
+        }
+        var accordionList = $('#basicForm').find('.accordion-body');
+    	
+    	var accordionName = $('#' +currentElement).parent().closest(".accordion-body");
+    	var currentInputWrapper = $('#' +currentElement).parent().closest(".input-wrapper");
+
+    	var accordionId = accordionName.attr('id');
+    	
+    	// get all inputs and the last input 
+    	var inputs = $('#' + accordionId).find('.input-wrapper');
+    	var last = inputs.last().attr('id');
+    	
+    	var accordionIndex = accordionList.index(accordionName);
+    	
+    	// check if this is the last accordion
+    	if((accordionIndex + 1)  === accordionList.length && (currentInputWrapper.attr('id') === last)){//last accordion
+    		
+    		/* send focus to the submit button */
+//			$('#viewNext').focus();
+    		
+    		
+    	}else{//not the last accordion
+    	  
+        	
+        	if(currentInputWrapper.attr('id') === last){
+        	    e.preventDefault();
+        		
+        		var nextAccordion = accordionList[accordionIndex + 1];
+        		var publishProgram = $('input[name=courseProvider]:checked').val();
+        		
+        		/* This condition will need modified if there are any other accordions with display none style */
+        		if (accordionList.index(nextAccordion) === 4 && (publishProgram !== "FEATURED_COURSE_PROVIDER") ){
+            		
+        			$('#viewNext').focus();
+        		}else{
+        			
+            		// send focus to the next accordion
+            		$(".admin .accordion").accordion({		 
+            			active: accordionList.index(nextAccordion),
+            			header: ".accordion-header",
+            			collapsible: false,
+            			heightStyle: "content", 
+            			autoHeight: false,
+            			navigation: true	
+            		});
+            		
+            		var newInputs = $( nextAccordion).find('.form-control');
+            		var firstInputId = newInputs.first().attr('id');
+            		
+            		$('#' + firstInputId).focus();
+  
+        		}
+
+
+        	}else{// do default
+       		/* send focus to the next input. */
+
+        	}
+    	}
+
+    
+    }
+});

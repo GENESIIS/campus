@@ -20,6 +20,14 @@ package com.genesiis.campus.command;
 //20170203 JH c39-add-course-provider code changed to get the default course provider expriation date form the system config enum class
 //20170221 JH c141-add-course-provider-issue-improvements modified to access validator class methods in static way, added doc comments
 //20170301 JH c141-add-course-provider-issue-improvements remove expiration date which is retrieved from the front end, removed entity.setModBy() statements 
+//20170404 JH c141-ui-integration-for-add-course-provider code modified to use AccountType enum class values to validate user type
+//20170405 JH c141-ui-integration-for-add-course-provider fixed exception due to account status code selection
+//20170406 JH c141-ui-integration-for-add-course-provider build contact number and web link hint messages
+//20170407 JH c141-ui-integration-for-add-course-provider removed commented old expiration date implementation and added codes to get web link prefix
+//20170417 JH c141-ui-integration-for-add-course-provider added "http://" as the webLinkPrefix value and build the last weblink
+//20170502 JH c141-ui-integration-for-add-course-provider added checkUsername(IDataHelper, CourseProviderAccount, String)() method for username validation
+//20170503 JH c141-ui-integration-for-add-course-provider use checkUsername() method to validate the email and the username, added method checkPrefix(),
+//				added getExpirateionDate() to get the common expiration date
 
 import com.genesiis.campus.entity.CourseProviderPrefixDAO;
 import com.genesiis.campus.entity.CourseProviderUsernameDAO;
@@ -101,68 +109,28 @@ public class CmdAddFeaturedProvider implements ICommand {
 			if (errorMessages.size() == 0) {
 
 				// validate username
-				ICrud usernameDAO = new CourseProviderUsernameDAO();
 				String username = helper.getParameter("providerUsername");
 				String email = helper.getParameter("providerEmail");
 				courseProviderAccount.setUsername(username);
 				courseProviderAccount.setEmail(email);
-				Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
 
 				/**
 				 * checks the username availability and email. If the email
-				 * exist,
 				 */
-				usernameCollection = usernameDAO
-						.findById(courseProviderAccount);
-				if (usernameCollection.size() > 0) {
-					String accountUsername = null;
-					String accountEmail = null;
-
-					if (usernameCollection.size() == 1) {
-
-						for (Collection<String> accountCollection : usernameCollection) {
-							Object[] accountData = accountCollection.toArray();
-							accountUsername = (String) accountData[2];
-							accountEmail = (String) accountData[4];
-						}
-
-						if (username.equalsIgnoreCase(accountUsername)) {
-
-							systemMessage = SystemMessage.USERNAME_INVALID
-									.message();
-							helper.setAttribute("errorUsername",
-									SystemMessage.USERNAME_INVALID.message());
-						} else if (email.equalsIgnoreCase(accountEmail)) {
-							systemMessage = SystemMessage.EMAIL_EXIST.message();
-							helper.setAttribute("errorPrivateEmail",
-									SystemMessage.EMAIL_EXIST.message());
-						}
-					} else {
-						systemMessage = SystemMessage.USERNAME_INVALID
-								.message()
-								+ " and "
-								+ SystemMessage.EMAIL_EXIST.message();
-						helper.setAttribute("errorUsername",
-								SystemMessage.USERNAME_INVALID.message());
-						helper.setAttribute("errorPrivateEmail",
-								SystemMessage.EMAIL_EXIST.message());
-					}
+				
+				if ( !checkUsername(helper, courseProviderAccount, systemMessage)) { 
+					/* username or the email is not valid */
 
 				} else {
-					// valdate prefix
+					/* valdate prefix */
 					String prefix = helper.getParameter("uniquePrefix");
-
-					ICrud prefixDAO = new CourseProviderPrefixDAO();
 					courseProvider.setUniquePrefix(prefix);
-					Collection<Collection<String>> prefixCollection = prefixDAO
-							.findById(courseProvider);
-					if (prefixCollection.size() != 0) {
-						helper.setAttribute("userMessage",
-								SystemMessage.PREFIX_INVALID.message());
 
-					} else if (prefixCollection.size() == 0) {
+					if (!checkPrefix(helper, courseProvider, systemMessage)) {
+						/* prefix is not available */
 
-						String expireDate = helper.getParameter("expirationDate");
+					} else if (checkPrefix(helper, courseProvider, systemMessage)) {/* prefix is available */
+
 						String countryCode = helper.getParameter("selectedCountry");
 						String selectedTown = helper.getParameter("selectedTown");
 						String courseProviderType = helper.getParameter("selectedProviderType");
@@ -182,60 +150,10 @@ public class CmdAddFeaturedProvider implements ICommand {
 						}
 
 						int providerStatus = Integer.parseInt(helper.getParameter("providerStatus"));
-						
-						/*
-						 * commented the following code until the actual implementation (one off provider) confirms
-						 */
-						
-//						java.sql.Date sql = null;
-//
-//						SimpleDateFormat format = new SimpleDateFormat(
-//								"dd-MM-yyyy");
-//						
-//						/**
-//						 * publishProgram parameter is used to select whether
-//						 * the registered course provider will publish programs or not.
-//						 * 
-//						 */
-//						if (Integer.parseInt(helper.getParameter("publishProgram")) == 0) {
-//							sql = java.sql.Date.valueOf(expireDate);
-//						} else {
-//
-//							/**
-//							 * course providers without program publishing
-//							 * functionality will need an expiration date. And
-//							 * that date needs to be selected by the admin at
-//							 * the course provider registration.
-//							 * 
-//							 * for those who has the full functionality, need
-//							 * not to have an expiration date. (The requirements
-//							 * given by the marketing team). Therefore a static
-//							 * value is assigned to those course providers. Then
-//							 * it would be easy to select those course providers
-//							 * and perform a bulk update.
-//							 * 
-//							 * Therefore a common expiration date, which is stored in 
-//							 * the system configuration enum class is used to support both
-//							 * the requirements.
-//							 * 
-//							 */
-//
-//							expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
-//							sql = java.sql.Date.valueOf(expireDate);
-//						}
 
-						
-						/*
-						 * Course provider expiration date is related and will depend on their payments. 
-						 * Until the payment module is implemented an expiration date from the 
-						 * systemConfig enum will be used as the expiration date of the course provider.
-						 * By using a one expiration date until the actual payment module implementation 
-						 * will help to retrieve all previous records
-						 */
-						java.sql.Date sql = null;
-
-						expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
-						sql = java.sql.Date.valueOf(expireDate);
+						String webLinkPrefix = "http://";
+						String webLink = helper.getParameter("webLink");
+						String lastWebAddress = webLinkPrefix + webLink;
 						
 						// set basic data
 						courseProvider.setUniquePrefix(helper.getParameter("uniquePrefix"));
@@ -248,15 +166,14 @@ public class CmdAddFeaturedProvider implements ICommand {
 						courseProvider.setLandPhoneNo(helper.getParameter("land1"));
 						courseProvider.setMobilePhoneNetworkCode(helper.getParameter("networkCode"));
 						courseProvider.setMobilePhoneNumber(helper.getParameter("mobile"));
-						courseProvider.setExpirationDate(sql);
+						courseProvider.setExpirationDate(getExpirationDate());
 						courseProvider.setMobilePhoneCountryCode(countryCode);
 
 						courseProvider.setCourseProviderType(Integer.parseInt(courseProviderType));
 						courseProvider.setLandPhpneNo2(helper.getParameter("land2"));
 						courseProvider.setFaxNo(helper.getParameter("fax"));
 						courseProvider.setSpeciality(helper.getParameter("specialFeatures"));
-						courseProvider.setExpirationDate(sql);
-						courseProvider.setWeblink(helper.getParameter("webLink"));
+						courseProvider.setWeblink(lastWebAddress);
 						courseProvider.setFacebookURL(helper.getParameter("facebook"));
 						courseProvider.setTwitterURL(helper.getParameter("twitter"));
 						courseProvider.setMyspaceURL(helper.getParameter("mySpace"));
@@ -290,18 +207,15 @@ public class CmdAddFeaturedProvider implements ICommand {
 						map.put("provider", courseProvider);
 						map.put("town", courseProviderTown);
 
-						int providerType = Integer.parseInt(helper
-								.getParameter("courseProvider"));
+						String providerType = helper.getParameter("courseProvider");
 
 						/**
 						 * selects the account type of the course provider and
 						 * calls different DAO classes depending on the
 						 * course provider type
 						 */
-						if (providerType == AccountType.FEATURED_COURSE_PROVIDER
-								.getTypeValue()) {
-							courseProvider
-									.setAccountType(AccountType.FEATURED_COURSE_PROVIDER
+						if (providerType.equals(AccountType.FEATURED_COURSE_PROVIDER.name())) {
+							courseProvider.setAccountType(AccountType.FEATURED_COURSE_PROVIDER
 											.getTypeValue());
 							courseProvider.setTutorRelated(false);
 
@@ -309,24 +223,24 @@ public class CmdAddFeaturedProvider implements ICommand {
 									.getParameter("accountStatus");
 							
 							//compare account status with enum class values
-							if (ApplicationStatus.valueOf(accountStatus).equals(ApplicationStatus.ACTIVE)) {
+							if ( Integer.parseInt(accountStatus)  == ApplicationStatus.ACTIVE.getStatusValue()) {
 								courseProviderAccount.setActive(true);
 							}
-							if (ApplicationStatus.valueOf(accountStatus).equals(ApplicationStatus.INACTIVE)) {
+							if (Integer.parseInt(accountStatus)  == ApplicationStatus.INACTIVE.getStatusValue()) {
 								courseProviderAccount.setActive(false);
 							}
-
+							String contactNumber = countryCode + helper.getParameter("providerContactNumber");
 							courseProviderAccount.setName(helper.getParameter("providerPrivateName"));
 							courseProviderAccount.setPassword(helper.getParameter("providerPassword"));
 							courseProviderAccount.setDescription(helper.getParameter("accountDescription"));
-							courseProviderAccount.setContactNumber(helper.getParameter("providerContactNumber"));
+							courseProviderAccount.setContactNumber(contactNumber);
 							// to be update after the session is created
 							courseProviderAccount.setCrtBy("admin");
 
 							map.put("account", courseProviderAccount);
 							generatedKey = courseProviderDAO.add(map);
 
-						} else if (providerType == AccountType.ONE_OFF_COURSE_PROVIDER.getTypeValue()) {
+						} else if (providerType.equals(AccountType.ONE_OFF_COURSE_PROVIDER.name())) {
 							courseProvider.setTutorRelated(false);
 							courseProvider.setAdminAllowed(false);
 
@@ -335,10 +249,10 @@ public class CmdAddFeaturedProvider implements ICommand {
 							generatedKey = oneOffCourseProviderDAO.add(map);
 						}
 
-						if (generatedKey > 0) {
+						if (generatedKey > 0) {/* register success */
 							systemMessage = SystemMessage.ADDED.message();
 							helper.setAttribute("registerId", generatedKey);
-						} else if (generatedKey == 0) {
+						} else if (generatedKey == 0) {/* register failed */
 							systemMessage = SystemMessage.NOTADDED.message();
 						}
 					}
@@ -364,4 +278,124 @@ public class CmdAddFeaturedProvider implements ICommand {
 		return view;
 	}
 
+	
+	
+	/**
+	 * username validation method used to validate the username and the course provider contact email 
+	 * address
+	 * @param helper
+	 * @param courseProviderAccount
+	 * @return true if valid, else return false
+	 */
+	public static boolean checkUsername(IDataHelper helper, CourseProviderAccount courseProviderAccount, String systemMessage)
+	throws SQLException, Exception {
+		// validate username
+		ICrud usernameDAO = new CourseProviderUsernameDAO();
+		Collection<Collection<String>> usernameCollection = new ArrayList<Collection<String>>();
+		boolean isValid = true;
+
+		/**
+		 * checks the username availability and email. 
+		 */
+		usernameCollection = usernameDAO
+				.findById(courseProviderAccount);
+		if (usernameCollection.size() > 0) {
+			
+			isValid = false;
+			String accountUsername = null;
+			String accountEmail = null;
+
+			if (usernameCollection.size() == 1) {
+
+				for (Collection<String> accountCollection : usernameCollection) {
+					Object[] accountData = accountCollection.toArray();
+					accountUsername = (String) accountData[2];
+					accountEmail = (String) accountData[4];
+				}
+
+				if((courseProviderAccount.getUsername().equalsIgnoreCase(accountUsername)) &&
+						courseProviderAccount.getEmail().equalsIgnoreCase(accountEmail)){
+					systemMessage = SystemMessage.USERNAME_INVALID
+							.message()
+							+ " and "
+							+ SystemMessage.EMAIL_EXIST.message();
+					helper.setAttribute("errorUsername",
+							SystemMessage.USERNAME_INVALID.message());
+					helper.setAttribute("errorPrivateEmail",
+							SystemMessage.EMAIL_EXIST.message());
+				}else if (courseProviderAccount.getUsername().equalsIgnoreCase(accountUsername)) {
+
+					systemMessage = SystemMessage.USERNAME_INVALID.message();
+					helper.setAttribute("errorUsername",
+							SystemMessage.USERNAME_INVALID.message());
+				} else if (courseProviderAccount.getEmail().equalsIgnoreCase(accountEmail)) {
+					systemMessage = SystemMessage.EMAIL_EXIST.message();
+					helper.setAttribute("errorPrivateEmail",
+							SystemMessage.EMAIL_EXIST.message());
+				}
+		
+			} else {
+				systemMessage = SystemMessage.USERNAME_INVALID
+						.message()
+						+ " and "
+						+ SystemMessage.EMAIL_EXIST.message();
+				helper.setAttribute("errorUsername",
+						SystemMessage.USERNAME_INVALID.message());
+				helper.setAttribute("errorPrivateEmail",
+						SystemMessage.EMAIL_EXIST.message());
+			}
+		
+	}
+		helper.setAttribute("userMessage", systemMessage);
+		return isValid;
+}
+	
+	/**
+	 * checkPrefix() method validate the course provider prefix. If the prefix is not available it 
+	 * will give an error message
+	 * @param helper
+	 * @param courseProvider
+	 * @param systemMessage
+	 * @return true if valid; else false
+	 * @throws SQLException
+	 * @throws Exception
+	 */
+	public static boolean checkPrefix(IDataHelper helper, CourseProvider courseProvider, String systemMessage)
+			throws SQLException, Exception{
+		
+		boolean isValid = true;
+		ICrud prefixDAO = new CourseProviderPrefixDAO();
+		Collection<Collection<String>> prefixCollection = prefixDAO
+				.findById(courseProvider);
+		
+		if (prefixCollection.size() != 0) {
+			helper.setAttribute("userMessage",
+					SystemMessage.PREFIX_INVALID.message());
+			isValid = false;
+
+		}
+		
+		
+		return isValid;
+	}
+	
+	/**
+	 * 		
+	 * Course provider expiration date is related and will depend on their payments. 
+	 * Until the payment module is implemented an expiration date from the 
+	 * systemConfig enum will be used as the expiration date of the course provider.
+	 * By using a one expiration date until the actual payment module implementation 
+	 * will help to retrieve all previous records						 
+	 * @return sql expiration date
+	 * @author JH
+	 */
+	public static java.sql.Date getExpirationDate(){
+		
+		java.sql.Date sql = null;
+
+		String expireDate = SystemConfig.COURSE_PROVIDER_EXPIRATION_DATE.getValue1();
+		sql = java.sql.Date.valueOf(expireDate);
+		
+		return sql;
+	}
 }

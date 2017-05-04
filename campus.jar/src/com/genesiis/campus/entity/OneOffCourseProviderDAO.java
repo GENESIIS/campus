@@ -122,12 +122,12 @@ public class OneOffCourseProviderDAO implements ICrud{
 			conn.commit();
 			
 		}catch(SQLException sqlException){
-			log.error("add SQL Exception " + sqlException.toString());
+			log.error("add() : SQL Exception " + sqlException.toString());
 			conn.rollback();
 			throw sqlException;
 			
 		}catch (Exception exception) {
-			log.error("add Exception " + exception.toString());
+			log.error("add() : Exception " + exception.toString());
 			conn.rollback();
 			throw exception;
 		}finally {

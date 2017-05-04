@@ -81,12 +81,12 @@ public class CourseProviderPrefixDAO implements ICrud {
 
 		} catch (SQLException sqlException) {
 
-			log.error("finById method SQLException " + sqlException);
+			log.error("finById() : method SQLException " + sqlException.toString());
 			throw sqlException;
 
 		} catch (Exception exception) {
 
-			log.error("findById method Exception " + exception.toString());
+			log.error("findById() : method Exception " + exception.toString());
 			throw exception;
 
 		} finally {

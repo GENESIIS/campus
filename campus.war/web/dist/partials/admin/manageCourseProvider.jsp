@@ -4,10 +4,34 @@
 <!-- 20161202 JH c39-add-course-provider added missing input fields -->
 <!-- 20161206 JH c39-add-course-provider create check boxes to account status -->
 <!-- 20161208 JH c39-add-course-provider crev modifications -->
+<!-- 20170224 DK c58-admin-manage-course-provider-ui-dk  Integrating the UI development -->
 <!-- 20170224 JH c141-add-course-provider-issue-improvements changed error message ids -->
 <!-- 20170227 JH c141-add-course-provider-issue-improvements removed asterisk mark from short name   -->
 <!-- 20170228 JH c141-add-course-provider-issue-improvements enable one-off provider functions, removed expiration date   -->
 <!-- 20170301 JH c141-add-course-provider-issue-improvements import error-handling.js javaScript file -->
+<!-- 20170316 JH c141-ui-integration-add-course-provider merged c141-add-course-provider and c58-manage-course-provider-ui-dk, change html element
+				 names to match with the back end validation in general information, contact information wip-->
+<!-- 20170320 JH c141-ui-integration-add-course-provider change html element names to match with the back end validation in 
+				contact information, social media and admin info wip-->
+<!-- 20170321 JH c141-ui-integration-add-course-provider display error messages on country selection wip -->
+<!-- 20170323 JH c141-ui-integration-add-course-provider added error-handling javascript to hand, changed the default error title -->
+<!-- 20170324 JH c141-ui-integration-for-add-course-provider added id elements to div tags to show error messages wip -->
+<!-- 20170327 JH c141-ui-integration-for-add-course-provider added <a> tag to show short name errors -->
+<!-- 20170328 JH c141-ui-integration-for-add-course-provider added internal styles for success messages, added missing ids for password, cPassword and accountStatus -->
+<!-- 20170329 JH c141-ui-integration-for-add-course-provider changed phone number related ids to match with front end validation classes -->
+<!-- 20170330 JH c141-ui-integration-for-add-course-provider call landPhoneNubmerHelper() on change of phone number fields wip, disabled area code inputs except
+					land number one -->
+<!-- 20170331 JH c141-ui-integration-for-add-course-provider changed the id of the datalist to countryresults -->
+<!-- 20170402 JH c141-ui-integration-for-add-course-provider added error element for country list, added select tag for course provider types -->
+<!-- 20170403 JH c141-ui-integration-for-add-course-provider removed onchange function from the country list, code changes to implement town list wip 
+					added hidden inputs to store country and town -->
+<!-- 20170404 JH c141-ui-integration-for-add-course-provider changed course provider type value to pass the enum value instead of the type value -->
+<!-- 20170405 JH c141-ui-integration-for-add-course-provider added parameter registeredId to the "upload-logo-modal" modal to display registered id of the course provider on successful registration -->
+<!-- 20170406 JH c141-ui-integration-for-add-course-provider added input max length values for phone number fields, span tags for contact number and weblink, added min max password hints -->
+<!-- 20170407 JH c141-ui-integration-for-add-course-provider added a success message to display with the modal body when a course provider is registered -->
+<!-- 20170417 JH c141-ui-integration-for-add-course-provider added name attribute and the value for weblink prefix -->
+<!-- 20170420 JH c141-ui-integration-for-add-course-provider fixed error in span closing tag for id landNumber2  -->
+<!-- 20170425 JH c141-ui-integration-for-add-course-provider added form-control class to selectedProviderType input -->
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -16,663 +40,555 @@
 	class="com.genesiis.campus.validation.ApplicationStatusBean" />
 <jsp:useBean id="accountTypeBean"
 	class="com.genesiis.campus.validation.AccountTypeBean" />
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Campus.lk</title>
-
-<!-- Bootstrap & CSS Style-->
-
+<!-- Page & Layout Styles -->
 <link href="/dist/css/style.css" rel="stylesheet">
-<link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
-
-</head>
-<style type="text/css">
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info
-	{
-	display: block;
-	padding-top: 3px;
-	padding-bottom: 3px;
+<!-- Bootstrap Styles -->
+<link href="/dist/bower-components/bootstrap/bootstrap.min.css"
+	rel="stylesheet">
+<!-- FontAwsome Font Styles -->
+<link rel="stylesheet"
+	href="/dist/bower-components/fav/css/font-awesome.min.css">
+	<style type="text/css">
+#userMessage:empty {
+	display: none;
 }
 
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name
-	{
-	display: inline-block;
-	width: 25%;
-	float: left;
-	border-right: 1px solid #e1e1e1;
+.has-success input,.has-success text-area,.has-success select {
+	border: 1px solid #1eab37 !important;
 }
 
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .pro-name
-	{
-	display: block;
-	text-align: center;
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: #193949;
-	line-height: 0px;
-	font-weight: 600;
-}
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .input
-	{
-	display: block;
-	text-align: center;
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: gray;
-	line-height: 0px;
-	font-style: italic;
-	font-weight: 100;
-}
-
-.main-category .content-holder .course-filter-panel .filter-result-table .course-info .col-name .textarea
-	{
-	font-family: "Roboto", sans-serif;
-	font-size: 20px;
-	color: gray;
-	font-style: italic;
-	font-weight: 100;
-}
-
-.main-category .content-holder .course-filter-panel .filtering-area .bottom ul>li
-	{
-	width: 16.66%;
-	text-align: center; 
-	float: left;
-}
-.error-message{
-	color : red;
+.has-success .error-info {
+	visibility: visible;
+	z-index: 9999;
 }
 </style>
+</head>
 
-<body>
+<body class="admin-page">
 	<!-- include Header-->
-<header class="header"> <jsp:include
-		page="/dist/partials/layout/header.jsp"></jsp:include> </header> 
+	 <jsp:include
+		page="/dist/partials/layout/header.jsp"></jsp:include> 
 	<!-- End Header -->
 
 
 	<!-- Main Container - Higher-Education -->
 	<div class="main-category clearfix">
 
-		<!-- page inner header -->
-		<div class="inner-header">
-			<div class="category-name">
-				<h1>| Register a Course Provider</h1>
-			</div>
-		</div>
-		<!-- end inner header -->
-		<form action="/dist/partials/admin/courseProviderManagement.jsp" method="POST" id="basicForm">
-			<!-- Page content -->
+		<div class="container course-provider-registration admin">
+			<div class="form-wrapper">
+				<h2 class="form-title">
+					<span class="fa fa-pencil" aria-hidden="true"></span> Register a
+					Course Provider <span class="form-intro">Please fill the
+						form below to add a course provider (Complete all sections)</span>
+				</h2>
 
-				<input type="hidden" name="generatedId" id="generatedId" value=""/>
-			<div class="content-holder center-block clearfix">
-					<div class="alert alert-danger" role="alert" id="userMessage" name="userMessage">
-					</div>
+				<form class="form form-admin has-error-form" 
+					 name="basicForm" id="basicForm" method="POST" action=""> 	
 
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<h3>Basic Info</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<!-- select the course provider type -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Account Type : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" style="width: 50%;">
-									<!-- here we selects featured course provider account type as default and all other account
-								types are disabled by default. This is due to current requirements.
-								If we want to manage one-off course providers, then the only change need to be done is to
-								enable to select one-off provider account type and call the command class CmdAddFeaturedProvider.java -->
+		<input type="hidden" name="CCO" id="CCO" value="ADD_FEATURED_COURSE_PROVIDER" />
+					<div class="alert alert-danger fade in" id="userMessage"></div>
 
-									<!-- back end code is already completed to handle one-off course providers as well -->
+					<div class="accordion">
 
-									<c:forEach items="${accountTypeBean.values}" var="accountTypes">
+						<h4 class="form-section-title accordion-header" id="generalInfoSection">1. General
+							Information</h4>
+						<div class="accordion-body" id="generalInfoSectionDiv">
+							<div class="row clearfix">								
+								<div class="form-group col-sm-12 input-wrapper">
+								<div>
+								<label for="account-category" class="right-padding inline-info">
+										<span class="mandatory">*</span> Account Category <a
+										class="error-info" href="#" data-toggle="tooltip" id="errorCourseProvider"
+										title="Error! " data-placement="top"></a>
+									</label>
+									</div>
+								<c:forEach items="${accountTypeBean.values}" var="accountTypes">
+								<label class="radio-inline radio-lbl">
 										<c:if test="${accountTypes.typeValue == 1}">
 											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" checked="checked"
-												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
+												value="${accountTypes}" checked="checked"
+												onchange="changeRequiredData('${accountTypes}');" /> ${accountTypes} &nbsp;
 										</c:if>
 										<c:if test="${accountTypes.typeValue != 1}">
 											<input type="radio" name="courseProvider" id="courseProvider"
-												value="${accountTypes.typeValue}" 
-												onchange="changeRequiredData('${accountTypes.typeValue}');" /> ${accountTypes} &nbsp;
+												value="${accountTypes}" 
+												onchange="changeRequiredData('${accountTypes}');" /> ${accountTypes} &nbsp;
 										</c:if>
+										</label>
 									</c:forEach>
-									<span id="errorCourseProvider" class="error-message"></span>
 								</div>
-							</li>
-							<!-- end -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Course Provider Name: <span style="color: red;">*</span></h1>
+							</div>
+							<div class="row clearfix">
+								<div class="form-group col-sm-4">
+									<label for="course-provider"><span class="mandatory">*</span>
+										Course Provider Name</label>
+									<div class="input-wrapper" id="providerNameDiv">
+										<input name="providerName" type="text" class="form-control"
+											id="providerName"> <a
+											class="error-info" href="#" data-toggle="tooltip" id="errorProviderName"
+											title=""></a>
+									</div>
 								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerName"
-										id="providerName" size="50px;" /><span id="errorProviderName"
-										class="error-message">${errorProviderName }</span>
+								<div class="form-group col-sm-4">
+									<label for="shorten-name">Shorten Name</label>
+									<div class="input-wrapper" id="shortNameDiv">
+										<input name="shortName" id="shortName" type="text" class="form-control"
+											id="shorten-name" placeholder=""> <a
+											class="error-info" href="#" data-toggle="tooltip" id="errorShortName"
+											title=""></a>
+									</div>
 								</div>
-							</li>
-							<!-- end -->
+								<div class="form-group col-sm-4">
+									<label for="unique-prefix"><span class="mandatory">*</span>	Unique Prefix</label>
+									<div class="input-wrapper" id="uniquePrefixDiv" >
+										<input name="uniquePrefix" type="text" class="form-control" id="uniquePrefix" placeholder="" onblur="providerPrefixValidation();"> 
+										<a id="errorUniquePrefix" class="error-info" data-toggle="tooltip" title="Error! "></a>
+									</div>
+								</div>
+							</div>
+							<div class="row clearfix">
+								<div class="form-group col-sm-6">
+									<label for="company-profile"><span class="mandatory">*</span>
+										Company Profile</label>
+									<div class="input-wrapper" id="aboutMeDiv">
+										<textarea name="aboutMe" class="form-control"
+											id="aboutMe" rows="4"></textarea>
+										<a class="error-info" href="#" data-toggle="tooltip" id="errorAboutMe"
+											title="Error! "></a>
+									</div>
+								</div>
+								<div class="form-group col-sm-6">
+									<label for="special-features">Special Features</label>
+									<div class="input-wrapper" id="specialFeaturesDiv">
+										<textarea name="specialFeatures" class="form-control"
+											id="specialFeatures" rows="4"></textarea>
+											<a class="error-info" href="#" data-toggle="tooltip" id="errorSpecialFeatures"
+											title="Error! "></a>
+									</div>
+								</div>
+							</div>
+						</div>
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">
-										Unique Name: <span style="color: red;">*</span>
-									</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="uniquePrefix"
-										id="uniquePrefix" size="30px;"
-										onblur="providerPrefixValidation();" /> <span
-										id="errorUniquePrefix" class="error-message">${errorUniquePrefix }</span>
-									<span id="prefixMessage" style="color: blue;"></span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">
-										Short Name:
-									</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="shortName"
-										id="shortName" size="30px;" /> <span id="errorShortName"
-										class="error-message">${errorShortName }</span>
-								</div>
-							</li>
-							<!-- end -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">
-										Company Profile: <span style="color: red;">*</span>
-									</h1>
-								</div>
-								<div class="col-name">
-									<textarea class="textarea" rows="8" cols="90" name="aboutMe"
-										id="aboutMe"></textarea>
-									<span id="errorAboutMe" class="error-message">${errorAboutMe }</span>
-								</div>
-							</li>
-							<!-- end -->
+						<h4 class="form-section-title accordion-header" id="contactInfoSection">2. Contact
+							Information</h4>
+						<div class="accordion-body" id="contactInfoSectionDiv">
+							<div class="row clearfix">
+								<div class="col-sm-4">
+									<div class="row clearfix">
+										<div class="col-xs-12">
+											<div class="row clearfix">
+											<div class="col-xs-6">
+											<div>
+												<label for="select-country"><span class="mandatory">*</span>
+													Country</label>
+														</div>
+													<div class="input-wrapper has-select" id="country-List">
+														<input name="countries" id="countries" class="form-control" list="countryresults">
+														<datalist id="countryresults" class="select-country"></datalist>
+														
+														<a class="error-info" href="#" data-toggle="tooltip"
+															title="Error! " id="errorSelectedCountry"></a>
+														<input type="hidden" name="selectedCountry"	id="selectedCountry" value=""/>
+													</div> 
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Special Features :</h1>
+											</div>
+											<div class="col-xs-6">
+													<label for="select-city"><span class="mandatory">*</span>
+														City</label>
+													<div class="input-wrapper has-select" id="town-List">
+													<input name="towns" id="towns" class="form-control" list="townresults">
+													<datalist id="townresults" class="select-city"></datalist>
+													<a class="error-info" href="#" data-toggle="tooltip"
+															title="Error! " id="errorSelectedTown"></a>
+													<input type="hidden" name="selectedTown" id="selectedTown" value=""/>		
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-xs-12">
+											<div class="row clearfix">
+												<div class="form-group col-xs-12">
+													<label for="address-line-1"><span class="mandatory">*</span>
+														Street Address - Line 1</label>
+													<div class="input-wrapper" id="address1Div">
+														<input name="address1" type="text"
+															class="form-control" id="address1" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorAddress1"
+															title="Error! "></a>
+													</div>
+												</div>
+												<div class="form-group col-xs-12">
+													<label for="address-line-2">Street Address - Line 2</label>
+													<div class="input-wrapper" id="address2Div">
+														<input name="address2" type="text"
+															class="form-control" id="address2" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorAddress2"
+															title="Error! "></a>
+													</div>
+												</div>
+												<div class="form-group col-xs-12">
+													<label for="address-line-3">Street Address - Line 3</label>
+													<div class="input-wrapper" id="address3Div">
+														<input name="address3" type="text"
+															class="form-control" id="address3" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorAddress3"
+															title="Error! "></a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
-								<div class="col-name">
-									<textarea class="textarea" rows="5" cols="90"
-										name="specialFeatures" id="specialFeatures"></textarea>
-									<span id="errorSpecialFeatures" class="error-message">${errorSpecialFeatures }</span>
+								<div class="col-sm-4">
+									<div class="row clearfix">
+										<div class="form-group col-xs-12">
+											<label for="land-no-1"><span class="mandatory">*</span>
+												Land Number 1</label>
+											<div class="input-wrapper input-group" id="land1Div">
+												<input name="countryCode" type="text"
+													class="col-xs-3 input-border-r disabled-input"
+													id="countryCode" placeholder="" disabled>
+												<input name="areaCode" type="text"
+													class="col-xs-3 input-border-r" id="areaCode"
+													placeholder="" onkeyup="landPhoneNubmerHelper();" maxlength="4" size="4">
+												 <input name="land1" type="tel"  onkeyup="landPhoneNubmerHelper();"
+													class="col-xs-6" id="land1" placeholder=""  maxlength="12" size="12">
+												 <span class="phone-no-hint" id="landNumber1"></span>
+												 <a
+													class="error-info" href="#" data-toggle="tooltip" 
+													title="Error! " id="errorLand1"></a>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="land-no-2">Land Number 2</label>
+											<div class="input-wrapper input-group" id="land2Div">
+												<input name="countryCode" type="text"
+													class="col-xs-3 input-border-r disabled-input"
+													id="countryCode" placeholder="" disabled>
+												<input name="areaCode2" type="text"
+													class="col-xs-3 input-border-r" id="areaCode2"
+													placeholder="" disabled maxlength="4" size="4">
+												<input name="land2" type="tel" onkeyup="landPhoneNubmerHelper();"
+													class="col-xs-6" id="land2" placeholder=""  maxlength="12" size="12">
+												 <span class="phone-no-hint" id="landNumber2"></span>
+												<a class="error-info" href="#" data-toggle="tooltip" 
+													title="Error! " id="errorLand2"></a>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="mobile-number"><span class="mandatory">*</span>
+												Mobile Number</label>
+											<div class="input-wrapper input-group" id="mobileDiv">
+												<input name="countryCode" type="text"
+													class="col-xs-3 input-border-r disabled-input"
+													id="countryCode" placeholder="" disabled>
+												<input name="networkCode" type="text" onkeyup="landPhoneNubmerHelper();"
+													class="col-xs-3 input-border-r" id="networkCode"
+													placeholder="" maxlength="4" size="4"> 
+												<input name="mobile"  onkeyup="landPhoneNubmerHelper();"
+													type="tel" class="col-xs-6" id="mobile" placeholder=""  maxlength="12" size="12">
+												<span class="phone-no-hint" id="lastMobileNumber"></span> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorMobile"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="fax-number">Fax Number</label>
+											<div class="input-wrapper input-group" id="faxDiv">
+												<input name="countryCode" type="text"
+													class="col-xs-3 input-border-r disabled-input"
+													id="countryCode" placeholder="" disabled> 
+												<input name="areaCode2" type="text" maxlength="4" size="4"
+													class="col-xs-3 input-border-r" id="areaCode2"
+													placeholder="" disabled> <span class="phone-no-hint" id="lastFaxNumber"></span> 
+												<input name="fax" type="tel" class="col-xs-6"  onkeyup="landPhoneNubmerHelper();"
+													id="fax" placeholder="" maxlength="12" size="12">
+												<a class="error-info" href="#" data-toggle="tooltip" id="errorFax"
+													title="Error! "></a>
+											</div>
+										</div>
+									</div>
 								</div>
-							</li>
-							<!-- end -->
-						</ul>
+								<div class="col-sm-4">
+									<div class="row clearfix">
+										<div class="form-group col-xs-12">
+											<label for="general-email"><span class="mandatory">*</span>
+												General Email</label>
+											<div class="input-wrapper" id="generalEmailDiv">
+												<input name="generalEmail" type="email" class="form-control"
+													id="generalEmail" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorGeneralEmail"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="inquiry-email"><span class="mandatory">*</span>
+												Course Inquiry Email</label>
+											<div class="input-wrapper" id="inquiryMailDiv">
+												<input name="inquiryMail" type="email" class="form-control"
+													id="inquiryMail" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorInquiryMail"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-xs-12">
+											<label for="web-link">Web Link</label>
+											<div class="input-wrapper input-group" id="webLinkDiv">
+											<span class="input-group-addon" name="web-basic-addon" id="web-basic-addon" value="http://">http://</span>
+											<input name="webLink" type="url" class="form-control"
+													id="webLink" placeholder=""> 
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorWebLink"
+													title="Error! "></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<h4 class="form-section-title accordion-header" id="socialMedialSection">3. Social
+							Media Information</h4>
+						<div class="accordion-body" id="socialMedialSectionDiv">
+							<div class="row clearfix">
+								<div class="col-sm-4 col-sm-offset-2">
+									<div class="row">
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="facebook-url">Facebook URL</label>
+											<div class="input-wrapper" id="facebookDiv">
+												<input name="facebook" type="url" class="form-control"
+													id="facebook" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorFacebook" title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="linkedin-url">LinkedIn URL</label>
+											<div class="input-wrapper" id="linkdedInDiv">
+												<input name="linkdedIn" type="url" class="form-control"
+													id="linkdedIn" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorLinkedIn"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="twitter-url">Twitter URL</label>
+											<div class="input-wrapper" id="twitterDiv">
+												<input name="twitter" type="url" class="form-control"
+													id="twitter" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorTwitter"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="instagram-url">Instagram URL</label>
+											<div class="input-wrapper" id="instagramDiv">
+												<input name="instagram" type="url" class="form-control"
+													id="instagram" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorInstagram"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-11 col-xs-12">
+											<label for="myspace-url">MySpace URL</label>
+											<div class="input-wrapper" id="mySpaceDiv">
+												<input name="mySpace" type="url" class="form-control"
+													id="mySpace" placeholder="">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorMyspace"
+													title="Error! "></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-5">
+									<div class="row">
+										<div class="form-group col-sm-9 col-xs-12 col-sm-offset-2">
+											<label for="whatsapp-no">WhatsApp Number</label>
+											<div class="input-wrapper" id="whatsappDiv">
+												<input name="whatsapp" type="tel" class="form-control"
+													id="whatsapp" placeholder="" maxlength="16" size="16">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorWhatsapp"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-9 col-xs-12 col-sm-offset-2">
+											<label for="viber-no">Viber Number</label>
+											<div class="input-wrapper" id="viberDiv">
+												<input name="viber" type="tel" class="form-control"
+													id="viber" placeholder="" maxlength="16" size="16">
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorViber"
+													title="Error! "></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<h4 class="form-section-title accordion-header" id="adminInfoSection">4. Admin Information</h4>
+						<div class="accordion-body" id="adminInfoSectionDiv">
+							<div class="row clearfix">
+								<div class="form-group col-sm-12 text-center">
+									<label for="course-provider-type"><span class="mandatory">*</span> Course Provider Type</label>
+									<div class="input-wrapper has-select text-center" id="providerTypeList">
+										<div class="inner-input-wrapper">
+											<select id="selectedProviderType" name="selectedProviderType" class="form-control"></select>											
+											<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderType"	title="Error! "></a>
+										</div> 
+									</div>
+									
+								</div>
+							</div>
+							<div class="row clearfix">			
+								<div class="form-group col-sm-12 text-center center-block input-wrapper" id="providerStatusDiv">
+									<label for="course-provider-status"	class="text-center center-block top-padding inline-info">
+										<span class="mandatory">*</span> Course Provider Status 
+										<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderStatus" title="Error! "></a>
+									</label>
+									<c:forEach items="${applicationStatusBean.values}" var="applicationStatus">										
+										<label class="radio-inline radio-lbl">
+										<input type="radio" name="providerStatus"  id="providerStatus" value="${applicationStatus.statusValue}">${applicationStatus}</label>
+									</c:forEach>									 
+								</div>
+							</div>
+						</div>
+
+						<h4 class="form-section-title accordion-header"  id="accountInfoSection">5. Account
+							Information (Authorized Personnel)</h4>
+						<div class="accordion-body" id="accountInfoSectionDiv">
+							<div class="row clearfix">
+								<div class="col-sm-6">
+									<div class="row">
+										<div class="form-group col-sm-8 col-sm-offset-2">
+											<label for="full-name"><span class="mandatory">*</span>
+												Full Name</label>
+											<div class="input-wrapper" id="providerPrivateNameDiv">
+												<input name="providerPrivateName" type="text" class="form-control"
+													id="providerPrivateName"> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorPrivateName"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-8 col-sm-offset-2">
+											<label for="contract-no"><span class="mandatory">*</span>
+												Contact Number</label>
+											<div class="input-wrapper input-group" id="providerContactNumberDiv">
+											<span class="input-group-addon" id="countryCode2"></span>
+												<input name="providerContactNumber" type="text" class="form-control"
+													id="providerContactNumber" placeholder="" maxlength="12" size="12"> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorContactNumber"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-8 col-sm-offset-2">
+											<label for="account-email"><span class="mandatory">*</span>
+												Email</label>
+											<div class="input-wrapper" id="providerEmailDiv">
+												<input name="providerEmail" type="text" class="form-control"
+													id="providerEmail" placeholder=""> <a
+													class="error-info" href="#" data-toggle="tooltip" id="errorPrivateEmail"
+													title="Error! "></a>
+											</div>
+										</div>
+										<div class="form-group col-sm-8 col-sm-offset-2">
+											<label for="account-desc">Description</label>
+											<div class="input-wrapper" id="accountDescriptionDiv">
+												<textarea name="accountDescription" class="form-control"
+													id="accountDescription" rows="3"></textarea>
+													<a class="error-info" href="#" data-toggle="tooltip" id="errorAccountDescription"
+													title="Error! "></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="row">
+										<div class="border-wrapper col-sm-12 center-block">
+											<div class="row">
+												<div class="form-group col-sm-8 col-sm-offset-2">
+													<label for="login-name"><span class="mandatory">*</span>
+														Username</label>
+													<div class="input-wrapper" id="usernameDiv">
+														<input name="providerUsername" type="text"
+															class="form-control" id="providerUsername" placeholder="" onblur="providerUsernameValidation();">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorUsername"
+															title="Error! "></a>
+													</div>
+												</div>
+												<div class="form-group col-sm-8 col-sm-offset-2">
+													<label for="login-pwd"><span class="mandatory">*</span>
+														Password</label>
+													<div class="input-wrapper" id="providerPasswordDiv">
+														<input name="providerPassword" type="password"
+															class="form-control" id="providerPassword" placeholder="">
+															<span class="phone-no-hint"> min:6  and max:100</span> 
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorProviderPassword"
+															title="Error! "></a>
+													</div>
+												</div>
+												<div class="form-group col-sm-8 col-sm-offset-2">
+													<label for="confirm-pwd"><span class="mandatory">*</span>
+														Confirm Password</label>
+													<div class="input-wrapper" id="cProviderPasswordDiv">
+														<input name="cProviderPassword" type="password"
+															class="form-control" id="cProviderPassword" placeholder="">
+														<a class="error-info" href="#" data-toggle="tooltip" id="errorCProviderPassword"
+															title="Error! "></a>
+													</div>
+												</div>
+												<div class="form-group col-sm-8 col-sm-offset-2 input-wrapper" id="accountStatusDiv">
+												<label for="account-category"
+													class="right-padding inline-info"> <span
+													class="mandatory">*</span> Account Status
+												</label> <a class="error-info" href="#"
+													data-toggle="tooltip" id="errorStatus" title="Error! "></a>
+
+												<div id="accountStatusList"></div>
+											</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					</div>
-					<!-- End filter result table -->
 
-				</div>
-				<!-- End left panel -->
-				<br /> <br />
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<h3>Contact Info</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">General Email : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="generalEmail"
-										id="generalEmail" size="25px;" /> <span
-										id="errorGeneralEmail" class="error-message">${errorGeneralEmail }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Course Inquiry Email : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="inquiryMail"
-										id="inquiryMail" size="25px;" /> <span id="errorInquiryMail"
-										class="error-message">${errorInquiryMail }</span>
-								</div>
-							</li>
-							<!-- end -->
+			 	<div class="row clearfix">
+				 	<!--
+				 		<button type="button" class="btn btn-register pull-right">
+				 			<i class="fa fa-times fa-3x" aria-hidden="true" onclick="saveCourseProvider();"></i> Add Course	provider
+						</button>
+					-->				
+					<input type="button" id="viewNext" value="Proceed Next" class="btn btn-next pull-right" onclick="saveCourseProvider();" />
+				</div> 
 
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Country : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" id="country-List"></div> <span
-								id="errorSelectedCountry" class="error-message">${errorSelectedCountry }</span>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Town : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" id="town-List"></div> <span
-								id="errorSelectedTown" class="error-message">${errorSelectedTown }</span>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Land Phone Area Code : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="areaCode" id="areaCode"
-										onkeyup="landPhoneNubmerHelper();" size="25px;" /> <span
-										id="errorAreaCode" class="error-message number-helper">${errorAreaCode }</span>
-										<span>Ex: 11, 31, 81, .....</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Land Phone 1 : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="land1" id="land1"
-										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorLand1" class="error-message number-helper">${errorLand1 }</span> <span
-										id="landNumber1" style="color: blue;" class="number-helper"></span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Land Phone 2 :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="land2" id="land2"
-										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorLand2" class="error-message number-helper">${errorLand2 }</span> <span
-										id="landNumber2" style="color: blue;" class="number-helper"></span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Fax Number :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="fax" id="fax"
-										size="25px;" /> <span id="errorFax"
-										class="error-message number-helper">${errorFax }</span>
-										<span
-										id="faxNumber" style="color: blue;" class="number-helper"></span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Mobile Phone Network Code : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="networkCode"
-										id="networkCode" size="25px;"
-										onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorNetworkCode" class="error-message number-helper">${errorNetworkCode }</span>
-										<span>Ex: 77, 71, 72, .....</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Mobile Number : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="mobile" id="mobile"
-										size="25px;" onkeyup="landPhoneNubmerHelper();" /> <span
-										id="errorLastMobileNumber" class="error-message number-helper">${errorMobile }</span>
-									<span id="lastMobileNumber" style="color: blue;" class="number-helper"></span>
-								</div>
-
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix"></li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Address Line 1 : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="address1" id="address1"
-										size="50px;" /> <span id="errorAddress1"
-										class="error-message">${errorAddress1 }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Address Line 2 :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="address2" id="address2"
-										size="50px;" />
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Address Line 3 :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="address3" id="address3"
-										size="50px;" />
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Web Link :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="webLink" id="webLink"
-										size="25px;" /> <span id="errorWebLink" class="error-message">${errorWebLink }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Facebook URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="facebook" id="facebook"
-										size="25px;" />. <span id="errorFacebook"
-										class="error-message">${errorFacebook }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">LinkedIn URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="linkdedIn"
-										id="linkdedIn" size="25px;" /> <span id="errorLinkedIn"
-										class="error-message">${errorLinkedIn }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Twitter URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="twitter" id="twitter"
-										size="25px;" /> <span id="errorTwitter" class="error-message">${errorTwitter }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Instagram URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="instagram"
-										id="instagram" size="25px;" /> <span id="errorInstagram"
-										class="error-message">${errorInstagram }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">MySpace URL :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="mySpace" id="mySpace"
-										size="25px;" /> <span id="errorMyspace" class="error-message">${errorMyspace }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">WhatsApp Number :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="whatsapp" id="whatsapp"
-										size="25px;" /> <span id="errorWhatsapp"
-										class="error-message">${errorWhatsapp }</span>
-								</div>
-								<div class="col-name">
-									<h1 class="pro-name">Viber Number :</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="viber" id="viber"
-										size="25px;" /> <span id="errorViber" class="error-message">${errorViber }</span>
-								</div>
-							</li>
-							<!-- end -->
-						</ul>
+				</form>		
+				<div id="upload-logo-modal" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<div style="color:green;">
+									<label>Course provider registered and the code is</label><input type="text" id="registeredId" name="registeredId" value="" readonly/>
+								</div>							
+								<button class="close" type="button" data-dismiss="modal">×</button>
+								<h4 class="modal-title">Upload Course Provider Logo</h4>
+							</div>
+							<div class="modal-body">This is the test modal pop-up.</div>
+							<div class="modal-footer"></div>
+						</div>
 					</div>
-					<!-- End filter result table -->
 				</div>
-				<!-- End left panel -->
 
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<h3 style="color: navy;">Admin Info</h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-
-							<!-- select the course provider type -->
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Course Provider Type : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" id="providerTypeList"></div> <span
-								id="errorProviderType" class="error-message">${errorProviderStatus }</span>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Course Provider Status : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" style="width: 50%;">
-									<c:forEach items="${applicationStatusBean.values}"
-										var="applicationStatus">
-										<input type="radio" name="providerStatus" id="providerStatus"
-											value="${applicationStatus.statusValue}" /> ${applicationStatus}
-									 </c:forEach>
-									<span id="errorProviderStatus" class="error-message">${errorProviderStatus }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-						</ul>
-					</div>
-					<!-- End filter result table -->
-				</div>
-				<!-- End left panel -->
-				<br /> <br /> <input type="hidden" name="CCO" id="CCO" value="ADD_FEATURED_COURSE_PROVIDER" />
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel" id="accountInfo">
-					<h3 style="color: maroon;">Account Info | Authorized Person </h3>
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Name : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerPrivateName"
-										id="providerPrivateName" size="50px;" /> <span
-										id="errorPrivateName" class="error-message">${errorPrivateName }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Contact Number : <span style="color: red;">*</span>
-									</h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerContactNumber"
-										id="providerContactNumber" size="50px;" /> <span
-										id="errorContactNumber" class="error-message">${errorContactNumber }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Email : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="email" name="providerEmail"
-										id="providerEmail" size="50px;" /> <span
-										id="errorPrivateEmail" class="error-message">${errorProviderEmail }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Username : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="text" name="providerUsername"
-										id="providerUsername" size="50px;"
-										onblur="providerUsernameValidation();" /> <span
-										id="errorUsername" class="error-message">${errorProviderUsername }</span>
-										<span id="usernameMessage" style="color: blue;"></span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Password : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="password" name="providerPassword"
-										id="providerPassword" size="50px;" required /> <span
-										id="errorProviderPassword" class="error-message">${errorProviderPassword }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Confirm Password : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name">
-									<input class="input" type="password" name="cProviderPassword"
-										id="cProviderPassword" size="50px;" required /> <span
-										id="errorCProviderPassword" class="error-message">${errorCProviderPassword }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-							<li class="course-info clearfix"><div class="col-name">
-									<h1 class="pro-name">Account status : <span style="color: red;">*</span></h1>
-								</div>
-								<div class="col-name" style="width: 50%;">
-									<h1 class="pro-name" id="accountStatusList">		
-									</h1>
-									<span id="errorStatus" class="error-message">${errorStatus }</span>
-								</div></li>
-							<!-- end -->
-
-							<li class="course-info clearfix">
-								<div class="col-name">
-									<h1 class="pro-name">Description :</h1>
-								</div>
-								<div class="col-name">
-									<textarea class="textarea" rows="5" cols="90"
-										name="accountDescription" id="accountDescription"></textarea>
-									<span id="errorAccountDescription" class="error-message">${errorAccountDescription }</span>
-								</div>
-							</li>
-							<!-- end -->
-
-						</ul>
-					</div>
-					<!-- End filter result table -->
-
-				</div>
-				<!-- End left panel -->
-
-				<!-- course filter panel : left side -->
-				<div class="course-filter-panel">
-					<!-- Filter result table -->
-					<div class="filter-result-table">
-						<ul class="result-row">
-
-							<li class="course-info clearfix">
-								<div class="col-name" style="width: 50%;">
-									<input type="button" id="viewNext" value="Next"
-										class="btn btn-lg btn-info" onclick="saveCourseProvider();" />
-								</div>
-							</li>
-							<!-- end -->
-						</ul>
-					</div>
-					<!-- End left panel -->
-		</form>
-
-		<form action="/AdminController" method="POST">
-			<!-- course filter panel : left side-->
-			<div class="course-filter-panel" id="logoPanel">
-				<h3>Course Provider Images</h3>
-				<!-- Filter result table -->
-				<div class="filter-result-table">
-					<ul class="result-row">
-						<li class="course-info clearfix" id="smallImg">
-							<div class="col-name">
-								<h1 class="pro-name">Logo image (Small) :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageSmall"
-									id="imageSmall" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
-
-						<li class="course-info clearfix" id="largeImg">
-							<div class="col-name">
-								<h1 class="pro-name">Logo image (Large) :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageLarge"
-									id="imageLarge" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
-
-						<li class="course-info clearfix" id="headerImg">
-							<div class="col-name">
-								<h1 class="pro-name">Header Image :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageHeader"
-									id="imageHeader" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
-
-						<li class="course-info clearfix" id="commonImg">
-							<div class="col-name">
-								<h1 class="pro-name">Common Image :</h1>
-							</div>
-							<div class="col-name">
-								<input class="input" type="file" name="imageCommon"
-									id="imageCommon" size="50px;" />
-							</div>
-						</li>
-						<!-- end -->
-					</ul>
-				</div>
-				<!-- End filter result table -->
-				<input type="submit" value="Add" class="btn btn-success" />
 			</div>
-			<!-- End left panel -->
-		</form>
-	</div>
-	<!-- End page content  -->
+		</div>
+
 	</div>
 	<!-- End Main Container -->
 
@@ -681,8 +597,9 @@
 	</footer>
 
 	<!-- jQuery & Other js -->
-	<script src="/dist/bower-components/jquery/jquery.min.js"></script>
+	<!--  <script src="/dist/bower-components/jquery/jquery.min.js"></script> -->
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+	<script src="/dist/bower-components/jquery-ui/jquery-ui.min.js"></script>
 	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<script src="/dist/js/main.js"></script>
 
@@ -690,11 +607,11 @@
 	<script src="/dist/bower-components/w3/w3data.js"></script>
 
 	<!-- custom javascript -->
-<!-- 	<script language="JavaScript" type="text/javascript"
-		src="/dist/js/header/ui-populate-helper.js"></script> -->
-		<script type="text/javascript" src="/dist/js/admin/course-provider-validator.js"></script>
+	<!-- <script language="JavaScript" type="text/javascript" src="/dist/js/header/ui-populate-helper.js"></script> -->
+
+	<script src="/dist/js/admin/course-provider-validator.js"></script>
 	<script src="/dist/js/admin/load-provider-registration-page.js"></script>
-		<script src="/dist/js/error-handling.js"></script>
+	<script  src="/dist/js/error-handling.js"type="text/javascript"></script>
 
 </body>
 </html>
