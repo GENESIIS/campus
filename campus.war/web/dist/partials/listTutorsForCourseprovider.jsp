@@ -11,6 +11,7 @@
 <!-- 20170428 c159-courseprovider-accept-tutor-request-cw - Change courseprovidercode hidden variable declared place -->
 <!-- 20170428 c159-courseprovider-accept-tutor-request-cw - Add Requested Date into the table -->
 <!-- 20170502 c159-courseprovider-accept-tutor-request-cw - Add java script enabled check validation into the page -->
+<!-- 20170504 c159-courseprovider-accept-tutor-request-cw - Add validation for the courseProviderCode value -->
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -56,14 +57,15 @@
 						</td>
 					</tr>
 					
-					<input type="hidden" name="cpCode" id="cpCode" value="${param.courseProviderCode}"/>
-									
-					<c:forEach var="cpCodeList" items="${result.collection}">		
-						<c:set var="courseprovidercode" value="${cpCodeList[0]}"/>		
-					</c:forEach>
+					<c:choose>
+					  <c:when test="${empty param.courseProviderCode}">
+						<input type="text" name="cpCode" id="cpCode" value="${cpCode}"/>
+					  </c:when>
+					  <c:otherwise>					    
+						<input type="text" name="cpCode" id="cpCode" value="${param.courseProviderCode}"/>
+					  </c:otherwise>
+					</c:choose>
 					
-					<input type="hidden" name="courseprovidercode" id="courseprovidercode" value="${courseprovidercode}"/>				
-									
 					<div>
 						<table id="Tutors" width="80%">
 							<tr>
