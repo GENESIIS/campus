@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20170428 CW c159-courseprovider-accept-tutor-request-cw modified execute method to update data, view message & view final tutor list
 //20170428 CW c159-courseprovider-accept-tutor-request-cw remove commented lines
 //20170501 CW c159-courseprovider-accept-tutor-request-cw clean the code by removing commented lines & info log messages 
+//20170504 CW c159-courseprovider-accept-tutor-request-cw add header comments, Removed creation of the allcpCodeList & add cpCode to the helper
 
 import com.genesiis.campus.entity.EmploymentDAO;
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
@@ -24,6 +25,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * This class is used to save the details of the employment status changes done by course provider
+ * further it implements ICommand interface
+ * @author CW
+ *
+ */
 public class CmdSaveEmploymentStatusCP implements ICommand {
 
 	static Logger log = Logger.getLogger(CmdSaveEmploymentStatusCP.class.getName());
@@ -74,18 +81,8 @@ public class CmdSaveEmploymentStatusCP implements ICommand {
 					tablemessage = SystemMessage.UPDATED.message();
 				}
 				
-				Collection<String> cpCodeList = new ArrayList<String>();
-				
 				String cpCode = helper.getParameter("cpCode");
-				if(cpCode == ""){
-					cpCode =  helper.getParameter("courseprovidercode");
-				}
-				
-				cpCodeList.add(cpCode);
-				
-				final Collection<Collection<String>> allcpCodeList = new ArrayList<Collection<String>>();
-				allcpCodeList.add(cpCodeList);
-				view.setCollection(allcpCodeList);	
+				helper.setAttribute("cpCode", cpCode);
 				
 			}
 		} catch (Exception exception) {
