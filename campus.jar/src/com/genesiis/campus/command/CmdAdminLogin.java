@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->   
 //20170424 AS CAM-154-admin-privilege-handling-as - attempts database update
 //20170425 AS CAM-154-admin-privilege-handling-as - attempts handling modification done
+//20170504 AS CAM-154-admin-privilege-handling-as - attempts handling if-else-if condition changed to switch-case
 import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.AdminPrivilegeDAO;
 import com.genesiis.campus.entity.ICrud;
@@ -142,50 +143,56 @@ public class CmdAdminLogin implements ICommand{
 		try {
 			ICrud adminLoginDAO = new AdminLoginDAO();
 
-			for (max = max; max <= 3; max++) {
+			 label:		for (max = max; max <= 3; max++) {
 
-				if (max == 3) {
+				switch (max) {
+				case 3:
 					message = SystemMessage.LOGGINATTEMPT3.message();
 					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
 					adminData.setAttempts(max);
 					adminLoginDAO.update(adminData);
 					pageURL = path;
 					max++;
-					break;
-				} else if (max == 2) {
+					break label;
+
+				case 2:
 					message = SystemMessage.LOGGINATTEMPT2.message();
 					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
 					adminData.setAttempts(max);
 					adminLoginDAO.update(adminData);
 					pageURL = path;
 					max++;
-					break;
-				} else if (max == 1) {
+					break label;
+
+				case 1:
 					message = SystemMessage.LOGGINATTEMPT1.message();
 					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
 					adminData.setAttempts(max);
 					adminLoginDAO.update(adminData);
 					pageURL = path;
 					max++;
-					break;
-				} else if (max == 0) {
+					break label;
+
+				case 0:
 					message = SystemMessage.INVALIDPASSWORD.message();
 					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
 					adminData.setAttempts(max);
 					adminLoginDAO.update(adminData);
 					pageURL = path;
 					max++;
-					break;
+					break label;
 
-				} else {
+				default :
 					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
 					adminData.setAttempts(max);
 					adminLoginDAO.update(adminData);
 					pageURL = path;
 					max++;
-					break;
+					break label;
 				}
+				
 			}
+			
 		} catch (SQLException e) {
 			log.error("logginAttempts():   SQLException" + e.toString());
 			throw e;

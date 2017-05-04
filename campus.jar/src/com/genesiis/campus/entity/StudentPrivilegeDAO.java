@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161209 AS C19-student-login-without-using-third-party-application-test-as  StudentPrivilegeDAO created.
 //20161214 AS C19-student-login-without-using-third-party-application-test-as added studentPrivilege method . 
+//20170428 AS CAM-154-admin-privilege-handling-as - change the logger statement info to error 
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.ApplicationStatus;

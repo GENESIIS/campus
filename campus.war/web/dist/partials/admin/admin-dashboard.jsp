@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!-- 20170314 AS c23-admin-login-logout-function-as - admin-dashborad.jsp sample page created -->
-<!-- 20170319 AS c23-admin-login-logout-function-as - sample design modifying WIP-->
+<!-- 20170319 AS c23-admin-login-logout-function-as - logged user, user type string to load the dashbord body -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

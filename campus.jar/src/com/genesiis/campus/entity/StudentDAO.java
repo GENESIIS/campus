@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added code to retrieve more columns from the result set
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
+//20170428 AS CAM-154-admin-privilege-handling-as - change the logger statement info to error 
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 
