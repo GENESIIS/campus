@@ -1,5 +1,6 @@
 /*
 * 20170226 JH c95-list-tutor-ddl-changes c95-ddl file created
+* 20170504 JH TUTORPROFESSIONALEXPERIENCE table ORGANIZATION and DESIGNATION column data lenght changed from 20 to 250
 */
 
 USE [xeno]
@@ -101,11 +102,11 @@ GO
 
 CREATE TABLE [CAMPUS].[TUTORPROFESSIONALEXPERIENCE](
 	[CODE] [int] IDENTITY(1,1) NOT NULL,
-	[ORGANIZATION] [varchar](20) NOT NULL,
+	[ORGANIZATION] [varchar](250) NOT NULL,
 	[TUTOR] [int] NOT NULL,
 	[INDUSTRY] [int] NOT NULL,
 	[JOBCATEGORY] [int] NOT NULL,
-	[DESIGNATION] [varchar](20) NOT NULL,
+	[DESIGNATION] [varchar](250) NOT NULL,
 	[COMMENCEDON] [date] NOT NULL,
 	[COMPLETIONON] [date] NOT NULL,
 	[DESCRIPTION] [varchar](500) NOT NULL,
