@@ -1,6 +1,7 @@
 package com.genesiis.campus.command;
 //20170426 AS c155-admin-logout-function-as CmdAdminLogout class created
 //20170427 AS CAM-155-admin-logout-function-as- userTypeString, userLoginHistoryCode to session attribute removed 
+//20170504 AS CAM-155-admin-logout-function-as- Error logger statement changed to "execute():  Exception"
 import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentLoginDAO;
@@ -65,7 +66,7 @@ public class CmdAdminLogout implements ICommand{
 			
 			
 		} catch (Exception e) {
-			log.error("CmdAdminLogout():  Exception" + e.toString());
+			log.error("execute():  Exception" + e.toString());
 			throw e;
 		}
 		helper.setAttribute("message", message);
