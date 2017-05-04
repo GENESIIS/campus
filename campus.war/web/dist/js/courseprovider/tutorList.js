@@ -11,6 +11,7 @@
  * 20170428 CW c159-courseprovider-accept-tutor-request-cw add validations to cpCode variable in ready function
  * 20170428 CW c159-courseprovider-accept-tutor-request-cw add Requested date value into the table & removed the commented lines
  * 20170504 CW c159-courseprovider-accept-tutor-request-cw removed validation for cpCode in ready function
+ * 20170504 CW c159-courseprovider-accept-tutor-request-cw modify variable declarations in fillListItems method & optimize the code
  */
 
 $(document).ready(function() {
@@ -83,32 +84,31 @@ function fillListItems(maxIndex, response){
 		$.each(response.applicationStatusMap, function(index, value) {
 			var res = value.toString();
 			var data = res.split(",");
-			var x = index;
-			var y = data[0].toString();
+			var statusStr = data[0].toString();
 			
-			var val1 = resultValue[9].toString(); // added for the testing purposes
-			var val2 = resultValue[7].toString(); // added for the testing purposes
+			var initiatedBy = resultValue[9].toString(); // added for the testing purposes
+			var confirmStatus = resultValue[7].toString(); // added for the testing purposes
 			
-			if(resultValue[9].toString() == "COURSEPROVIDER" && resultValue[7].toString() == "Active" && y == "Delete"){
-				$('<option>').val(x).text(y).appendTo(status);
+			if(initiatedBy == "COURSEPROVIDER" && confirmStatus == "Active" && statusStr == "Delete"){
+				$('<option>').val(index).text(statusStr).appendTo(status);
 			}
 			
-			if(resultValue[9].toString() == "COURSEPROVIDER" && resultValue[7].toString() == "Pending" && y == "InActive"){
-				y = "Remove";
-				$('<option>').val(x).text(y).appendTo(status);
-			}
-
-			if(resultValue[9].toString() == "TUTOR" && resultValue[7].toString() == "Active" && y == "Delete"){
-				$('<option>').val(x).text(y).appendTo(status);
+			if(initiatedBy == "COURSEPROVIDER" && confirmStatus == "Pending" && statusStr == "InActive"){
+				statusStr = "Remove";
+				$('<option>').val(index).text(statusStr).appendTo(status);
 			}
 
-			if(resultValue[9].toString() == "TUTOR" && resultValue[7].toString() == "Pending" && (y == "InActive" || y == "Active")){
-				if(y == "InActive"){
-					y = "Remove";
+			if(initiatedBy == "TUTOR" && confirmStatus == "Active" && statusStr == "Delete"){
+				$('<option>').val(index).text(statusStr).appendTo(status);
+			}
+
+			if(initiatedBy == "TUTOR" && confirmStatus == "Pending" && (statusStr == "InActive" || statusStr == "Active")){
+				if(statusStr == "InActive"){
+					statusStr = "Remove";
 				}else{
-					y = "Approve";
+					statusStr = "Approve";
 				}
-				$('<option>').val(x).text(y).appendTo(status);
+				$('<option>').val(index).text(statusStr).appendTo(status);
 			}
 		});		
 	});
