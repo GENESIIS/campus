@@ -49,12 +49,15 @@ package com.genesiis.campus.entity;
 //20170429 CW c159-courseprovider-accept-tutor-request-cw fixing the errors creating the status value in getTutorsListOfCourseprovider method
 //20170501 CW c159-courseprovider-accept-tutor-request-cw log message changed into info from error in getFCPListForTutorToSelect
 //20170504 CW c159-courseprovider-accept-tutor-request-cw removed un used varisble declarations from getTutorsListOfCourseprovider method
+//20170504 CW c159-courseprovider-accept-tutor-request-cw add genderMap to getTutorsListOfCourseprovider method
 
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
 import com.genesiis.campus.util.security.Encryptable;
 import com.genesiis.campus.util.security.TripleDesEncryptor;
+import com.genesiis.campus.validation.ApplicationStatus;
+import com.genesiis.campus.validation.Gender;
 import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
@@ -65,6 +68,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * this class used to manage the town related data 
@@ -439,7 +443,7 @@ public class TutorDAO implements ICrud {
 		
 		return allTutorCpEmailList;
 	}
-
+	
 	/**
 	 * Returns the Tutors list for given course provider.
 	 * @author Chinthaka 
@@ -462,14 +466,52 @@ public class TutorDAO implements ICrud {
 					}else{
 						status = status + courseProviderCode[i];
 					}
+				}				
+
+				HashMap<Integer, String> genderMap = Gender.getGenderMap();
+				
+				for ( HashMap.Entry<Integer, String> entry : genderMap.entrySet()) {
+				    int key = entry.getKey();
+				    String stringVal = entry.getValue();
+				    
+				    
 				}
+				
+				int inactive = ApplicationStatus.INACTIVE.getStatusValue();
+				int active = ApplicationStatus.ACTIVE.getStatusValue();
+				int pending = ApplicationStatus.PENDING.getStatusValue();
+				int expired = ApplicationStatus.EXPIRED.getStatusValue();
+				int delete = ApplicationStatus.DELETE.getStatusValue();
+				int undefined = ApplicationStatus.UNDEFINED.getStatusValue();
 											
 				StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE TUTORCODE, T.FIRSTNAME +' '+ T.MIDDLENAME +' '+ T.LASTNAME NAME, "); 
-				queryBuilder.append("CASE T.GENDER WHEN 1 then 'Male' WHEN 2 then 'Female' END GENDER, ");
+				//queryBuilder.append("CASE T.GENDER WHEN 1 then 'Male' WHEN 2 then 'Female' END GENDER, ");
+				queryBuilder.append("CASE T.GENDER WHEN ");
+				for ( HashMap.Entry<Integer, String> gender : genderMap.entrySet()) {
+				    int key = gender.getKey();
+				    String stringVal = gender.getValue();
+				    queryBuilder.append(key +" then "+ "'"+stringVal+"' ");				    
+				}
+				queryBuilder.append(" END GENDER, ");
+				
+				
+				
+				//1 then 'Male' WHEN 2 then 'Female' END GENDER, ");
 				queryBuilder.append("T.EMAIL, T.LANDPHONECOUNTRYCODE + T.LANDPHONEAREACODE + T.LANDPHONENUMBER LANDNUMBER, ");
 				queryBuilder.append("T.MOBILEPHONECOUNTRYCODE + T.MOBILEPHONENETWORKCODE + T.MOBILEPHONENUMBER MOBILENUMBER, ");
 				queryBuilder.append("EMP.CODE EMPCODE, EMP.COURSEPROVIDER CPCODE, ");
-				queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN 0 then 'Inactive' WHEN 1 then 'Active' WHEN 2 then 'Pending' WHEN 3 then 'Expired' WHEN 4 then 'Deleted' WHEN -1 then 'Undefined' END CONFIRMSTATUS, ");
+				queryBuilder.append("CASE EMP.CONFIRMATIONSTATUS WHEN ");
+				queryBuilder.append(inactive).append(" then '").append(ApplicationStatus.getApplicationStatus(inactive)).append("' WHEN ");
+				queryBuilder.append(active).append(" then '").append(ApplicationStatus.getApplicationStatus(active)).append("' WHEN ");
+				queryBuilder.append(pending).append(" then '").append(ApplicationStatus.getApplicationStatus(pending)).append("' WHEN ");
+				queryBuilder.append(expired).append(" then '").append(ApplicationStatus.getApplicationStatus(expired)).append("' WHEN ");
+				queryBuilder.append(delete).append(" then '").append(ApplicationStatus.getApplicationStatus(delete)).append("' WHEN ");
+				queryBuilder.append(undefined).append(" then '").append(ApplicationStatus.getApplicationStatus(undefined)).append("' END CONFIRMSTATUS, ");
+/*				queryBuilder.append(ApplicationStatus.ACTIVE.getStatusValue()).append(" then 'Active' WHEN ");
+				queryBuilder.append(ApplicationStatus.PENDING.getStatusValue()).append(" then 'Pending' WHEN ");
+				queryBuilder.append(ApplicationStatus.EXPIRED.getStatusValue()).append(" then 'Expired' WHEN ");
+				queryBuilder.append(ApplicationStatus.DELETE.getStatusValue()).append(" then 'Deleted' WHEN ");
+				queryBuilder.append(ApplicationStatus.UNDEFINED.getStatusValue()).append(" then 'Undefined' END CONFIRMSTATUS, ");*/
 				queryBuilder.append("EMP.INITIATEDBY INITIATEDBY, EMP.CRTON CRTON ");
 				queryBuilder.append("FROM CAMPUS.TUTOR T ");
 				queryBuilder.append("INNER JOIN CAMPUS.EMPLOYMENT EMP ON T.CODE = EMP.TUTOR ");
