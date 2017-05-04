@@ -2,6 +2,7 @@
 * 20170206 JH c141-add-course-provider-issue-improvements INIT 
 * 20170222 JH c141-add-course-provider-issue-improvements check and validate the user type code before inserting course provider data to the database in campus.add_featured_provider_main_branch
 * 				and add_featured_provider_sub_branch stored procedures
+* 20170503 JH c141-add-course-provider-issue-improvements changed the datatype of password from varchar to nvarchar
 */
 
 
@@ -17,7 +18,7 @@
 
 DROP PROCEDURE campus.add_featured_provider_main_branch; 
 
-USE [xeno-4]
+USE [xeno]
 GO
 
 
@@ -56,7 +57,7 @@ CREATE PROCEDURE campus.add_featured_provider_main_branch(
 @crtBy varchar(20),
 @accountName varchar(100),
 @username varchar(100),
-@password varchar(100),
+@password nvarchar(100),
 @contactEmail varchar(255),
 @accountDescription varchar(4000),
 @accountStatus bit,
@@ -123,7 +124,7 @@ GO
 
 DROP PROCEDURE  campus.add_featured_provider_sub_branch; 
 
-USE [xeno-4]
+USE [xeno]
 GO
 
 
@@ -162,7 +163,7 @@ CREATE PROCEDURE campus.add_featured_provider_sub_branch(
 @crtBy varchar(20),
 @accountName varchar(100),
 @username varchar(100),
-@password varchar(100),
+@password nvarchar(100),
 @contactEmail varchar(255),
 @accountDescription varchar(4000),
 @accountStatus bit,
@@ -228,7 +229,7 @@ GO
 
 DROP PROCEDURE campus.add_one_off_provider; 
 
-USE [xeno-4]
+USE [xeno]
 GO
 
 
