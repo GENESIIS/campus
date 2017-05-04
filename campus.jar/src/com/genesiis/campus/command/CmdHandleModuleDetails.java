@@ -62,7 +62,7 @@ public class CmdHandleModuleDetails implements ICommand {
 			moduleDTO.setName("name" + i);
 			moduleDTO.setInternalCodeModule("InternalCodeModule"+i);
 			moduleDTO.setCreditValue(i);
-			moduleDTO.setDescription("Semester Description" + i);
+			moduleDTO.setDescription("Module Description" + i);
 			moduleDTO.setCompulsoryStatus(1);
 			moduleDTO.setTutoredBy(" ");
 			moduleDTO.setIsActive(1);			
