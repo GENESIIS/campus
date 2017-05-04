@@ -11,8 +11,11 @@ package com.genesiis.campus.entity.dao;
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Initiated addModuleDetails() method.
 //DJ 20170428 c145-add-enhanced-programme-MP-dj Implement addModuleDetails() method, sql implementation .
 //DJ 20170428 c145-add-enhanced-programme-MP-dj addModuleDetails()-get input parameter values for module insertion.
+//DJ 20170504 c145-add-enhanced-programme-MP-dj Implement addIntakeDetails() method, sql implementation.
+
 
 import com.genesiis.campus.entity.ProgrammeICrud;
+import com.genesiis.campus.entity.model.IntakeDTO;
 import com.genesiis.campus.entity.model.ModuleDTO;
 import com.genesiis.campus.entity.model.ProgrammeDTO;
 import com.genesiis.campus.entity.model.SemesterDTO;
@@ -126,10 +129,10 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 				allCategoryList.add(singleCategory);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAll() sqlException" + sqlException.toString());
+			log.error("getAll() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAll() Exception" + e.toString());
+			log.error("getAll() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -174,10 +177,10 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 				allMajorList.add(singleMajorList);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findMajorsByMajorCodes() sqlException" + sqlException.toString());
+			log.error("findMajorsByMajorCodes() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findMajorsByMajorCodes() Exception" + e.toString());
+			log.error("findMajorsByMajorCodes() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -222,10 +225,10 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 				allLevelList.add(singleLevel);
 			}
 		} catch (SQLException sqlException) {
-			log.info("findLevelsByLevelCodes() sqlException" + sqlException.toString());
+			log.error("findLevelsByLevelCodes() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("findLevelsByLevelCodes() Exception" + e.toString());
+			log.error("findLevelsByLevelCodes() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -260,10 +263,10 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 				allMajorList.add(singleMajorList);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAllMajors() sqlException" + sqlException.toString());
+			log.error("getAllMajors() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAllMajors() Exception" + e.toString());
+			log.error("getAllMajors() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -297,10 +300,10 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 				allLevelList.add(singleLevel);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAllLevels() sqlException" + sqlException.toString());
+			log.error("getAllLevels() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAllLevels() Exception" + e.toString());
+			log.error("getAllLevels() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -335,10 +338,10 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 				allClassTypeList.add(singleClassType);
 			}
 		} catch (SQLException sqlException) {
-			log.info("getAllClassTypes() sqlException" + sqlException.toString());
+			log.error("getAllClassTypes() sqlException" + sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("getAllClassTypes() Exception" + e.toString());
+			log.error("getAllClassTypes() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, rs);
@@ -389,11 +392,11 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			successStatus= stmt.executeUpdate();
 
 		} catch (SQLException sqlException) {
-			log.info("addProgrammeDetails() sqlException"
+			log.error("addProgrammeDetails() sqlException"
 					+ sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("addProgrammeDetails() Exception" + e.toString());
+			log.error("addProgrammeDetails() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, null);
@@ -434,11 +437,11 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			successCount=stmt.executeBatch();	
 			
 		} catch (SQLException sqlException) {
-			log.info("addSemesterDetails() sqlException"
+			log.error("addSemesterDetails() sqlException"
 					+ sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("addSemesterDetails() Exception" + e.toString());
+			log.error("addSemesterDetails() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, null);
@@ -455,7 +458,7 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 	 */
 
 	@Override
-	public int[] addModuleDetails(ArrayList<ModuleDTO> moduleList)throws SQLException, Exception {
+	public int[] addModuleDetails(final ArrayList<ModuleDTO> moduleList)throws SQLException, Exception {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		int[] successCount;
@@ -485,16 +488,64 @@ public class ProgrammeDAOImpl implements ProgrammeICrud{
 			successCount = stmt.executeBatch();
 			
 		} catch (SQLException sqlException) {
-			log.info("addModuleDetails() sqlException"
+			log.error("addModuleDetails() sqlException"
 					+ sqlException.toString());
 			throw sqlException;
 		} catch (Exception e) {
-			log.info("addModuleDetails() Exception" + e.toString());
+			log.error("addModuleDetails() Exception" + e.toString());
 			throw e;
 		} finally {
 			DaoHelper.cleanup(conn, stmt, null);
 		}
 		return successCount;
 
+	}
+
+	
+	/**
+	 *Insertion of intakes details to application.Implementation done as a batch update.	 
+	 * @author DJ
+	 * @param intakeList   ArrayList of ModuleDTO
+	 * @return int[] 
+	 */
+	
+	@Override
+	public int[] addIntakeDetails(final ArrayList<IntakeDTO> intakeList)throws SQLException, Exception {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		int[] successCount;
+
+		try {
+			conn = ConnectionManager.getConnection();
+			StringBuilder sb = new StringBuilder("INSERT INTO [CAMPUS].[INTAKE] ([NAME],[DESCRIPTION] ,[OPENINGDATE] ,[CLOSINGDATE],[COMMENCEMENTDATE] ,[PROGRAMME],[FEE] ,[ISACTIVE],[CRTON] ,[CRTBY])");
+			sb.append(" VALUES (?,?,?,?,?,?,?,?,?,?)");
+			stmt = conn.prepareStatement(sb.toString());
+			
+			for(final IntakeDTO intakeDTO:intakeList){
+				stmt.setString(1,intakeDTO.getIntakeName());
+				stmt.setString(2,intakeDTO.getDescription());	
+				stmt.setDate(3,new java.sql.Date(intakeDTO.getOpeningDate().getTime()));	
+				stmt.setDate(4,new java.sql.Date(intakeDTO.getClosingDate().getTime()));	
+				stmt.setDate(5,new java.sql.Date(intakeDTO.getCommencementDate().getTime()));	
+				stmt.setInt(6,intakeDTO.getProgrammeCode());	
+				stmt.setDouble(7,intakeDTO.getFee());	
+				stmt.setInt(8,intakeDTO.getIsActive());	
+				stmt.setDate(9,new java.sql.Date(intakeDTO.getCrtOn().getTime()));
+				stmt.setString(10,intakeDTO.getCrtBy());
+				stmt.addBatch();
+			}
+			successCount = stmt.executeBatch();
+
+		} catch (SQLException sqlException) {
+			log.error("addIntakeDetails() sqlException"
+					+ sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.error("addIntakeDetails() Exception" + e.toString());
+			throw e;
+		} finally {
+			DaoHelper.cleanup(conn, stmt, null);
+		}
+		return successCount;
 	}
 }

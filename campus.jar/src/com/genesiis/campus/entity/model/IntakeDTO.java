@@ -4,6 +4,7 @@ import java.util.Date;
 
 //20170221 DJ c145-add-enhanced-programme created IntakeDTO.java
 //20170502 DJ c145-add-enhanced-programme modify IntakeDTO.java
+//20170504 DJ c145-add-enhanced-programme set util Date type for date attributes.
 
 public class IntakeDTO {
 	
@@ -13,7 +14,7 @@ public class IntakeDTO {
 	private Date openingDate;
 	private Date closingDate;
 	private Date commencementDate;
-	private String fee;
+	private Double fee;
 	private int isActive;
 	private int programmeCode;
 	private Date crtOn;
@@ -56,11 +57,11 @@ public class IntakeDTO {
 	}
 	public void setCommencementDate(Date commencementDate) {
 		this.commencementDate = commencementDate;
-	}
-	public String getFee() {
+	}	
+	public Double getFee() {
 		return fee;
 	}
-	public void setFee(String fee) {
+	public void setFee(Double fee) {
 		this.fee = fee;
 	}
 	public int getIsActive() {

@@ -8,6 +8,7 @@
  * 20170214 DJ c138-add-basic-programme-MP-dj  Implemented validateFormData() to validate input data.
  * 20170427 DJ c145-add-enhanced-programme-MP-dj  Redirects to semester detail view after successfully completed course detail adding
  * 20170428 DJ c145-add-enhanced-programme-MP-dj  triggers the add semester detail button action.
+ * 20170504 DJ c145-add-enhanced-programme-MP-dj  triggers the add intakes detail button action.
  *  */
 
 $(document).ready(function() {	
@@ -128,7 +129,7 @@ $(document).ready(function() {
 	
 	
 	/*
-	 ********************START TOTO:DJ Semester implementation work flow******************************************	  
+	 ********************START TOTO:DJ Semester/modules/intakes implementation work flow******************************************	  
 	 */
 	$('.btn-save').on('click', function(event){			
 		window.location.href = 'addSemesterDetails.jsp';
@@ -170,8 +171,26 @@ $(document).ready(function() {
 		});		
 	});
 	
+	$('.intake-save').on('click',function(event){
+		alert("intake-save");
+		$.ajax({
+			url : '../../AdminController',
+			type: 'POST',
+			data : {
+				CCO : 'ADD_INTAKE_DETAILS'			
+			},
+			dataType : "json",
+			success : function(response) {			
+				alert("success");
+			},
+			error : function(jqXHR, exception) {			
+				errorCodeGeneration(jqXHR, exception);
+			}
+		});		
+	});
+	
 	/*
-	 ********************END TOTO:DJ Semester implementation work flow-******************************************	  
+	 ********************END TOTO:DJ Semester/modules/intake implementation work flow-******************************************	  
 	 */
 });
 
