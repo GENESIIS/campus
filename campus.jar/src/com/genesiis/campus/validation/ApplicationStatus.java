@@ -1,5 +1,7 @@
 package com.genesiis.campus.validation;
 
+import java.util.HashMap;
+
 //20161124 JH c7-higher-education-landing-page-MP ApplicationStatus.java created
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus((String statusValue))
 //20161221 DJ c51-report-courses-by-course-provider-MP-dj Implement generic method getApplicationStatus(int statusValue)
@@ -7,6 +9,7 @@ package com.genesiis.campus.validation;
 //20170425 CW c159-courseprovider-accept-tutor-request-cw command DELETED added
 //20170426 CW c159-courseprovider-accept-tutor-request-cw add getApplicationStatus method
 //20170427 CW c159-courseprovider-accept-tutor-request-cw command DELETED modified into DELETE
+//20170504 CW c159-courseprovider-accept-tutor-request-cw add getapplicationStatusMap method
 
 /**
 * ApplicationStatus enum created to manage all the status values
@@ -92,5 +95,20 @@ public enum ApplicationStatus {
 		}
 		
 		return applicationStatus;
+	}
+	
+	/**
+	 * Generic method to get the int value with String as key, value pairs in HashMap. 
+	 * @author CW
+	 * @return HashMap<Integer, String> applicationStatusMap
+	 */
+	public static HashMap<Integer, String> getapplicationStatusMap(){
+		HashMap<Integer, String> applicationStatusMap = new HashMap<Integer, String>();
+		
+		for (ApplicationStatus statusValues : ApplicationStatus.values()) {
+			int statusValueInt = ApplicationStatus.getApplicationStatus(statusValues.toString());
+			applicationStatusMap.put(statusValueInt, ApplicationStatus.getApplicationStatus(statusValueInt));
+		}
+		return applicationStatusMap;
 	}
 }
