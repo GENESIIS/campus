@@ -8,7 +8,8 @@ package com.genesiis.campus.entity;
 // 20170427 CW c159-courseprovider-accept-tutor-request-cw completed update(Object object) method implementations
 						//modify verificationstatus to confirmationStatus
 // 20170428 CW c159-courseprovider-accept-tutor-request-cw modified the query in update(Object object) method
-//20170501 CW c159-courseprovider-accept-tutor-request-cw remove commented lines
+// 20170501 CW c159-courseprovider-accept-tutor-request-cw remove commented lines
+// 20170504 CW c159-courseprovider-accept-tutor-request-cw add method comments into update method
 
 import com.genesiis.campus.command.CmdAddTutorEmploymentDetails;
 import com.genesiis.campus.entity.model.Employment;
@@ -77,7 +78,14 @@ public class EmploymentDAO implements ICrud {
 
 		return status;
 	}
-
+	
+	/**
+	 * Update employment confirmation status in Database
+	 * 
+	 * @author Chinthaka
+	 * @param object : ArrayList<Employment> object of Object type
+	 * @return int number of success/fail status
+	 */
 	@Override
 	public int update(Object object) throws SQLException, Exception {
 		
@@ -86,6 +94,7 @@ public class EmploymentDAO implements ICrud {
 		int totalNumOfRecordsAffected = 0;
 		
 		try {			
+			@SuppressWarnings("unchecked")
 			List<Employment> employmentStatusChangeCollection = (ArrayList<Employment>) object; 
 			
 			String query = "UPDATE [campus].[EMPLOYMENT] SET CONFIRMATIONSTATUS = ?, MODBY = ?, MODON = GETDATE() WHERE CODE = ?";
