@@ -1,9 +1,10 @@
 package com.genesiis.campus.entity.model;
+
 //20170316 AS CAM-23 c23-admin-login-logout-function-as LoginHistory pojo class created and attributes 
+//20170427 AS CAM-155-admin-logout-function-as- loginHistoryCode,loginHistoryCrtOn,loginHistoryCrtBy, loginHistoryModOn , loginHistoryModBy attributes and getters and setters changed
 public class LoginHistory {
 
-	private int code;
-
+	private int loginHistoryCode;
 	private String lastLoggedInUserAgent;
 	private String lastLoggedInSessionid;
 	private String lastLoggedInDate;
@@ -17,6 +18,51 @@ public class LoginHistory {
 	private int courseProvider;
 	private int tutor;
 	private boolean isActive;
+
+	private java.sql.Date loginHistoryCrtOn;
+	private String loginHistoryCrtBy;
+	private java.sql.Date loginHistoryModOn;
+	private String loginHistoryModBy;
+
+	public int getLoginHistoryCode() {
+		return loginHistoryCode;
+	}
+
+	public void setLoginHistoryCode(int loginHistoryCode) {
+		this.loginHistoryCode = loginHistoryCode;
+	}
+
+	public java.sql.Date getLoginHistoryCrtOn() {
+		return loginHistoryCrtOn;
+	}
+
+	public void setLoginHistoryCrtOn(java.sql.Date loginHistoryCrtOn) {
+		this.loginHistoryCrtOn = loginHistoryCrtOn;
+	}
+
+	public String getLoginHistoryCrtBy() {
+		return loginHistoryCrtBy;
+	}
+
+	public void setLoginHistoryCrtBy(String loginHistoryCrtBy) {
+		this.loginHistoryCrtBy = loginHistoryCrtBy;
+	}
+
+	public java.sql.Date getLoginHistoryModOn() {
+		return loginHistoryModOn;
+	}
+
+	public void setLoginHistoryModOn(java.sql.Date loginHistoryModOn) {
+		this.loginHistoryModOn = loginHistoryModOn;
+	}
+
+	public String getLoginHistoryModBy() {
+		return loginHistoryModBy;
+	}
+
+	public void setLoginHistoryModBy(String loginHistoryModBy) {
+		this.loginHistoryModBy = loginHistoryModBy;
+	}
 
 	public String getLastLoggedInUserAgent() {
 		return lastLoggedInUserAgent;
@@ -122,11 +168,4 @@ public class LoginHistory {
 		this.isActive = isActive;
 	}
 
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
 }
