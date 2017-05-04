@@ -17,6 +17,7 @@
  <!-- 			  Hide the radio button pending and Expired as per Tw's instruction	
  <!-- 20170417 DN 83-admin-manage-banner-update-banner-info-dn. jQuery & Other js imported statements are placed at the end of the page	 -->
  <!-- 20170418 DN 83-admin-manage-banner-update-banner-info-dn. Added id 'all-delete' property for Inactive Selected Banner(s) button -->
+ <!-- 20170504 DN 83-admin-manage-banner-update-banner-info-dn. The field tool tip comment have been added to the Filter Commence Date: field -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -76,8 +77,13 @@
 	    <div class="col-lg-12 col-md-12 col-sm-12">
 	        <div class="date-picker-area col-lg-5 col-md-5 col-sm-12">
 	            <div class="col-lg-6 col-md-6 col-sm-12">
-                    <div id="" class="date-input">Filter Commence Date:<input type="date" name="startDate" id="startDate" onclick="clearField('startDateInfor')"></div>
-                </div>
+						<div id="" class="date-input">
+							Filter Commence Date:<input type="date" name="startDate"
+								id="startDate" onclick="clearField('startDateInfor')"
+								data-toggle="tooltip"
+								title="If only the 'Filter Commence Date field' is partially filled but 'Filter End Date:' is left unattended, then, all the banners will be displayed  ">
+						</div>
+					</div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div id="" class="date-input">Filter End Date:<input type="date" name="endtDate" id="endtDate" onclick="clearField('endtDateInfor')"></div>
                 </div>
