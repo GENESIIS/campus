@@ -4,6 +4,7 @@ package com.genesiis.campus.entity.model;
 //20161229 CW c38-view-update-tutor-profile removed isActive field & add tutorStatus field
 //20170102 CW c36-add-tutor-information isActive and add tutorStatus
 //20170114 CW c36-add-tutor-information modified the name of the getViber() method to getViberNumber()
+//20170505 CW c37-tutor-update-tutor-profile-cw add townName & countryName variables & their getters & setters
 
 import java.sql.Date;
 
@@ -44,6 +45,9 @@ public class Tutor {
 	private String crtBy;
 	private Date modOn;
 	private String modBy;
+	private String townName;
+	private String countryName;
+	
 	/**
 	 * @return the code
 	 */
@@ -471,6 +475,28 @@ public class Tutor {
 	public void setModBy(String modBy) {
 		this.modBy = modBy;
 	}
-	
-	
+	/**
+	 * @return the townName
+	 */
+	public String getTownName() {
+		return townName;
+	}
+	/**
+	 * @param townName the townName to set
+	 */
+	public void setTownName(String townName) {
+		this.townName = townName;
+	}
+	/**
+	 * @return the countryName
+	 */
+	public String getCountryName() {
+		return countryName;
+	}
+	/**
+	 * @param countryName the countryName to set
+	 */
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}	
 }
