@@ -25,6 +25,7 @@ package com.genesiis.campus.factory;
 //20170424 DN c88-admin-manage-advertiser-add-new-advertiser-dn add DISPLAY_PREREQUISITE_DATA,DISPLAY_TOWN_DATA  entries to the map
 //				and both to getCommand()
 //20170425 DN c88-admin-manage-advertiser-add-new-advertiser-dn.The enum GET_ADVERTISER_CREDENTIALS has been added to the map and the getCommand(String) method.
+//20170505 DN c89-admin-manage-advertiser-update-details-of-existing-advertiser-dn. The enum DISPLAY_PREREQUISITE_ADVERTISER_DATA and DISPLAY_ADVERTISER_TOWN_DATA are added to the class
 //
 
 import com.genesiis.campus.command.CmdAddAdvertiserPrerequisiteData;
@@ -32,6 +33,7 @@ import com.genesiis.campus.command.CmdAdminBannerUpload;
 import com.genesiis.campus.command.CmdAdminMangeAdvertiser;
 import com.genesiis.campus.command.CmdAmendBannerState;
 import com.genesiis.campus.command.CmdBannerPreRequisite;
+import com.genesiis.campus.command.CmdEditingAdvertiserPrerequisiteData;
 import com.genesiis.campus.command.CmdListBanner;
 import com.genesiis.campus.command.CmdListPrereqSignUpWithoutThirdParty;
 import com.genesiis.campus.command.CmdAdvertiserCredentialRetriever;
@@ -59,6 +61,8 @@ public class AdminCmdFactory implements ICmdFactory{
 		map.put(Operation.DISPLAY_TOWN_DATA,new CmdAddAdvertiserPrerequisiteData());
 		map.put(Operation.GET_ADVERTISER_CREDENTIALS, new CmdAdvertiserCredentialRetriever());
 		map.put(Operation.CREATE_NEW_ADVERTISER, new CmdAdminMangeAdvertiser());
+		map.put(Operation.DISPLAY_ADVERTISER_TOWN_DATA, new CmdEditingAdvertiserPrerequisiteData());
+		map.put(Operation.DISPLAY_PREREQUISITE_ADVERTISER_DATA, new CmdEditingAdvertiserPrerequisiteData());
 	}
 
 	@Override
@@ -101,7 +105,13 @@ public class AdminCmdFactory implements ICmdFactory{
 			break;
 		case CREATE_NEW_ADVERTISER:
 			command = map.get(o);
-			break;	
+			break;
+		case DISPLAY_PREREQUISITE_ADVERTISER_DATA:
+			command = map.get(o);
+			break;
+		case DISPLAY_ADVERTISER_TOWN_DATA:
+			command = map.get(o);
+			break;
 		default:
 			break;
 		}
