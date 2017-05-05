@@ -3,6 +3,8 @@ package com.genesiis.campus.command;
 /**
  * 20170221 PN CAM-48: INIT CmdGetcpImgDetails.java class and implementing execute() method to get cp images related config data.
  * 20170226 PN CAM-48: getImageDiskPath() implementation changed. modified execute method to get all the files in courseprovider's logo path and pass it into the JSP file as an array.
+ * 20170228 PN CAM-163:	set collection list to pass all the image details belongs to the particular customer.
+ * 20170505 PN CAM-163:	move the ICrud sysConf declaration moved into try-catch block.
  */
 
 import com.genesiis.campus.entity.ICrud;
@@ -29,16 +31,18 @@ public class CmdGetcpImgDetails implements ICommand {
 	public IView execute(IDataHelper helper, IView view) throws SQLException, Exception {
 
 		String[] listOfFiles;
-
-		int courseProviderCode = 1; // This needs to be assign from the request later.
-		ICrud sysConf = new SystemConfigDAO();
+		Collection<Collection<String>> details = new ArrayList<Collection<String>>();
+		int courseProviderCode = 1; // This needs to be assign from the request later.	
 		Collection<Collection<String>> sysConfCollection = new ArrayList<Collection<String>>();
+		String fileUploadedPath = "";
 		try {
+			ICrud sysConf = new SystemConfigDAO();
 			sysConfCollection = sysConf.getAll();
 			view.setCollection(sysConfCollection);
 			// This code value given here can be any SYSTEMCONFIGCODE given for for CP images.
-			String fileUploadedPath = getImageDiskPath(3, sysConfCollection);
+			fileUploadedPath = getImageDiskPath(3, sysConfCollection);
 			listOfFiles = FileUtility.getFileNames(fileUploadedPath + "/" + Integer.toString(courseProviderCode) + "/");
+			details = FileUtility.getFileDetails(fileUploadedPath + "/" + Integer.toString(courseProviderCode) + "/");
 		} catch (SQLException sqle) {
 			log.error("execute() : sqle" + sqle.toString());
 			throw sqle;
@@ -48,6 +52,8 @@ public class CmdGetcpImgDetails implements ICommand {
 		}
 		helper.setAttribute("courseProviderCode", courseProviderCode);
 		helper.setAttribute("listOfFiles", listOfFiles);
+		helper.setAttribute("cpImageData", details);
+		helper.setAttribute("fileUploadedPath", fileUploadedPath);
 		return view;
 	}
 

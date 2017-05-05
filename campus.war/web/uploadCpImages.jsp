@@ -5,6 +5,7 @@
 20170417 DK CAM-48: Orinal Code was commented to develop the BS modal structure.
 20170417 DK CAM-48: Develop upload course provider logo modal.
 20170419 PN CAM-48: modifying new UI element IDs and NAMEs to match with the initial UI.
+20170502 PN CAM-163: cp image details content table modified to display more details in it.
  --%>
  
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -101,29 +102,19 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-12">
-								<table class="tbl-logo-list table">
+								<table class="tbl-logo-list table" id="cpImageData">
 									<thead>
 										<tr>
 											<th></th>
 											<th>Image Name</th>
+											<th>Dimensions</th>
+											<th>Size</th>
+											<th>Type</th>
+											<th>Added</th>
 											<th></th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>
-												<a class="thumb-img" id="thumb-img_display" name="thumb-img_display" href="" title="">
-													<img id="cp_img_display" name="cp_img_display" alt="" />
-												</a>
-											</td>
-											<td><span id="cp_img_name" name="cp_img_name"></span></td>
-											<td class="">
-<!-- 												<a class="remove-item action-item fa fa-trash-o" aria-hidden="true" id="cp_img_upload_btn" name="cp_img_upload_btn">&nbsp;</a> -->
-												<button type="button" class="btn-default btn-sm" id="cp_img_delete_btn" name="cp_img_delete_btn">
-													<i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i>
-												</button>
-											</td>
-										</tr>								
 									</tbody>
 							  </table>
 							</div>
@@ -138,30 +129,17 @@
 		</div>
 	</form>
 
-<!--	Orinal Code was commented to develop the BS modal structure - 20170417 DK CAM-48
-
-		<select id="cp_img_type" name="cp_img_type" required>
-			<option value="">--Select Type--</option>
-		</select>	
-		<span id="cp_img_desc" name="cp_img_desc"></span>
-		<input type="file" id="cp_img_upload" name="cp_img_upload" accept="image/*" onchange="validateFile(this, 'cp_img_upload', 'cp_img_upload_btn')">
-		<input type="submit" id="cp_img_upload_btn" name="cp_img_upload_btn" value="Upload Image">
-		<input type="submit" id="cp_img_delete_btn" name="cp_img_delete_btn" value="Delete Image">
-		<br>
-		<span id="cp_img_err" name="cp_img_err"></span>
-		<img id="cp_img_display" name="cp_img_display" src="" alt="" width="" height="">
-		
--->	
-
 	<!-- jQuery Library -->
 	<script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
+		
 	<!-- Bootstrap JS -->
 	<script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
 	<!-- FancyBox JS -->	
 	<script src="/dist/bower-components/fancybox/dist/jquery.fancybox.js"></script>
+	<script src="/dist/js/imageUpload/cp_img_upload_helper.js" type="text/javascript"></script>
+	
 	<!-- JS & jQuery Scripts -->
 	<script src="/dist/js/imageUpload/sitescripts.js" type="text/javascript"></script>
-	<script src="/dist/js/imageUpload/cp_img_upload_helper.js" type="text/javascript"></script>
-
+	
 </body>
 </html>

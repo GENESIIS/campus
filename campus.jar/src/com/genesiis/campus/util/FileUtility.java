@@ -8,6 +8,10 @@ package com.genesiis.campus.util;
 //20170222 PN CAM-48: implement remvoeOldAndUploadNew(String imgName) method to rename and save course provider related images.
 //20170224 PN CAM-48: non static logger variable changed into static.
 //20170226 PN CAM-48: implemented deleteFile(String folder, String imgName) method to delete cp image from the disk.
+//20170428 PN CAM-163: getFileDetails(String folder) method implemented to get all the image details to the JSP page.
+//20170502 PN CAM-163: getFileDetails(String folder) method implementation modified to get more details of image.
+//20170503 PN CAM-163: deleteFile(String folder, String imgName) method implementation modified.
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -19,11 +23,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import javax.imageio.ImageIO;
 
 /**
  * This file handles all the file related tasks Cut, copy, paste, rename, save and delete relevant to cp image/logo uploading.
@@ -489,7 +498,7 @@ public class FileUtility {
 	}
 	
 	/**
-	 * This method is to get all the files given folder.
+	 * This method is to get all the file names inside given folder.
 	 * @param folder - disk path name
 	 * @return String[] - file names inside given folder.
 	 * @throws IOException
@@ -513,7 +522,7 @@ public class FileUtility {
 	/**
 	 * This method is to delete files from given name, from given folder.
 	 * @param folder - disk path name
-	 * @param imgName - image name to be deleted.
+	 * @param imgName - cp code and image name to be deleted.
 	 * @return true, if image deleted, else false
 	 */
 	public boolean deleteFile(String folder, String imgName) throws IOException {
@@ -524,11 +533,8 @@ public class FileUtility {
 				// Check if the content inside folder is a file (not a
 				// directory)
 				if (listOfFiles[i].isFile()) {
-					String fileNameWithOutExt = FilenameUtils.removeExtension(listOfFiles[i].getName());
-					if (imgName.equals(fileNameWithOutExt)) {
-						FileUtils.forceDelete(new File(folder + listOfFiles[i].getName()));
-						return true;
-					}
+					FileUtils.forceDelete(new File(folder + listOfFiles[i].getName()));
+					return true;
 				}
 			}
 		} catch (IOException e) {
@@ -539,5 +545,38 @@ public class FileUtility {
 			throw ioe;
 		}
 		return false;
+	}
+	
+	/**
+	 * This method is to get all the file details inside the given folder.
+	 * @param folder - disk path name
+	 * @return Collection<Collection<String>> - collection contains all the details of images.
+	 * @throws IOException
+	 */
+	public static Collection<Collection<String>> getFileDetails(String folder) throws IOException {
+		File file = null;
+		Collection<Collection<String>> details = new ArrayList<Collection<String>>();
+		String[] paths;
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+		DecimalFormat df = new DecimalFormat("#.###");
+		try {
+			// create new file
+			file = new File(folder);
+			File[] listOfFiles = file.listFiles();
+			
+			for (int i = 0; i < listOfFiles.length; i++) {
+				ArrayList<String> singleImage = new ArrayList<String>();
+				singleImage.add(listOfFiles[i].getName());
+				singleImage.add(ImageIO.read(listOfFiles[i]).getWidth()+"X"+ImageIO.read(listOfFiles[i]).getHeight()+" px");
+				singleImage.add((df.format((listOfFiles[i].length())/100000))+" MB");
+				singleImage.add(listOfFiles[i].getName().substring(listOfFiles[i].getName().lastIndexOf(".")+1));
+				singleImage.add(sdf.format(listOfFiles[i].lastModified()));				
+				details.add(singleImage);
+			}		
+		} catch (Exception e) {
+			log.error("getFileDetails(): " + e.toString());
+			throw e;
+		}
+		return details;
 	}
 }

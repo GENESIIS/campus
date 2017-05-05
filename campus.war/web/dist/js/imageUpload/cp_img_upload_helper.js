@@ -12,7 +12,10 @@
  * 20170308 PN CAM-48: modified 'cp_img_upload_btn' upload event to set selected image type back to the drop down. 
  * 					   cp_img_type on change event modified to make button enable and disable if an image exists/not exists for the selected type
  * 20170419 PN CAM-48: modified the implementation of createFileName() method, 'cp_img_type on' change event and 'cp_img_upload_btn' upload event to match the functionality with new UI.
- */
+ * 20170428 PN CAM-163: populateImageTable(details,courseProviderCode) method implemented to print all the image on the JSP page.
+ * 20170502 PN CAM-163: populateImageTable(details,courseProviderCode) method implementation modified to populate more details on the table.
+ * 20170503 PN CAM-163: deleteImage(imagePath,delete_btn) method implementation completed to perform image deletion. 'no images found inside folder' condition check inside methods.
+ *  */
 
 var dataSet = null;
 var courseProviderCode = null;
@@ -20,8 +23,11 @@ var courseProviderCode = null;
 var extensions = [ "jpeg", "jpg", "png", "gif", "GPEG", "JPG", "PNG", "GIF" ];
 // array with file names list.
 var listOfFiles = [];
+//array with file names list.
+var listOfImageFileDetails = [];
 //Physical path of the images.
 var diskImgPath = "/education/provider/logo/";
+var fileUploadedPath = "C:/sdb/ctxdeploy/education.war/provider/logo";
 //Error messages to display. 
 var noImagetoDisplayErr = "No image found.";
 var sizeExceededErr = " file size exceeded. Please upload a file with size less than %size.";
@@ -42,7 +48,6 @@ $(document).ready(function() {
 		$('#img-err-lbl').hide();
 		$('#cp_img_err').html("");
 		document.getElementById("cp_img_upload_btn").disabled = false;
-		document.getElementById("cp_img_delete_btn").disabled = false;
 		var sysConfCode = this.value;
 		var cp_img_type = "";
 		var courseProviderCode = 1; // ToBe assigned later.
@@ -54,15 +59,8 @@ $(document).ready(function() {
 				var fileName = createFileName(courseProviderCode,cp_img_type);
 				var actFileName = getActualFileName(listOfFiles,fileName);
 				if(actFileName != noImagetoDisplayErr){
-					$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
-					$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+actFileName+"?"+Math.random());
-					$('#cp_img_name').html(actFileName);
 					document.getElementById("cp_img_upload_btn").disabled = true;
 				}else{
-					$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
-					$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",cp_img_type)+".jpg?"+Math.random());
-					$('#cp_img_name').html(createFileName("default",cp_img_type)+".jpg");
-					document.getElementById("cp_img_delete_btn").disabled = true;
 					$('#img-err-lbl').show();
 					$('#cp_img_err').html(noImagetoDisplayErr);
 					$('#cp_img_err').css('color', 'red');
@@ -101,6 +99,12 @@ $(document).ready(function() {
 	    	    contentType : false,
 			    success:function(response){
 			    	listOfFiles = response.listOfFiles;
+			    	listOfImageFileDetails = response.cpImageData;		    	
+			    	populateImageTable(listOfImageFileDetails,courseProviderCode);
+			    	if(listOfImageFileDetails.length <= 0){
+			    		alert("No images inside the folder to display.");
+			    		return;
+			    	}
 			    	if(response.fileUploadError != ""){
 			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileUploadError);
@@ -112,12 +116,6 @@ $(document).ready(function() {
 			    		$('#img-err-lbl').show();
 			    		$('#cp_img_err').html(response.fileUploadSuccess);
 			    		$('#cp_img_err').css('color', 'green');
-			    		
-			    		//Display uploaded image on img tag.
-			    		var newName = createFileName(courseProviderCode,uploadPathConf)+"."+fileExt[1];
-			    		$('#cp_img_display').attr("src",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
-			    		$('#thumb-img_display').attr("href",diskImgPath+courseProviderCode+"/"+newName+"?"+Math.random());
-			    		$('#cp_img_name').html(newName);
 			    	}
 				},
 				error : function(x, status, error) {
@@ -140,69 +138,6 @@ $(document).ready(function() {
 			}
 		}
 	});
-	
-	// Handle image delete button click.
-	$(document).on('click','#cp_img_delete_btn',function(event){	
-		event.stopPropagation(); 
-	    event.preventDefault(); 
-	    $('#img-err-lbl').hide();
-	    var courseProviderCode = 1;// This will be get assigned from UI element later.
-	    var uploadPathConf = $("#cp_img_type option:selected").text();	    
-	    var uploadPathConfId = $("#cp_img_type").val();
-	    document.getElementById("cp_img_delete_btn").disabled = true;
-	    
-	    if((courseProviderCode != "") && (uploadPathConfId != "")){
-	    	var delete_cp_img = createFileName(courseProviderCode,uploadPathConf);
-		    var formData = new FormData();    
-			formData.append("delete_cp_img", delete_cp_img);
-			formData.append("courseProviderCode", courseProviderCode);
-			formData.append("uploadPathConf", uploadPathConf);
-			
-			$.ajax({
-			    url: '/AdminController?CCO=DCPI',
-			    type: 'POST',
-			    dataType: 'json',
-			    data: formData,
-	            processData: false,
-	            cache : false ,
-	    	    contentType : false,
-			    success:function(response){
-			    	listOfFiles = response.listOfFiles;
-			    	if(response.fileDeleteError != ""){
-			    		$('#img-err-lbl').show();
-			    		$('#cp_img_err').html(response.fileDeleteError);
-			    		$('#cp_img_err').css('color', 'red');
-			    	}else if(response.fileDeleteSuccess != ""){
-			    		$('#img-err-lbl').show();
-			    		$("#cp_img_type").val(uploadPathConfId);
-			    		$('#cp_img_err').html(response.fileDeleteSuccess);
-			    		$('#cp_img_err').css('color', 'green');
-			    		
-			    		//Display uploaded image on img tag.  		
-			    		$('#cp_img_display').attr("src",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
-			    		$('#thumb-img_display').attr("href",diskImgPath+"/"+createFileName("default",uploadPathConf)+".jpg?"+Math.random());
-			    		$('#cp_img_name').html(createFileName("default",uploadPathConf)+".jpg");
-			    	}
-				},
-				error : function(x, status, error) {
-					//Modified the error handling.
-					var err = displayErrorMessage(x, status, error);
-					alert(err);
-				}
-			});
-		}else{
-			$('#img-err-lbl').show();
-			if((uploadPathConfId == "")||(uploadPathConfId == null)){
-				$('#cp_img_err').html(fileTypeNotSelectedErr);
-	    		$('#cp_img_err').css('color', 'red');
-			}else if((courseProviderCode == "")||(courseProviderCode == null)){
-				$('#cp_img_err').html(invalidCourseProviderCode);
-	    		$('#cp_img_err').css('color', 'red');
-			}
-		}
-	    
-	});
-
 });
 
 /**
@@ -223,7 +158,14 @@ function displayImgDetails() {
 				dataSet = response;
 				courseProviderCode = response.courseProviderCode;
 				listOfFiles = response.listOfFiles;
-				setCPImgData(response);
+				listOfImageFileDetails = response.cpImageData;
+				fileUploadedPath = fileUploadedPath;
+				setCPImgData(response);				
+				populateImageTable(listOfImageFileDetails,courseProviderCode);
+				if(listOfImageFileDetails.length <= 0){
+		    		alert("No images inside the folder to display.");
+		    		return;
+		    	}
 			}
 		},
 		error : function(x, status, error) {
@@ -418,4 +360,92 @@ function displayErrorMessage(x, status, error) {
 		errorMessage = errorMessage + " Error: " + error +" Status: "+ status;
 	}
 	return errorMessage;
+}
+
+/**
+ * Print the CP image details on the table.
+ * @param details - details list of given folder containing images.
+ * @param courseProviderCode -
+ *            course provider code.
+ * @param uploadPathConf -
+ *            uploaded image type.
+ */
+function populateImageTable(details,courseProviderCode){
+	var html = '';
+	$('#cpImageData tbody').find('tr').remove();
+	$.each(details, function(index, value) {
+		$('#cpImageData tbody').append('<tr>'+
+		'<td>'+
+			'<a class="thumb-img" href="'+diskImgPath+courseProviderCode+"/"+value[0]+"?"+Math.random()+'" title="" rel="fancybox">'+
+				'<img alt="" src ="'+diskImgPath+courseProviderCode+"/"+value[0]+"?"+Math.random()+'"/>'+
+			'</a>'+
+		'</td>'+
+		'<td><span>' + value[0]+ '</span></td>'+
+		'<td><span>' + value[1]+ '</span></td>'+
+		'<td><span>' + value[2]+ '</span></td>'+
+		'<td><span>' + value[3]+ '</span></td>'+
+		'<td class="">'+
+			'<button type="button" class="btn-default btn-sm" onclick="deleteImage(\'' + courseProviderCode+"/"+value[0] + '\',this)">'+
+				'<i class="remove-item action-item fa fa-trash-o" aria-hidden="true"></i>'+
+			'</button>'+
+		'</td>'+
+		'</tr>');		
+	});
+	
+	$("a.thumb-img").fancybox({
+		'transitionIn'	:	'elastic',
+		'transitionOut'	:	'elastic',
+		'speedIn'		:	600, 
+		'speedOut'		:	200, 
+		'overlayShow'	:	false
+	});
+}
+
+/**
+ * Perform image deletion from the disk.
+ * @param imagePath: location of the image stored.
+ * @param delete_btn: delete button identity of the relevant row of the cp image details table.
+ */
+function deleteImage(imagePath,delete_btn){
+	event.stopPropagation(); 
+    event.preventDefault(); 
+    $('#img-err-lbl').hide();
+    $(delete_btn).prop('disabled', true);
+
+    	var formData = new FormData();    
+		formData.append("delete_cp_img", imagePath);
+		formData.append("fileUploadedPath", fileUploadedPath);
+		
+		$.ajax({
+		    url: '/AdminController?CCO=DCPI',
+		    type: 'POST',
+		    dataType: 'json',
+		    data: formData,
+            processData: false,
+            cache : false ,
+    	    contentType : false,
+		    success:function(response){
+		    	listOfFiles = response.listOfFiles;
+		    	listOfImageFileDetails = response.cpImageData;
+		    	populateImageTable(listOfImageFileDetails,imagePath.substr(0,imagePath.indexOf("/")));
+		    	if(listOfImageFileDetails.length <= 0){
+		    		alert("No images inside the folder to display.");
+		    		return;
+		    	}
+		    	if(response.fileDeleteError != ""){
+		    		$('#img-err-lbl').show();
+		    		$('#cp_img_err').html(response.fileDeleteError);
+		    		$('#cp_img_err').css('color', 'red');
+		    	}else if(response.fileDeleteSuccess != ""){
+		    		$('#img-err-lbl').show();
+		    		$('#cp_img_err').html(response.fileDeleteSuccess);
+		    		$('#cp_img_err').css('color', 'green');
+		    	}
+			},
+			error : function(x, status, error) {
+				//Modified the error handling.
+				var err = displayErrorMessage(x, status, error);
+				alert(err);
+			}
+		});
 }
