@@ -1,5 +1,8 @@
 package com.genesiis.campus.command;
-
+/*
+ * 20170505 DN CAM-89:Inital class stub has been created and the execute() with utility methods has been created
+ *             add the doc comments for the class.
+ */
 import java.sql.SQLException;
 
 import com.genesiis.campus.entity.AddAdvertiserPrerequisiteData;
@@ -9,10 +12,23 @@ import com.genesiis.campus.util.IDataHelper;
 
 import org.apache.log4j.Logger;
 
+
+
+/**
+ * The Class CmdEditingAdvertiserPrerequisiteData.<br>
+ * Bears the responsibility of handling Editing command issued to<br>
+ * the advertiser
+ * @author dushantha DN
+ */
 public class CmdEditingAdvertiserPrerequisiteData implements ICommand {
+	
+	
 	private static Logger log = Logger.getLogger(CmdEditingAdvertiserPrerequisiteData.class.getName());
 	private EditAvertiserPrerequisiteData pagePrerequiaiteData = null;
 	
+	/* (non-Javadoc)
+	 * @see com.genesiis.campus.command.ICommand#execute(com.genesiis.campus.util.IDataHelper, com.genesiis.campus.entity.IView)
+	 */
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws	Exception {
 		try{
@@ -38,10 +54,9 @@ public class CmdEditingAdvertiserPrerequisiteData implements ICommand {
 	
 	/**
 	 * setPagePrerequiaiteData sets the field value <br>
-	 * from the callers argument
-	 * @param pagePrerequiaiteData: EditvertiserPrerequisiteData type
-	 * which handles and provides a means to manage the prerequisite data for the <br>
-	 * page where the advertiser is added.
+	 * from the callers argument.
+	 *
+	 * @param pagePrerequiaiteData the new page prerequiaite data
 	 */
 	public void setPagePrerequiaiteData(
 			EditAvertiserPrerequisiteData pagePrerequiaiteData) {
