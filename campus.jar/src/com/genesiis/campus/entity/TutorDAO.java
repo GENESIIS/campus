@@ -39,6 +39,7 @@ package com.genesiis.campus.entity;
 //20170407 CW c37-tutor-update-tutor-profile-cw trim the password fields in getTutorPassword method
 //20170502 CW c37-tutor-update-tutor-profile-cw removed un wanted log messages from getTutorPassword, update methods, 
 			// modified findById, validateUsernameEmailFields, getListOfUsernameEmail, getTutorPassword log messages
+//20170505 CW c37-tutor-update-tutor-profile-cw add getTutorDetails method
 
 import com.genesiis.campus.command.CmdTutorUpdateTutorProfile;
 import com.genesiis.campus.entity.model.Tutor;
@@ -419,5 +420,87 @@ public class TutorDAO implements ICrud {
 		}
 		
 		return password;
-	}
+	}	
+
+	/**
+	 * Returns the Tutor Details from a tutor Object
+	 * 
+	 * @author Chinthaka
+	 * 
+	 * @param Object code - A Tutor Object with tutor code
+	 * 
+	 * @return Returns the Tutor Details in Database for a given Tutor Code from a tutor Object
+	 */
+	public Tutor getTutorDetails(Object code) throws SQLException, Exception {
+		
+		Tutor tutorDets = new Tutor();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+					
+		StringBuilder queryBuilder = new StringBuilder("SELECT T.CODE, T.USERNAME, T.FIRSTNAME, T.MIDDLENAME, T.LASTNAME, T.GENDER, T.EMAIL, T.LANDPHONECOUNTRYCODE, ");
+		queryBuilder.append("T.LANDPHONEAREACODE, T.LANDPHONENUMBER, T.MOBILEPHONECOUNTRYCODE, T.MOBILEPHONENETWORKCODE, T.MOBILEPHONENUMBER, T.DESCRIPTION, T.EXPERIENCE, ");
+		queryBuilder.append("T.WEBLINK, T.FACEBOOKURL, T.TWITTERURL, T.MYSPACEURL, T.LINKEDINURL, T.INSTAGRAMURL, T.VIBERNUMBER, T.WHATSAPPNUMBER, T.ADDRESS1, T.ADDRESS2, ");		
+		queryBuilder.append("T.ADDRESS3, T.TOWN,  T.USERTYPE, T.ISAPPROVED, T.TUTORSTATUS, TOWN.NAME AS TOWNNAME, C.NAME AS COUNTRYNAME ");
+		queryBuilder.append("FROM [CAMPUS].[TUTOR] T ");
+		queryBuilder.append("JOIN [CAMPUS].[COUNTRY2] C ON C.CODE = T.LANDPHONECOUNTRYCODE ");
+		queryBuilder.append("JOIN [CAMPUS].[TOWN] TOWN ON TOWN.CODE = T.TOWN ");
+		queryBuilder.append("WHERE T.CODE = ?;");
+			
+		try {			
+			Tutor tutor = (Tutor) code; 
+			conn = ConnectionManager.getConnection();			
+			
+			stmt = conn.prepareStatement(queryBuilder.toString());
+			stmt.setInt(1, tutor.getCode());
+			rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				tutorDets.setCode(!Validator.isEmptyOrHavingSpace(rs.getString("CODE")) ? Integer.parseInt(rs.getString("CODE")): 0);
+				tutorDets.setUsername(rs.getString("USERNAME"));
+				tutorDets.setFirstName(rs.getString("FIRSTNAME"));
+				tutorDets.setMiddleName(rs.getString("MIDDLENAME"));
+				tutorDets.setLastName(rs.getString("LASTNAME"));
+				tutorDets.setGender(rs.getString("GENDER"));
+				tutorDets.setEmailAddress(rs.getString("EMAIL"));
+				tutorDets.setLandCountryCode(rs.getString("LANDPHONECOUNTRYCODE"));
+				tutorDets.setLandAreaCode(rs.getString("LANDPHONEAREACODE"));
+				tutorDets.setLandNumber(rs.getString("LANDPHONENUMBER"));
+				tutorDets.setMobileCountryCode(rs.getString("MOBILEPHONECOUNTRYCODE"));
+				tutorDets.setMobileNetworkCode(rs.getString("MOBILEPHONENETWORKCODE"));
+				tutorDets.setMobileNumber(rs.getString("MOBILEPHONENUMBER"));
+				tutorDets.setDescription(rs.getString("DESCRIPTION").trim());
+				tutorDets.setExperience(rs.getString("EXPERIENCE").trim());
+				tutorDets.setWebLink(rs.getString("WEBLINK"));
+				tutorDets.setFacebookLink(rs.getString("FACEBOOKURL"));
+				tutorDets.setTwitterNumber(rs.getString("TWITTERURL"));
+				tutorDets.setMySpaceId(rs.getString("MYSPACEURL"));
+				tutorDets.setLinkedInLink(rs.getString("LINKEDINURL"));
+				tutorDets.setInstagramId(rs.getString("INSTAGRAMURL"));
+				tutorDets.setViberNumber(rs.getString("VIBERNUMBER"));
+				tutorDets.setWhatsAppId(rs.getString("WHATSAPPNUMBER"));
+				tutorDets.setAddressLine1(rs.getString("ADDRESS1"));
+				tutorDets.setAddressLine2(rs.getString("ADDRESS2"));
+				tutorDets.setAddressLine3(rs.getString("ADDRESS3"));
+				tutorDets.setTownName(rs.getString("TOWNNAME"));
+				tutorDets.setTown(rs.getString("TOWN"));			
+				tutorDets.setUsertype(!Validator.isEmptyOrHavingSpace(rs.getString("USERTYPE")) ? Integer.parseInt(rs.getString("USERTYPE")): 0);
+				tutorDets.setCountryName(rs.getString("COUNTRYNAME"));
+				tutorDets.setIsApproved((rs.getString("ISAPPROVED") == "1" ? true : false));
+				tutorDets.setTutorStatus(!Validator.isEmptyOrHavingSpace(rs.getString("TUTORSTATUS")) ? Integer.parseInt(rs.getString("TUTORSTATUS")): 0);
+			}
+		} catch (ClassCastException cce) {
+			log.error("getTutorDetails(): ClassCastException " + cce.toString());
+			throw cce;
+		} catch (SQLException sqlException) {
+			log.error("getTutorDetails(): SQLException " + sqlException.toString());
+			throw sqlException;
+		} catch (Exception e) {
+			log.error("getTutorDetails(): Exception " + e.toString());
+			throw e;
+		} finally {			
+			DaoHelper.cleanup(conn, stmt, rs);
+		}
+		return tutorDets;
+	}	
 }
