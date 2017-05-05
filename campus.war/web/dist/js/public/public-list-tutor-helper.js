@@ -8,6 +8,9 @@
  * 20170314 JH c96 DisplayTutorTable(): added styles to html labels, removed commented and codes in listPublicTutors() and selectTutorRecord(),
  * 				created selectTutorMajor() and selectTutorCategory() methods, added onclick function to tutor name
  * 20170320 JH c96 added getCategoryData() method to window.onload function to call header populate methods
+ * 20170424 JH c135-public-display-tutor-profile selectTutorRecord() modified to load tutor profile page, added loadTutor() method to load tutor profile details wip
+ * 20170427 JH c135-public-display-tutor-profile removed loadTutor() method 
+ * 20170428 JH c135-public-display-tutor-profile added method comments and encode tutor code before sending it to the profile page, removed unwanted hidden attribute 'CCO'
  */
 
 window.tutorList = null;
@@ -58,17 +61,40 @@ function listPublicTutors(){
 }
 
 
+/**
+ * Encode String to Hash code
+ * Added from CAM-22
+ * @param data
+ * @returns encoded hash
+ * 
+ */
+function hashEncode(data) {
+	// Define the string
+	var string = data;
+
+	// Encode the String
+	var encodedString = btoa(string);
+
+	return encodedString;
+}
 
 /**
- * used to select a specific record of a tutor and alert the tutor code value until
- * the public profile page is created.
+ * used to select a specific record of a tutor and pass the tutor
+ * code value to the profile page
  * @param code
  * @returns
  * @author JH
  */
 function selectTutorRecord(code){
 
-	   alert("will direct to tutor public profile. And the tutor is "  + code);
+	 var tutorCode = hashEncode(code);
+	  var url = '/dist/partials/public/display-tutor-profile.jsp';
+	  var form = $('<form action="' + url + '" method="post">' +
+			  	'<input type="hidden" name="tutorCode" value="' + tutorCode+ '" />' +
+	  			'</form>');
+	  			$('body').append(form);
+	  			$(form).submit();
+  
 }
 
 /**
@@ -89,7 +115,8 @@ function selectTutorMajor(code){
  */
 function selectTutorCateogry(code){
 	   alert("This will redirect to Category description page. The selected categopry code is "  + code);
-}
+
+	  }
 
 /**
  * Used to generate the tutor table using datatables
@@ -127,8 +154,9 @@ function DisplayTutorTable(){
 							
 							onErroImage = fileSeparator + tutorImagePath + fileSeparator + defaultImage + extension;
 							
-							value1 = '  <img src="' + imageFile + '" alt="" onerror="this.src = \'' + onErroImage + '\'" onclick="selectTutorRecord('+ value[0] +');">';
-							value1 += hiddenCode;
+							value1 = '<a href="javascript:" onclick="selectTutorRecord('+ value[0] +');return false;">';
+							value1 += '<img src="' + imageFile + '" alt="" onerror="this.src = \'' + onErroImage + '\'">';
+							value1 += hiddenCode + '</a>';
 
 								value2 = '<div> <div> <a href="javascript:" onclick="selectTutorRecord('+ value[0] +');">' +value[1]+ ' ' +  value[2]+ ' ' + value[3] +'</a></div>'											
 								+ '<br/> <div> <label>Mobile : </label> ' + value[5]+ value[6]+ ' '+  value[7]+'</div>'
