@@ -8,6 +8,8 @@
 //20161205 JH c7-higher-education-landing-page-MP modify javascript function to load category data without onload function
 //20170203 PN CAM-137: added landing page category set displaying JavaScript in here.
 //20170206 PN CAM-137: error handling method called from getCategoryData() data method.
+//20170505 PN CAM-137: improved code by adding more code comments.
+
 /**
  * This method is to load category details
  */
@@ -35,7 +37,7 @@ function getCategoryData() {
 				displayCategories();
 			}
 		},
-		error : function(x, status, error) {
+		error : function(x, status, error) { // x : error details as a JSON object, status : error status, error : actual error. 
 			//CAM-137: Modified the error handling.
 			var err = displayErrorMessage(x, status, error);
 			alert(err);
