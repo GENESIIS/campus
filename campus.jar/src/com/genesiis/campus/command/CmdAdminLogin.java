@@ -47,8 +47,6 @@ public class CmdAdminLogin implements ICommand{
 			Exception {
 		
 		HttpSession session;
-		//time been this code commented 
-		//String domain = new URL(helper.getRequestURL()).getHost(); 
 		
 		try {
 			message = SystemMessage.LOGINUNSUCCESSFULL.message();
