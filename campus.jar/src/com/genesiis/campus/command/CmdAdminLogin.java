@@ -3,9 +3,12 @@ package com.genesiis.campus.command;
 //20170316 AS c23-admin-login-logout-function-as CmdAdminLogin class coding WIP
 //20170330 AS c23-admin-login-logout-function-as login attempts handled
 //20170331 AS c23-admin-login-logout-function-as setAdminLoginDetails() method coded.
-
-
+//20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->   
+//20170424 AS CAM-154-admin-privilege-handling-as - attempts database update
+//20170425 AS CAM-154-admin-privilege-handling-as - attempts handling modification done
+//20170504 AS CAM-154-admin-privilege-handling-as - attempts handling if-else-if condition changed to switch-case
 import com.genesiis.campus.entity.AdminLoginDAO;
+import com.genesiis.campus.entity.AdminPrivilegeDAO;
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Admin;
@@ -28,18 +31,16 @@ import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
-
-
-
 public class CmdAdminLogin implements ICommand{
 	static Logger log = Logger.getLogger(CmdAdminLogin.class.getName());
 	
 	private Collection<Collection<String>> dataCollection = null;
-	String pageURL;
-	String path;
-	String message;
+	private String pageURL;
+	private String path;
+	private String message;
 	private Admin adminData;
 	private static int max =0;
+	Collection<String> privilegeList = null;
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
@@ -83,25 +84,29 @@ public class CmdAdminLogin implements ICommand{
 						session = helper.getSession(true);
 						String sessionId = session.getId();
 						adminData.setLastLoggedInSessionid(sessionId);
-						session.setAttribute("currentSessionUser",adminData.getUsername());
+						session.setAttribute("currentSessionUsername",adminData.getUsername());
 						session.setAttribute("user", adminData.getName());
 						session.setAttribute("userCode", adminData.getCode());
 						setAdminLoginDetails(adminData, helper);
 						int status = AdminLoginDAO.loginDataUpdate(adminData);
 						if(status >0){
+							adminData.setAttempts(0);
+							adminLoginDAO.update(adminData);
 							//admin privacy privilege list
-							//CAM-154 doing the admin privilege handling 
+							AdminPrivilegeDAO adminPrivilegeDAO = new AdminPrivilegeDAO();
+							privilegeList = adminPrivilegeDAO.adminPrivileges(adminData);
+							dataCollection.add(privilegeList);
 						}else{
 							
 						}
-						
+						session.setAttribute("currentUserData", dataCollection);
 						message = SystemMessage.LOGGEDSUCCESSFULL.message();
 						path = SystemConfig.ADMIN_LANDING_PAGE.getValue1();
 						pageURL = path;
 	
 					}else{
 						//Logging attempts handling 
-						logginAttempts();
+						logginAttempts(adminData);
 					}
 					
 				}else{
@@ -133,38 +138,70 @@ public class CmdAdminLogin implements ICommand{
 	/**
 	 * this methods handling user Logging attempts
 	 */
-	
-	public void logginAttempts(){
-		for (max = max; max <= 3; max++) {
-			
-			if (max == 3) {
-				message = SystemMessage.LOGGINATTEMPT3.message();
-				path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
-				pageURL = path;
-				max++;
-				break;
-			} else if (max == 2) {
-				message = SystemMessage.LOGGINATTEMPT2.message();
-				path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
-				pageURL = path;
-				max++;
-				break;
-			} else if (max == 1) {
-				message = SystemMessage.LOGGINATTEMPT1.message();
-				path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
-				pageURL = path;
-				max++;
-				break;
-			} else {
-				path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
-				pageURL = path;
-				max++;
-				break;
+
+	public void logginAttempts(Admin adminData) throws SQLException, Exception {
+		try {
+			ICrud adminLoginDAO = new AdminLoginDAO();
+
+			 label:		for (max = max; max <= 3; max++) {
+
+				switch (max) {
+				case 3:
+					message = SystemMessage.LOGGINATTEMPT3.message();
+					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue3();
+					adminData.setAttempts(max);
+					adminLoginDAO.update(adminData);
+					pageURL = path;
+					max++;
+					break label;
+
+				case 2:
+					message = SystemMessage.LOGGINATTEMPT2.message();
+					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue2();
+					adminData.setAttempts(max);
+					adminLoginDAO.update(adminData);
+					pageURL = path;
+					max++;
+					break label;
+
+				case 1:
+					message = SystemMessage.LOGGINATTEMPT1.message();
+					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+					adminData.setAttempts(max);
+					adminLoginDAO.update(adminData);
+					pageURL = path;
+					max++;
+					break label;
+
+				case 0:
+					message = SystemMessage.INVALIDPASSWORD.message();
+					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+					adminData.setAttempts(max);
+					adminLoginDAO.update(adminData);
+					pageURL = path;
+					max++;
+					break label;
+
+				default :
+					path = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
+					adminData.setAttempts(max);
+					adminLoginDAO.update(adminData);
+					pageURL = path;
+					max++;
+					break label;
+				}
+				
 			}
+			
+		} catch (SQLException e) {
+			log.error("logginAttempts():   SQLException" + e.toString());
+			throw e;
+		} catch (Exception e) {
+			log.error("logginAttempts():  Exception" + e.toString());
+			throw e;
 		}
 	}
-	
-	
+								
 	/**
 	 * Admin login details maintain.
 	 * 
@@ -198,10 +235,7 @@ public class CmdAdminLogin implements ICommand{
 		return object;
 	}
 	
-	
-	
-	
-	
+		
 	/**
 	 * extract data from json object and assign to Admin
 	 * object

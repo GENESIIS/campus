@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161123 AS C19-student-login-without-using-third-party-application-test-as StudentLoginDAO class created.
 //20161214 AS C19-student-login-without-using-third-party-application-test-as findbyId method modified .
 //20170130 AS CAM-21 code review issues fixing 
+//20170428 AS CAM-154-admin-privilege-handling-as - change the logger statement info to error 
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.security.Encryptable;
@@ -115,10 +116,10 @@ public class StudentLoginDAO implements ICrud {
 				rowInserted = 0;
 			}
 		} catch (SQLException e) {
-			log.info("logoutDataUpdate(): SQLexception" + e.toString());
+			log.error("logoutDataUpdate(): SQLexception" + e.toString());
 			throw e;
 		} catch (Exception ex) {
-			log.info("logoutDataUpdate(): Exception" + ex.toString());
+			log.error("logoutDataUpdate(): Exception" + ex.toString());
 			throw ex;
 		} finally {
 
@@ -172,10 +173,10 @@ public class StudentLoginDAO implements ICrud {
 				rowInserted = 0;
 			}
 		} catch (SQLException e) {
-			log.info("loginDataUpdate(): SQLexception" + e.toString());
+			log.error("loginDataUpdate(): SQLexception" + e.toString());
 			throw e;
 		} catch (Exception ex) {
-			log.info("loginDataUpdate(): Exception" + ex.toString());
+			log.error("loginDataUpdate(): Exception" + ex.toString());
 			throw ex;
 		} finally {
 

@@ -2,6 +2,7 @@ package com.genesiis.campus.entity;
 
 //20161209 AS C19-student-login-without-using-third-party-application-test-as  StudentPrivilegeDAO created.
 //20161214 AS C19-student-login-without-using-third-party-application-test-as added studentPrivilege method . 
+//20170428 AS CAM-154-admin-privilege-handling-as - change the logger statement info to error 
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.validation.ApplicationStatus;
@@ -87,11 +88,11 @@ public class StudentPrivilegeDAO implements ICrud {
 			}
 
 		} catch (SQLException e) {
-			log.info("findById SQLException : " + e);
+			log.error("findById SQLException : " + e);
 			throw e;
 
 		} catch (Exception e) {
-			log.info("findById Exception : " + e);
+			log.error("findById Exception : " + e);
 			throw e;
 		} finally {
 			if (rs != null) {

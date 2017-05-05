@@ -3,6 +3,7 @@ package com.genesiis.campus.entity;
 //20161121 MM c25-student-login-create-dashboard-MP-mm INIT - Initialised file
 //20161122 MM c25-student-login-create-dashboard-MP-mm Added code to retrieve more columns from the result set
 //20161122 MM c25-student-login-create-dashboard-MP-mm Fixed logger class import issue
+//20170428 AS CAM-154-admin-privilege-handling-as - change the logger statement info to error 
 import com.genesiis.campus.entity.model.Student;
 import com.genesiis.campus.util.ConnectionManager;
 
@@ -59,14 +60,14 @@ public class StudentDAO implements ICrud {
 			retrieveStudentsFromResultSet(rs, studentDetailsCollectionList);
 
 		} catch (ClassCastException cce) {
-			Log.info("findById(Object): ClassCastException: " + cce.toString());
+			Log.error("findById(Object): ClassCastException: " + cce.toString());
 			throw new IllegalArgumentException(
 					"The argument passed is not of expected type (Programme)!");
 		} catch (SQLException sqle) {
-			Log.info("findById(Object): SQLException: " + sqle.toString());
+			Log.error("findById(Object): SQLException: " + sqle.toString());
 			throw sqle;
 		} catch (Exception e) {
-			Log.info("findById(Object): Exception: " + e.toString());
+			Log.error("findById(Object): Exception: " + e.toString());
 			throw e;
 		} finally {
 			if (ps != null) {
