@@ -1,6 +1,5 @@
-<!--20170421 DN c88-admin-manage-advertiser-add-new-advertiser-dn inital mock up of the issue has been developed  -->
-<!--20170502 DN c88-admin-manage-advertiser-add-new-advertiser-dn. The page iss added the xxxInfor elements -->
-<!--20170502 DN c88-admin-manage-advertiser-add-new-advertiser-dn.  clearErrorAndTheDataField() is implemented -->
+<!--20170505 DN c89-admin-manage-advertiser-update-details-of-existing-advertiser-dn. inital mock up of the issue has been developed  -->
+<!--20170505 DN c89-admin-manage-advertiser-update-details-of-existing-advertiser-dn. all teh importing scripts are included with absolute address  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
@@ -16,7 +15,7 @@
    <!-- Bootstrap & CSS Style -->
     <link href="/dist/bower-components/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="/dist/css/style.css" rel="stylesheet">
-    <link href="../../css/image-slides.css" rel="stylesheet">
+    <link href="/dist/css/image-slides.css" rel="stylesheet">
 	
 </head>
 
@@ -157,7 +156,7 @@
 <!-- jQuery & Other js -->
 	
     <script src="/dist/bower-components/jquery/jquery-3.1.1.min.js"></script>
-    <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.jss"></script>
+    <script src="/dist/bower-components/bootstrap/bootstrap-3.3.7.min.js"></script>
     
     <script src="/dist/js/main.js"></script>
     <script src="/dist/js/image-slides.js"></script>
