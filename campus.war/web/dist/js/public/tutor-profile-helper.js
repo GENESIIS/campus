@@ -5,6 +5,7 @@
  * 				list page if tutor records are empty or user tries to enter the profile url manually
  * 20170502 JH c135-public-display-tutor-profile fixed default image error, handled empty values in social media information and check optional 
  * 				address lines before concatenating them into a final string
+ * 20170505 JH c135-public-display-tutor-profile check if the tutor details are empty before displaying details
  */
 
 $( document ).ready(function() {
@@ -40,7 +41,7 @@ function loadTutor(code){
 			if (response !== undefined && response !== null) {
 			
 				 var tutorRecord = response.tutor;
-				 if (tutorRecord !== undefined && tutorRecord !== null) {
+				 if (tutorRecord !== undefined && tutorRecord !== null && tutorRecord.length > 0) {
 					 
 					 var imagePath = response.tutorProfileImagePath;
 					 var fileSeperator = "/";
