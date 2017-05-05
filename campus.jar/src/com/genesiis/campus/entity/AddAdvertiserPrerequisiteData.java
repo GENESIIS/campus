@@ -130,7 +130,6 @@ public class AddAdvertiserPrerequisiteData {
 				default:
 					Collection<String> signUpdata = new ArrayList<String>();
 					preRequisteCollnWrapper.add(signUpdata); //NODATA
-					signUpdata = null;
 					break;
 			}			
 			op =null;
