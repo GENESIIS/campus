@@ -1,5 +1,5 @@
 <!--20170505 DN c89-admin-manage-advertiser-update-details-of-existing-advertiser-dn. inital mock up of the issue has been developed  -->
-<!--20170505 DN c89-admin-manage-advertiser-update-details-of-existing-advertiser-dn. all teh importing scripts are included with absolute address  -->
+<!--20170505 DN c89-admin-manage-advertiser-update-details-of-existing-advertiser-dn. all the importing scripts are included with absolute address  -->
 
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
