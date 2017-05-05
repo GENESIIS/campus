@@ -25,6 +25,7 @@ package com.genesiis.campus.command;
 				//modified log messages from isValidUserAndEmailBeforeAddTutor, validateUsernameEmailFields methods
 //20170505 CW c37-tutor-update-tutor-profile-cw modify the way updated variable initialized, assign SystemMessage.INCORRECTDATA.message() to the message 
 				//variable initially & modify the code accordingly, removed some un required empty checks in setCompareVariablesBeforeTutorUpdateTutor method
+//20170505 CW c37-tutor-update-tutor-profile-cw modify setCompareVariablesBeforeTutorUpdateTutor method to get the tutor database values at the time of the method running.
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -117,7 +118,7 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 
 	/**
 	 * setCompareVariablesBeforeTutorUpdateTutor() method initialises all the instance variable	 * 
-	 * @author CM, CW	 * 
+	 * @author CM, CW
 	 * @param helper IDataHelper, Tutor
 	 * @return Returns true if updated
 	 */
@@ -129,7 +130,11 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("tutorCode")))){
 				tutor.setCode(Integer.parseInt(helper.getParameter("tutorCode").toString()));
 			}
-			tutor.setUsername(helper.getParameter("usernameOld"));
+			
+			final TutorDAO tutorDAO = new TutorDAO();
+			Tutor tutorDets = tutorDAO.getTutorDetails(tutor);
+			
+			tutor.setUsername(tutorDets.getUsername());
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("oldPassword")))){
 				// need to change the password
@@ -146,271 +151,271 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("firstname")))){
-				if(!((helper.getParameter("firstname")).equals(helper.getParameter("firstnameOld").toString()))){				
+				if(!((helper.getParameter("firstname")).equals(tutorDets.getFirstName()))){				
 					tutor.setFirstName(helper.getParameter("firstname"));
 					updated = true;
 				}else{
-					tutor.setFirstName(helper.getParameter("firstnameOld").toString());
+					tutor.setFirstName(tutorDets.getFirstName());
 				}
 			}else{
 				updated = true;
 			}
 			
  			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("middlename")))){
-				if(!((helper.getParameter("middlename")).equals(helper.getParameter("middlenameOld").toString()))){	
+				if(!((helper.getParameter("middlename")).equals(tutorDets.getMiddleName()))){	
 					tutor.setMiddleName(helper.getParameter("middlename"));	
 					updated = true;		
 				}else{
-					tutor.setMiddleName(helper.getParameter("middlenameOld").toString());	
+					tutor.setMiddleName(tutorDets.getMiddleName());	
 				}
 			}else{
 				tutor.setMiddleName("-");
-				if(Validator.isNotEmpty(helper.getParameter("middlenameOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getMiddleName())){
 					updated = true;
 				}
 			}
 			
  			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("lastname")))){
-				if(!((helper.getParameter("lastname")).equals(helper.getParameter("lastnameOld").toString()))){	
+				if(!((helper.getParameter("lastname")).equals(tutorDets.getLastName()))){	
 					tutor.setLastName(helper.getParameter("lastname"));			
 					updated = true;
 				}else{
-					tutor.setLastName(helper.getParameter("lastnameOld").toString());
+					tutor.setLastName(tutorDets.getLastName());
 				}
 			}else{
 				updated = true;
 			}
 			
-			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("gender"))) && !((helper.getParameter("gender")).equals(helper.getParameter("genderOld").toString()))){		
+			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("gender"))) && !((helper.getParameter("gender")).equals(tutorDets.getGender()))){		
 				tutor.setGender(helper.getParameter("gender"));
 				updated = true;
 			}else{		
-				tutor.setGender(helper.getParameter("genderOld").toString());
+				tutor.setGender(tutorDets.getGender());
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("email")))){
-				if(!((helper.getParameter("email")).equals(helper.getParameter("emailOld").toString()))){				
+				if(!((helper.getParameter("email")).equals(tutorDets.getEmailAddress()))){				
 					tutor.setEmailAddress(helper.getParameter("email"));
 					updated = true;
 				}else{
-					tutor.setEmailAddress(helper.getParameter("emailOld").toString());
+					tutor.setEmailAddress(tutorDets.getEmailAddress());
 				}			
 			}else{
 				updated = true;
 			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("countryDetails"))) && Integer.parseInt(helper.getParameter("countryDetails")) != 0){
-				if(!((helper.getParameter("countryDetails")).equals(helper.getParameter("landphonecountrycodeOld").toString()))){	
+				if(!((helper.getParameter("countryDetails")).equals(tutorDets.getLandCountryCode()))){	
 					tutor.setLandCountryCode(helper.getParameter("countryDetails"));
 					updated = true;
 				}else{
-					tutor.setLandCountryCode(helper.getParameter("landphonecountrycodeOld").toString());
+					tutor.setLandCountryCode(tutorDets.getLandCountryCode());
 				}
 			}else{
-				tutor.setLandCountryCode(helper.getParameter("landphonecountrycodeOld").toString());
+				tutor.setLandCountryCode(tutorDets.getLandCountryCode());
 			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("landAreaCode")))){
-				if(!((helper.getParameter("landAreaCode")).equals(helper.getParameter("landphoneareacodeOld").toString()))){	
+				if(!((helper.getParameter("landAreaCode")).equals(tutorDets.getLandAreaCode()))){	
 					tutor.setLandAreaCode(helper.getParameter("landAreaCode"));
 					updated = true;
 				}else{			
-					tutor.setLandAreaCode(helper.getParameter("landphoneareacodeOld").toString());
+					tutor.setLandAreaCode(tutorDets.getLandAreaCode());
 				}		
 			}else{
 				updated = true;
 			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("landNumber")))){
-				if(!((helper.getParameter("landNumber")).equals(helper.getParameter("landphonenumberOld").toString()))){	
+				if(!((helper.getParameter("landNumber")).equals(tutorDets.getLandNumber()))){	
 					tutor.setLandNumber(helper.getParameter("landNumber"));
 					updated = true;
 				}else{			
-					tutor.setLandNumber(helper.getParameter("landphonenumberOld").toString());
+					tutor.setLandNumber(tutorDets.getLandNumber());
 				}	
 			}else{
 				updated = true;
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("countryDetails"))) && Integer.parseInt(helper.getParameter("countryDetails")) != 0){
-				if(!((helper.getParameter("countryDetails")).equals(helper.getParameter("mobilephonecountrycodeOld").toString()))){	
+				if(!((helper.getParameter("countryDetails")).equals(tutorDets.getMobileCountryCode()))){	
 					tutor.setMobileCountryCode(helper.getParameter("countryDetails"));
 					updated = true;
 				}else{
-					tutor.setMobileCountryCode(helper.getParameter("mobilephonecountrycodeOld").toString());
+					tutor.setMobileCountryCode(tutorDets.getMobileCountryCode());
 				}
 			}else{
-				tutor.setMobileCountryCode(helper.getParameter("mobilephonecountrycodeOld").toString());
+				tutor.setMobileCountryCode(tutorDets.getMobileCountryCode());
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("mobileNetworkCode")))){
-				if(!((helper.getParameter("mobileNetworkCode")).equals(helper.getParameter("mobilephonenetworkcodeOld").toString()))){
+				if(!((helper.getParameter("mobileNetworkCode")).equals(tutorDets.getMobileNetworkCode()))){
 					tutor.setMobileNetworkCode(helper.getParameter("mobileNetworkCode"));		
 					updated = true;
 				}else{		
-					tutor.setMobileNetworkCode(helper.getParameter("mobilephonenetworkcodeOld").toString());
+					tutor.setMobileNetworkCode(tutorDets.getMobileNetworkCode());
 				}
 			}else{
 				updated = true;
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("mobileNumber")))){
-				if(!((helper.getParameter("mobileNumber")).equals(helper.getParameter("mobilephonenumberOld").toString()))){	
+				if(!((helper.getParameter("mobileNumber")).equals(tutorDets.getMobileNumber()))){	
 					tutor.setMobileNumber(helper.getParameter("mobileNumber"));			
 					updated = true;
 				}else{
-					tutor.setMobileNumber(helper.getParameter("mobilephonenumberOld").toString());
+					tutor.setMobileNumber(tutorDets.getMobileNumber());
 				}
 			}else{
 				updated = true;
 			}				
 						
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("aboutMe")))){
-				if(!((helper.getParameter("aboutMe")).equals(helper.getParameter("descriptionOld").toString()))){	
+				if(!((helper.getParameter("aboutMe")).equals(tutorDets.getDescription()))){	
 					tutor.setDescription(helper.getParameter("aboutMe"));	
 					updated = true;		
 				}else{
-					tutor.setDescription(helper.getParameter("descriptionOld").toString());	
+					tutor.setDescription(tutorDets.getDescription());	
 				}
 			}else{
 				tutor.setDescription("-");
-				if(Validator.isNotEmpty(helper.getParameter("descriptionOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getDescription())){
 					updated = true;
 				}
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("experience")))){
-				if(!((helper.getParameter("experience")).equals(helper.getParameter("experienceOld").toString()))){	
+				if(!((helper.getParameter("experience")).equals(tutorDets.getExperience().toString()))){	
 					tutor.setExperience(helper.getParameter("experience"));	
 					updated = true;		
 				}else{
-					tutor.setExperience(helper.getParameter("experienceOld").toString());	
+					tutor.setExperience(tutorDets.getExperience().toString());	
 				}
 			}else{
 				tutor.setExperience("-");
-				if(Validator.isNotEmpty(helper.getParameter("experienceOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getExperience().toString())){
 					updated = true;
 				}
 			}			
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("weblink")))){
-				if(!((helper.getParameter("weblink")).equals(helper.getParameter("weblinkOld").toString()))){	
+				if(!((helper.getParameter("weblink")).equals(tutorDets.getWebLink().toString()))){	
 					tutor.setWebLink(helper.getParameter("weblink"));	
 					updated = true;		
 				}else{
-					tutor.setWebLink(helper.getParameter("weblinkOld").toString());	
+					tutor.setWebLink(tutorDets.getWebLink().toString());	
 				}
 			}else{
 				tutor.setWebLink("-");
-				if(Validator.isNotEmpty(helper.getParameter("weblinkOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getWebLink().toString())){
 					updated = true;
 				}
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("facebook")))){
-				if(!((helper.getParameter("facebook")).equals(helper.getParameter("facebookurlOld").toString()))){	
+				if(!((helper.getParameter("facebook")).equals(tutorDets.getFacebookLink().toString()))){	
 					tutor.setFacebookLink(helper.getParameter("facebook"));	
 					updated = true;		
 				}else{
-					tutor.setFacebookLink(helper.getParameter("facebookurlOld").toString());	
+					tutor.setFacebookLink(tutorDets.getFacebookLink().toString());	
 				}
 			}else{
 				tutor.setFacebookLink("-");
-				if(Validator.isNotEmpty(helper.getParameter("facebookurlOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getFacebookLink().toString())){
 					updated = true;
 				}
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("twitter")))){
-				if(!((helper.getParameter("twitter")).equals(helper.getParameter("twitterurlOld").toString()))){	
+				if(!((helper.getParameter("twitter")).equals(tutorDets.getTwitterNumber().toString()))){	
 					tutor.setTwitterNumber(helper.getParameter("twitter"));	
 					updated = true;		
 				}else{
-					tutor.setTwitterNumber(helper.getParameter("twitterurlOld").toString());	
+					tutor.setTwitterNumber(tutorDets.getTwitterNumber().toString());	
 				}
 			}else{
 					tutor.setTwitterNumber("-");
-				if(Validator.isNotEmpty(helper.getParameter("twitterurlOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getTwitterNumber().toString())){
 					updated = true;
 				}
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("myspace")))){
-				if(!((helper.getParameter("myspace")).equals(helper.getParameter("myspaceurlOld").toString()))){	
+				if(!((helper.getParameter("myspace")).equals(tutorDets.getMySpaceId().toString()))){	
 					tutor.setMySpaceId(helper.getParameter("myspace"));	
 					updated = true;		
 				}else{
-					tutor.setMySpaceId(helper.getParameter("myspaceurlOld").toString());	
+					tutor.setMySpaceId(tutorDets.getMySpaceId().toString());	
 				}
 			}else{
 				tutor.setMySpaceId("-");
-				if(Validator.isNotEmpty(helper.getParameter("myspaceurlOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getMySpaceId().toString())){
 					updated = true;
 				}
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("linkedin")))){
-				if(!((helper.getParameter("linkedin")).equals(helper.getParameter("linkedinurlOld").toString()))){	
+				if(!((helper.getParameter("linkedin")).equals(tutorDets.getLinkedInLink().toString()))){	
 					tutor.setLinkedInLink(helper.getParameter("linkedin"));	
 					updated = true;		
 				}else{
-					tutor.setLinkedInLink(helper.getParameter("linkedinurlOld").toString());	
+					tutor.setLinkedInLink(tutorDets.getLinkedInLink().toString());	
 				}
 			}else{
 				tutor.setLinkedInLink("-");
-				if(Validator.isNotEmpty(helper.getParameter("linkedinurlOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getLinkedInLink().toString())){
 					updated = true;
 				}
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("instagram")))){
-				if(!((helper.getParameter("instagram")).equals(helper.getParameter("instagramurlOld").toString()))){	
+				if(!((helper.getParameter("instagram")).equals(tutorDets.getInstagramId().toString()))){	
 					tutor.setInstagramId(helper.getParameter("instagram"));	
 					updated = true;		
 				}else{
-					tutor.setInstagramId(helper.getParameter("instagramurlOld").toString());	
+					tutor.setInstagramId(tutorDets.getInstagramId().toString());	
 				}
 			}else{
 				tutor.setInstagramId("-");
-				if(Validator.isNotEmpty(helper.getParameter("instagramurlOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getInstagramId().toString())){
 					updated = true;
 				}
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("viber")))){
-				if(!((helper.getParameter("viber")).equals(helper.getParameter("vibernumberOld").toString()))){	
+				if(!((helper.getParameter("viber")).equals(tutorDets.getViberNumber().toString()))){	
 					tutor.setViberNumber(helper.getParameter("viber"));	
 					updated = true;		
 				}else{
-					tutor.setViberNumber(helper.getParameter("vibernumberOld").toString());	
+					tutor.setViberNumber(tutorDets.getViberNumber().toString());	
 				}
 			}else{
 					tutor.setViberNumber("-");
-				if(Validator.isNotEmpty(helper.getParameter("vibernumberOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getViberNumber().toString())){
 					updated = true;
 				}
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("whatsapp")))){
-				if(!((helper.getParameter("whatsapp")).equals(helper.getParameter("whatsappnumberOld").toString()))){	
+				if(!((helper.getParameter("whatsapp")).equals(tutorDets.getWhatsAppId().toString()))){	
 					tutor.setWhatsAppId(helper.getParameter("whatsapp"));	
 					updated = true;		
 				}else{
-					tutor.setWhatsAppId(helper.getParameter("whatsappnumberOld").toString());	
+					tutor.setWhatsAppId(tutorDets.getWhatsAppId().toString());	
 				}
 			}else{
 					tutor.setWhatsAppId("-");
-				if(Validator.isNotEmpty(helper.getParameter("whatsappnumberOld").toString())){
+				if(Validator.isNotEmpty(tutorDets.getWhatsAppId().toString())){
 					updated = true;
 				}
 			}
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("address1")))){
-				if(!((helper.getParameter("address1")).equals(helper.getParameter("address1Old").toString()))){				
+				if(!((helper.getParameter("address1")).equals(tutorDets.getAddressLine1().toString()))){				
 					tutor.setAddressLine1(helper.getParameter("address1"));
 					updated = true;
 				}else{
-					tutor.setAddressLine1(helper.getParameter("address1Old").toString());
+					tutor.setAddressLine1(tutorDets.getAddressLine1().toString());
 				}
 			}else{
 				updated = true;
@@ -418,29 +423,29 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("address2")))){
-				if(!((helper.getParameter("address2")).equals(helper.getParameter("address2Old").toString()))){	
+				if(!((helper.getParameter("address2")).equals(tutorDets.getAddressLine2().toString()))){	
 					tutor.setAddressLine2(helper.getParameter("address2"));	
 					updated = true;		
 				}else{
-					tutor.setAddressLine2(helper.getParameter("address2Old").toString());	
+					tutor.setAddressLine2(tutorDets.getAddressLine2().toString());	
 				}
 			}else{
 				tutor.setAddressLine2("-");
-				if(Validator.isNotEmpty(helper.getParameter("address2Old").toString())){
+				if(Validator.isNotEmpty(tutorDets.getAddressLine2().toString())){
 					updated = true;
 				}
 			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("address3")))){
-				if(!((helper.getParameter("address3")).equals(helper.getParameter("address3Old").toString()))){	
+				if(!((helper.getParameter("address3")).equals(tutorDets.getAddressLine3().toString()))){	
 					tutor.setAddressLine3(helper.getParameter("address3"));	
 					updated = true;		
 				}else{
-					tutor.setAddressLine3(helper.getParameter("address3Old").toString());	
+					tutor.setAddressLine3(tutorDets.getAddressLine3().toString());	
 				}
 			}else{
 				tutor.setAddressLine3("-");
-				if(Validator.isNotEmpty(helper.getParameter("address3Old").toString())){
+				if(Validator.isNotEmpty(tutorDets.getAddressLine3().toString())){
 					updated = true;
 				}
 			}
@@ -449,25 +454,25 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("townDetails")))){
 				if(Double.parseDouble(helper.getParameter("townDetails")) != 0){
-					if(!((helper.getParameter("townDetails")).equals(helper.getParameter("towncodeOld").toString()))){	
+					if(!((helper.getParameter("townDetails")).equals(tutorDets.getTown().toString()))){	
 						tutor.setTown(helper.getParameter("townDetails"));
 						updated = true;
 					}else{
-						tutor.setTown(helper.getParameter("towncodeOld").toString());
+						tutor.setTown(tutorDets.getTown().toString());
 					}
 				}else{
-					tutor.setTown(helper.getParameter("towncodeOld").toString());
+					tutor.setTown(tutorDets.getTown().toString());
 				}
 			}else{
 				updated = true;
 			}
 			
 			if(!(Validator.isEmptyOrHavingSpace(helper.getParameter("newtutorStatus"))) && 
-					!(Integer.parseInt(helper.getParameter("newtutorStatus")) == (Integer.parseInt(helper.getParameter("tutorstatusOld").toString())))){	
+					!(Integer.parseInt(helper.getParameter("newtutorStatus")) == (tutorDets.getTutorStatus()))){	
 				tutor.setTutorStatus(Integer.parseInt(helper.getParameter("newtutorStatus")));
 				updated = true;
 			}else{
-				tutor.setTutorStatus(Integer.parseInt(helper.getParameter("tutorstatusOld").toString()));
+				tutor.setTutorStatus(tutorDets.getTutorStatus());
 			}
 			
 			if(updated){
