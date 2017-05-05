@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 //20161024 DN c10-contacting-us-page created the initial version of the IDataHelper.java
 //20161107 DN, JH, DJ, AS, CM, MM Added getAttribute(String) method
+//20170328 AS CAM-23- getRequestDomain() method added
 
 public interface IDataHelper {
 	public String getCommandCode();
@@ -43,4 +44,6 @@ public interface IDataHelper {
 	void setRedirectPage(String pageName);
 	
 	String getRemoteAddr();
+	
+	public String getRequestURL();
 }

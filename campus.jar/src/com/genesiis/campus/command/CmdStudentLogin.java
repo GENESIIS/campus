@@ -36,8 +36,8 @@ public class CmdStudentLogin implements ICommand {
 
 	private Student data;
 	private Collection<Collection<String>> dataCollection = null;
-	String pageURL;
-	String message;
+	private String pageURL;
+	private String message;
 
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,

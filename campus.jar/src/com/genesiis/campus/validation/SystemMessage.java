@@ -3,6 +3,7 @@ package com.genesiis.campus.validation;
 //20160811 PN x25-list-employees SystemMessage enum Created
 //20161024 DN c10-contacting-us extracted to campus project
 //20170228 AS C22 LOGGEDALLREADY attribute added
+//20170331 AS c23-admin-login-logout-function-as added to enum LOGGINATTEMPT1, LOGGINATTEMPT2, LOGGINATTEMPT3.
 public enum SystemMessage {	
 	ADDED("Details added successfully."), 
 	UPDATED("Details updated successfully."), 
@@ -23,6 +24,9 @@ public enum SystemMessage {
 	LOGOUTSUCCESSFULL("Logout successfull"),
 	LOGOUTUNSUCCESSFULL("Logout Unsuccessfull"),
 	LOGGEDALLREADY("User Already Logged In"),
+	LOGGINATTEMPT3("Temporary Your account has been blocked! You have exceeded the 3 failed login attempts. Please try to loggin after 30 minutes."),
+	LOGGINATTEMPT2("The password you provided is invalid. 1 attempt remaining Please try again!"),
+	LOGGINATTEMPT1("Wrong password. Please try again! 2 Attempts remaining."),
 	NOTREGISTERD("Sorry, you are not a registered user! Please sign up first"),
 	INVALIDUSERNAME("The Username or Email you provided is invalid. Please try again!"),
 	INVALIDPASSWORD("The password you provided is invalid. Please try again!"),

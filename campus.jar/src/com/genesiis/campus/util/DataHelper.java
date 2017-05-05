@@ -4,6 +4,7 @@ package com.genesiis.campus.util;
 //20161026 DN c10-contacting-us-page add CONTACT_US_PUBLC and refactor getResultPage()
 //20161031 AS C8-inquiry-form-for-course modified getResultPage method
 //20161107 DN, JH, DJ, AS, CM, MM Added implementation of getAttribute(String) method
+//20170328 AS C23- getRequestURL() method added and get the  requested URL domain.
 import com.genesiis.campus.command.ICommand;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.View;
@@ -219,4 +220,15 @@ public class DataHelper implements IDataHelper {
 		return request;
 	}
 
+	/**
+	 * getRequestURL() returns Requested URL 
+	 * 
+	 * @return String
+	 */
+	
+	@Override
+	public String getRequestURL(){
+		
+		return request.getRequestURL().toString();
+	}
 }

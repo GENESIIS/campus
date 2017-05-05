@@ -22,12 +22,22 @@
 
 	<servlet>
 		<servlet-name>mainController</servlet-name>
-		<servlet-class>CampusController</servlet-class>
+		<servlet-class>com.genesiis.campus.controller.CampusController</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
 		<servlet-name>mainController</servlet-name>
 		<url-pattern>/CampusController</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LoginController</servlet-name>
+		<servlet-class>com.genesiis.campus.loginController.LoginController</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>LoginController</servlet-name>
+		<url-pattern>/LoginController</url-pattern>
 	</servlet-mapping>
 
 <!-- 	<filter> -->

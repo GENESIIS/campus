@@ -1,62 +1,56 @@
 package com.genesiis.campus.command;
-
-//20170118 AS CAM-21 CmdStudentLogout command class created. 
-//20170130 AS CAM-21 code review modification done. 
-//20170228 AS C22-  checked current Session User and is there already account logout shows the message and  redirect to index page.
-//20170301 AS C22-removed unwanted comments 
+//20170426 AS c155-admin-logout-function-as CmdAdminLogout class created
+//20170427 AS CAM-155-admin-logout-function-as- userTypeString, userLoginHistoryCode to session attribute removed 
+//20170504 AS CAM-155-admin-logout-function-as- Error logger statement changed to "execute():  Exception"
+import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.StudentLoginDAO;
-import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.SystemConfig;
 import com.genesiis.campus.validation.SystemMessage;
-import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
+import com.google.gson.Gson;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Enumeration;
 
-import javax.jms.Session;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
-public class CmdStudentLogout implements ICommand {
-	static Logger log = Logger.getLogger(CmdStudentLogout.class.getName());
-
-	private Student loggedStudent;
-	String pageURL = "/index.jsp";
-
+public class CmdAdminLogout implements ICommand{
+	static Logger log = Logger.getLogger(CmdAdminLogout.class.getName());
+	
+	private Admin adminData;
+	String pageURL = SystemConfig.ADMIN_LOGIN_PAGE.getValue1();
 	@Override
 	public IView execute(IDataHelper helper, IView view) throws SQLException,
 			Exception {
 		String message = SystemMessage.LOGOUTUNSUCCESSFULL.message();
 		try {
+			
 			HttpSession curentSession = helper.getRequest().getSession(false);
 
 			String currentSessionUser = (String) curentSession
-					.getAttribute("currentSessionUser");
+					.getAttribute("currentSessionUsername");
 			if (currentSessionUser != null) {
+				
+			int	loginHistoryID = (Integer) curentSession.getAttribute("userLoginHistoryCode");
+				String gsonData = helper.getParameter("jsonData");
+				adminData = getAdmindetails(gsonData);
+				adminData.setLoginHistoryCode(loginHistoryID);
+				adminData.setUsername(currentSessionUser);
+				adminData.setLoginHistoryModBy(currentSessionUser);
+				int status = AdminLoginDAO.logoutDataUpdate(adminData);
+				
 				curentSession.removeAttribute("user");
 				curentSession.removeAttribute("userCode");
 				curentSession.removeAttribute("currentUserData");
+				curentSession.removeAttribute("currentSessionUsername");
+				curentSession.removeAttribute("userTypeString");
+				curentSession.removeAttribute("userLoginHistoryCode");
 				curentSession.invalidate();
-
-				String gsonData = helper.getParameter("jsonData");
-				loggedStudent = getStudentdetails(gsonData);
-
-				Date loginTime = new Date();
-
-				java.util.Date utilDate = new java.util.Date();
-				java.sql.Date loginDate = new java.sql.Date(utilDate.getTime());
-
-				loggedStudent.setLastLoggedOutDate(loginDate.toString());
-				loggedStudent.setLastLoggedOutTime(new Timestamp(loginTime
-						.getTime()).toString());
-
-				int status = StudentLoginDAO.logoutDataUpdate(loggedStudent);
+				
 
 				if (status > 0) {
 					message = SystemMessage.LOGOUTSUCCESSFULL.message();
@@ -69,7 +63,8 @@ public class CmdStudentLogout implements ICommand {
 				pageURL = "http://www.campus.dev:8080/dist/partials/error/error-content.jsp";
 
 			}
-
+			
+			
 		} catch (Exception e) {
 			log.error("execute():  Exception" + e.toString());
 			throw e;
@@ -79,33 +74,34 @@ public class CmdStudentLogout implements ICommand {
 		return view;
 	}
 
+	
 	/**
-	 * extract data from json object and assign to StudentProgrammeInquiry
+	 * extract data from json object and assign to Admin
 	 * object
 	 * 
 	 * @author anuradha
 	 * @param gsonData
-	 * @return Student object
+	 * @return Admin object
 	 */
 
-	private Student getStudentdetails(String gsonData) {
-		Student student = (Student) extractFromJason(gsonData);
+	private Admin getAdmindetails(String gsonData) {
+		Admin admin = (Admin) extractFromJason(gsonData);
 
-		return student;
+		return admin;
 	}
 
 	public Object extractFromJason(String gsonData) {
 		Gson gson = new Gson();
 		String message = "";
-		Student student = null;
+		Admin admin = null;
 		try {
-			student = gson.fromJson(gsonData, Student.class);
+			admin = gson.fromJson(gsonData, Admin.class);
 
 		} catch (Exception exception) {
 			log.error("extractFromJason(): " + exception.toString());
 			throw exception;
 		}
-		return student;
+		return admin;
 	}
 
 }

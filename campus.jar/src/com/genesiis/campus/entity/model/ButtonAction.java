@@ -1,7 +1,7 @@
 package com.genesiis.campus.entity.model;
 //20161209 AS C19-student-login-without-using-third-party-application-test-as  ButtonAction created.
 public class ButtonAction {
-	int code;
+	private int code;
 	private String description;
 	private String action;
 	private String isActive;
