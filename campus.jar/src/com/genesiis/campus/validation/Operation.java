@@ -35,6 +35,7 @@ package com.genesiis.campus.validation;
 //20170327 DN c83-admin-manage-banner-update-banner-info-dn add the enum UPDATE_ONLY_THE_BANNER_RECORD to the class.]
 //20170418 DN c86-admin-manage-banner-search-banner-dn. ACTIVATE_BANNER/DEACTIVATE_BANNER enums have been added.
 //20170426 DN c88-admin-manage-advertiser-add-new-advertiser-dn. enum CREATE_NEW_ADVERTISER is added to the class.
+//20170505 DN c89-admin-manage-advertiser-update-details-of-existing-advertiser-dn. The enum DISPLAY_PREREQUISITE_ADVERTISER_DATA and DISPLAY_ADVERTISER_TOWN_DATA are added to the class
 //
 
 /**
@@ -70,6 +71,8 @@ public enum Operation {
 	ACTIVATE_BANNER("ACT_BNR",ResponseType.JSON,""),
 	GET_ADVERTISER_CREDENTIALS("GADLCP",ResponseType.JSON,""),
 	CREATE_NEW_ADVERTISER("CNADVR",ResponseType.JSON,""),
+	DISPLAY_PREREQUISITE_ADVERTISER_DATA("DPRAD",ResponseType.JSON,""),
+	DISPLAY_ADVERTISER_TOWN_DATA("DPATWN",ResponseType.JSON,""),
 	GET_USER_PROFILE("GUP", ResponseType.JSON, "dist/partials/student/student-dashboard.jsp");
 			
 	private final String commandString;
