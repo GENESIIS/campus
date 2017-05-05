@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
  * 20170226 PN CAM-48: INIT CmdDeleteCPImg.java class and implementing execute() method to delete cp image from disk.modified execute method to get all the files in courseprovider's logo path and pass it into the JSP file as an array.
  * 20170419 PN CAM-48: removed unwanted logger statement.
  * 20170503 PN CAM-163: modified the execute method to perform image deletion according to the incoming parameters. 
+ * 20170505 PN CAM-163: getImageUploadConfigs() method removed from the class.
  */
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -69,26 +70,4 @@ public class CmdDeleteCPImg implements ICommand{
 		helper.setAttribute("cpImageData", details);
 		return view;
 	}
-	
-	/**
-	 * This method is to get values from the [CAMPUS].[SYSTEMCONFIG] table where it passes the [SYSTEMCONFIGCODE] value and required field as index. (VALUE1, VALUE2, VALUE3)
-	 * @param index - value number
-	 * @return String -  physical path to upload the image.
-	 * @throws SQLException
-	 * @throws Exception
-	 */
-	private String getImageUploadConfigs(int index, Collection<Collection<String>> picUploaDpath) throws SQLException, Exception {
-		String value = "";
-		try {
-			for (Collection<String> collection : picUploaDpath) {
-				Object[] config = collection.toArray();
-				value = (String) config[index];
-			}
-		} catch (Exception e) {
-			log.error("getImageUploadConfigs(): Exception " + e.toString());
-			throw e;
-		}
-		return value;
-	}
-
 }
