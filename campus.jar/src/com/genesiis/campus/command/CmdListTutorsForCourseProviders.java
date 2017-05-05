@@ -11,6 +11,7 @@ package com.genesiis.campus.command;
 //20170429 CW c159-courseprovider-accept-tutor-request-cw set parameters into getTutorsListOfCourseprovider method
 //20170504 CW c159-courseprovider-accept-tutor-request-cw moved map creation code into ApplicationStatus enum & 
 					//use getapplicationStatusMap method to get the applicationStatusMap
+//20170505 CW c159-courseprovider-accept-tutor-request-cw passed applicationStatusMap parameter into getTutorsListOfCourseprovider method
 
 import com.genesiis.campus.entity.FeaturedCourseProviderDAO;
 import com.genesiis.campus.entity.IView;
@@ -54,10 +55,11 @@ public class CmdListTutorsForCourseProviders implements ICommand  {
 				
 				final TutorDAO tutorsForCP = new TutorDAO();							
 				
-				Collection<Collection<String>> allEmploymentTutorsList = tutorsForCP.getTutorsListOfCourseprovider(courseProviderCode, 
+				HashMap<Integer, String> applicationStatusMap = ApplicationStatus.getapplicationStatusMap();
+				
+				Collection<Collection<String>> allEmploymentTutorsList = tutorsForCP.getTutorsListOfCourseprovider(applicationStatusMap, courseProviderCode, 
 						String.valueOf(ApplicationStatus.ACTIVE.getStatusValue()), String.valueOf(ApplicationStatus.PENDING.getStatusValue()));				
 
-				HashMap<Integer, String> applicationStatusMap = ApplicationStatus.getapplicationStatusMap();
 				helper.setAttribute("applicationStatusMap", applicationStatusMap);
 				
 				view.setCollection(allEmploymentTutorsList);		
