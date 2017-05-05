@@ -24,14 +24,9 @@ package com.genesiis.campus.validation;
 //20170420 JH c141-ui-integration-for-add-course-provider validateCourseProvider(): fax number validation method changed to separately validate for null and integer
 //20170424 JH c135-public-display-tutor-profile removed course provider related validation methods validateCourseProvider(), featuredAccountValidation() and courseProviderURLValidation()
 //				methods removed
+//20170505 JH c135-public-display-tutor-profile removed unwanted imports 
 
-import com.genesiis.campus.util.IDataHelper;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
