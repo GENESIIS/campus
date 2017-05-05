@@ -3,6 +3,7 @@ package com.genesiis.campus.command;
 //20170424 JH c135-public-display-tutor-profile INIT CmdDisplayPublicTutorProfile.java
 //20170427 JH c135-public-display-tutor-profile created getTutorDetails() method to get tutor basic details from the tutor collection 
 //20170502 JH c135-public-display-tutor-profile added doc comments 
+//20170505 JH c135-public-display-tutor-profile changed the return type of getTutorDetails() to ArrayList<String>, changed tutor initialization  
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -37,7 +38,7 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 
 		final ICrud publicTutorDAO = new PublicTutorDAO();
 		SystemMessage message = SystemMessage.UNKNOWN;
-		ArrayList<String> tutor = null;
+		ArrayList<String> tutor = new ArrayList<String>();
 		
 		try{
 			if(Validator.validNumber(helper.getParameter("tutorCode"))){
@@ -45,7 +46,7 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 				
 				
 				if(tutorCollection.size() > 0){
-					tutor = (ArrayList<String>) getTutorDetails(tutorCollection);
+					tutor = getTutorDetails(tutorCollection);
 				}
 			}
 
@@ -63,7 +64,7 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 		}
 		
 		
-		return null;
+		return view;
 	}
 	
 	
@@ -76,9 +77,9 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 	 * @param tutorCollection
 	 * @return String collection of tutor details
 	 */
-	public static Collection<String> getTutorDetails(Collection<Collection<String>> tutorCollection){
+	public static ArrayList<String> getTutorDetails(Collection<Collection<String>> tutorCollection){
 		
-		Iterator tutorIterator = tutorCollection.iterator();
+		Iterator<Collection<String>> tutorIterator = tutorCollection.iterator();
 		ArrayList<String> tutor = new ArrayList<String>();
 		
 		int count = 0;
