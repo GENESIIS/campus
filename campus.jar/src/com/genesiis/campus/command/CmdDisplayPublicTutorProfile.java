@@ -16,6 +16,8 @@ import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
 
+import sun.java2d.SunGraphicsEnvironment.TTFilter;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -86,6 +88,9 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 		ArrayList<String> tutor = new ArrayList<String>();
 		Map<String, ArrayList<ArrayList<String>>> result = new HashMap<String, ArrayList<ArrayList<String>>>();
 		ArrayList<ArrayList<String>> tutorsList = new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<String>> qualifications = new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<String>> experiences = new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<String>> modules = new ArrayList<ArrayList<String>>();
 		
 		
 		int count = 0;
@@ -132,8 +137,17 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 				tutor.add(33, tutorList.get(33));
 				tutor.add(34, tutorList.get(34));
 				tutor.add(35, tutorList.get(35));
+				tutor.add(36, tutorList.get(36));
 							
 				tutorsList.add(tutor);
+			}
+			
+			if(!Validator.isEmptyString(tutorList.get(37))){
+				ArrayList<String> qualification = new ArrayList<String>();
+				qualification.add(tutorList.get(37));
+				qualification.add(tutorList.get(38));
+				qualification.add(tutorList.get(39));
+				qualification.add(tutorList.get(40));
 			}
 			
 			
