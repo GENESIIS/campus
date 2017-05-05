@@ -9,6 +9,7 @@ package com.genesiis.campus.entity;
 //20170424 JH c135-public-display-tutor-profile return result set data in findById() wip, fixed index out of bound error and fixed error 'too many arguments specified' 
 //20170427 JH c135-public-display-tutor-profile findById() modified: added codes to get tutor CODE from the database
 //20170502 JH c135-public-display-tutor-profile added doc comments 
+//20170505 JH c162-public-display-tutor-full-profile added new columns returned by the stored procedure
 
 import com.genesiis.campus.util.ConnectionManager;
 import com.genesiis.campus.util.DaoHelper;
@@ -122,10 +123,12 @@ public class PublicTutorDAO implements ICrud {
 				singleTutorList.add(rs.getString("QUALIFICATION"));
 				singleTutorList.add(rs.getString("QDESCRIPTION"));
 				singleTutorList.add(rs.getString("QLEVEL"));
+				singleTutorList.add(rs.getString("EXPCODE"));
 				singleTutorList.add(rs.getString("TUTOREX"));
 				singleTutorList.add(rs.getString("ORGANIZATION"));
 				singleTutorList.add(rs.getString("INDUSTRY"));
 				singleTutorList.add(rs.getString("JOBCATEGORY"));
+				singleTutorList.add(rs.getString("DESIGNATION"));
 				singleTutorList.add(rs.getString("COMMENCEDON"));
 				singleTutorList.add(rs.getString("COMPLETIONON"));
 				singleTutorList.add(rs.getString("MODULENAME"));

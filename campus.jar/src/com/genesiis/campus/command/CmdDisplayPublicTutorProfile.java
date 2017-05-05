@@ -16,8 +16,6 @@ import com.genesiis.campus.validation.Validator;
 
 import org.apache.log4j.Logger;
 
-import sun.java2d.SunGraphicsEnvironment.TTFilter;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,6 +52,9 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 					Map<String, ArrayList<ArrayList<String>>> result = getTutorDetails(tutorCollection);
 					tutors = result.get("tutor");
 					tutor = tutors.get(0);
+					
+					helper.setAttribute("qualifications", result.get("qualifications"));
+					helper.setAttribute("experiences", result.get("experiences"));
 				}
 			}
 
@@ -91,6 +92,7 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 		ArrayList<ArrayList<String>> qualifications = new ArrayList<ArrayList<String>>();
 		ArrayList<ArrayList<String>> experiences = new ArrayList<ArrayList<String>>();
 		ArrayList<ArrayList<String>> modules = new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<String>> employments = new ArrayList<ArrayList<String>>();
 		
 		
 		int count = 0;
@@ -148,12 +150,53 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 				qualification.add(tutorList.get(38));
 				qualification.add(tutorList.get(39));
 				qualification.add(tutorList.get(40));
+				
+				qualifications.add(qualification);
+			}
+			
+			if(!Validator.isEmptyString(tutorList.get(41))){
+				ArrayList<String> experience = new ArrayList<String>();
+				experience.add(tutorList.get(41));
+				experience.add(tutorList.get(43));
+				experience.add(tutorList.get(44));
+				experience.add(tutorList.get(45));
+				experience.add(tutorList.get(46));
+				experience.add(tutorList.get(47));
+				experience.add(tutorList.get(48));
+				
+				experiences.add(experience);
+				
+			}
+			
+			if(!Validator.isEmptyString(tutorList.get(50))){
+				ArrayList<String> module = new ArrayList<String>();
+				module.add(tutorList.get(50));
+				module.add(tutorList.get(49));
+				module.add(tutorList.get(52));
+				
+				modules.add(module);
+				
+			}
+			
+			if(!Validator.isEmptyString(tutorList.get(53))){
+				ArrayList<String> employment = new ArrayList<String>();
+				employment.add(tutorList.get(53));
+				employment.add(tutorList.get(54));
+				
+				employments.add(employment);
+				
+				
 			}
 			
 			
 		}
 		
 		result.put("tutor", tutorsList);
+		result.put("qualifications", qualifications);
+		result.put("experiences", experiences);
+		result.put("modules", modules);
+		result.put("employments", employments);
+
 		return result;
 	}
 
