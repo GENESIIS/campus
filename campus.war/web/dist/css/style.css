@@ -879,7 +879,7 @@ body.admin .header {
     font-size: 2em;
     font-weight: normal;
     margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 42px;
     padding-bottom: 20px;
     border-bottom: 1px solid #c8c8c8; }
     .course-registration h2.form-title .form-intro {
@@ -1035,49 +1035,64 @@ body.admin .header {
   min-height: 1220px; }
 
 #programmeForm fieldset {
-  position: relative; }
+  position: relative;
+  display: block; }
 
 #programmeForm fieldset:not(:first-of-type) {
   display: none; }
 
 #progressbar {
-  margin-bottom: 30px;
+  margin-bottom: 24px;
   overflow: hidden;
   /*CSS counters to number the steps */
   counter-reset: step; }
   #progressbar li {
     list-style-type: none;
-    color: white;
+    color: #174d72;
     text-transform: uppercase;
-    font-size: 9px;
-    width: 33.33%;
+    font-size: 10px;
+    width: 20%;
     float: left;
-    position: relative; }
+    position: relative;
+    text-align: center;
+    font-family: "Roboto", sans-serif; }
     #progressbar li:before {
       content: counter(step);
       counter-increment: step;
-      width: 20px;
-      line-height: 20px;
+      width: 25px;
+      line-height: 25px;
       display: block;
-      font-size: 10px;
-      color: #333;
-      background: white;
+      font-size: 14px;
+      color: #fff;
+      background: #bccdd6;
       border-radius: 3px;
-      margin: 0 auto 5px auto; }
+      margin: 0 auto 5px auto;
+      text-align: center;
+      font-family: "Roboto", sans-serif; }
     #progressbar li:after {
       content: "";
       width: 100%;
-      height: 2px;
-      background: white;
+      height: 4px;
+      background: #bccdd6;
       position: absolute;
       left: -50%;
-      top: 9px;
+      top: 10px;
       z-index: -1; }
     #progressbar li:first-child:after {
       content: none; }
   #progressbar li.active:after, #progressbar li.active:before {
     background: #27AE60;
     color: white; }
+
+.semester-reg-form .top-panel-wrap {
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto; }
+
+/* Input Field validation */
+.input-field {
+  width: 100%; }
 
 /* Modules */
 .btn-submit {

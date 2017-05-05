@@ -32,17 +32,18 @@ $(".next").click(function(){
             opacity = 1 - now;
             current_fs.css({
                 'transform': 'scale('+scale+')',
-                'position': 'absolute'
+                'position': 'absolute',
+                'width' : '98%'
             });
             next_fs.css({'left': left, 'opacity': opacity});
         },
-        duration: 800,
+        duration: 600,
         complete: function(){
             current_fs.hide();
             animating = false;
         },
         //this comes from the custom easing plugin
-        easing: 'easeInOutBack'
+        //easing: 'easeInOutBack'
     });
 });
 
@@ -71,13 +72,13 @@ $(".previous").click(function(){
             current_fs.css({'left': left});
             previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
         },
-        duration: 800,
+        duration: 600,
         complete: function(){
             current_fs.hide();
             animating = false;
         },
         //this comes from the custom easing plugin
-        easing: 'easeInOutBack'
+        //easing: 'easeInOutBack'
     });
 });
 
