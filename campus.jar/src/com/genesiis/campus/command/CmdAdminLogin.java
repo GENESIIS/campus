@@ -6,6 +6,7 @@ package com.genesiis.campus.command;
 //20170421 AS c154-admin-privilege-handling-as -AdminSessionDetails.jsp Session attribute name changed -->   
 //20170424 AS CAM-154-admin-privilege-handling-as - attempts database update
 //20170425 AS CAM-154-admin-privilege-handling-as - attempts handling modification done
+//20170427 AS CAM-155-admin-logout-function-as-Set the Admin userTypeString, userLoginHistoryCode to session attribute 
 //20170504 AS CAM-154-admin-privilege-handling-as - attempts handling if-else-if condition changed to switch-case
 import com.genesiis.campus.entity.AdminLoginDAO;
 import com.genesiis.campus.entity.AdminPrivilegeDAO;
@@ -86,10 +87,12 @@ public class CmdAdminLogin implements ICommand{
 						adminData.setLastLoggedInSessionid(sessionId);
 						session.setAttribute("currentSessionUsername",adminData.getUsername());
 						session.setAttribute("user", adminData.getName());
-						session.setAttribute("userCode", adminData.getCode());
+						session.setAttribute("userCode", adminData.getAdminCode());
+						session.setAttribute("userTypeString", adminData.getUserTypeString());
 						setAdminLoginDetails(adminData, helper);
 						int status = AdminLoginDAO.loginDataUpdate(adminData);
 						if(status >0){
+						session.setAttribute("userLoginHistoryCode", adminData.getLoginHistoryCode());
 							adminData.setAttempts(0);
 							adminLoginDAO.update(adminData);
 							//admin privacy privilege list

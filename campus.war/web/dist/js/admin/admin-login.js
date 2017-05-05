@@ -1,5 +1,7 @@
 /**
  * 20170314 AS c23-admin-login-logout-function-as - admin-login.js created 
+ * 20170426 AS c155-admin-logout-function-as ALogout function coding WIP
+ * 20170428 AS c155-admin-logout-function-as ALogout function page redirection script changed.
  */
 
 var theNewScript = document.createElement("script");
@@ -82,3 +84,62 @@ function ALogin() {
 	}
 	
 }
+
+function ALogout() {
+	
+		var userId = $("#userCode").val();
+
+		if (userId != null) {
+			var jsonData = {
+				"code" : userId
+
+			};
+			$.ajax({
+				type : "POST",
+				url : '/LoginController',
+				data : {
+					jsonData : JSON.stringify(jsonData),
+					CCO : "ALGOUT"
+
+				},
+				dataType : "json",
+				success : function(response) {
+					if(response['message'] === 'Logout successfull'){
+						$(window).scrollTop(0);
+						$('#logout-popup').modal('show');
+						
+						setTimeout( function(){
+							window.location.href = response['pageURL']; //this name may have to change depend on actual location of the page "admin Login  page"
+							}, 5000); 
+					}else{
+					 
+					setTimeout( function(){
+						window.location.href = response['pageURL']; 
+						}, 5000);
+					
+					}
+				},
+				error : function(response,error,errorThrown) {
+					alert("Error " + error);
+					console.log(error);
+					 var msg = '';
+				      if (response.status === 0) {
+				          msg = 'Not connect.\n Verify Network.';
+				      } else if (response.status == 404) {
+				          msg = 'Requested page not found. [404]';
+				      } else if (response.status == 500) {
+				          msg = 'Internal Server Error [500].';
+				      } else if (error === 'parsererror') {
+				          msg = 'Requested JSON parse failed.';
+				      } else if (error === 'timeout') {
+				          msg = 'Time out error.';
+				      } else if (error === 'abort') {
+				          msg = 'Ajax request aborted.';
+				      } else {
+				          msg = 'Uncaught Error.\n' + response.responseText;
+				      }
+				}
+
+			});
+		}
+	}
