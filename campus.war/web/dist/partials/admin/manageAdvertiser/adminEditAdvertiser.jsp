@@ -54,11 +54,11 @@
       <div>
         <div id="courseProviderInfor" style ="color:#C70039;"></div><br>
     		<label>Advertiser List</label>
-    		<input id="courseProvider" name="page" value=""
-							list="courseProviderList" class="text-field" type="text"
-							placeholder="-- Select an Advertiser --" onclick="clearErrorAndTheDataField('courseProviderInfor','courseProvider');">
-			<datalist id="courseProviderList" name="courseProviderList"> </datalist>
-			<input type="hidden" id="sCourseProviderCode" name="sCourseProviderCode" />
+    		<input id="advertiser" name="page" value=""
+							list="advertiserList" class="text-field" type="text"
+							placeholder="-- Select an Advertiser --" onclick="clearErrorAndTheDataField('courseProviderInfor','advertiser');">
+			<datalist id="advertiserList" name="advertiserList"> </datalist>
+			<input type="hidden" id="sAdvertiserCode" name="sAdvertiserCode" />
           		&nbsp; &nbsp;
           		<div>
     		<label id="advertiserLabel">Advertiser Code</label> 

@@ -1,5 +1,6 @@
 /**
  * 20170505 DN c89-admin-manage-advertiser-update-details-of-existing-advertiser-dn mock up of the issue has been developed
+ * 			course provider related ids are changed to advertiser[xx].			
  */
 
 
@@ -67,13 +68,13 @@ function displaySignUpPrerequisitDetails(){
 function getPreRequisitPageData(preRequistData){
 	
 	// populating the available active course provider list.
-	populateDataList(preRequistData.advertisers,'courseProviderList');	
+	populateDataList(preRequistData.advertisers,'advertiserList');	
 	
 	// get the selected code of the course provider
-	$('#courseProvider').on('input', function(){
+	$('#advertiser').on('input', function(){
 		var status = false;
 		var val = this.value; //select what is changed from the input field.
-		var dValue =$('#courseProviderList option').
+		var dValue =$('#advertiserList option').
 									filter( function(){
 												if($(this).val()===val){
 													status = true;
@@ -83,7 +84,7 @@ function getPreRequisitPageData(preRequistData){
 		selectedCourseProviderCode = dValue;
 	//Setting the course provider code to the hidden field.
 	if(status){		
-		$('#sCourseProviderCode').val(selectedCourseProviderCode); // set the country code in the none editable field
+		$('#sAdvertiserCode').val(selectedCourseProviderCode); // set the country code in the none editable field
 	  }
 	});
 	
@@ -287,9 +288,9 @@ function validateAdminAddingNewAdvertiserPageEmbedData (){
 
 	var validationPass =true;
 	
-  if(!isFieldFilled(isStringHasValiCharsAndLength($('#sCourseProviderCode')
+  if(!isFieldFilled(isStringHasValiCharsAndLength($('#sAdvertiserCode')
 			.val(), /^\d+$/g), 'Course Provider Field', "courseProviderInfor")) {
-		$("#courseProvider").focus();
+		$("#advertiser").focus();
 		return false;
 	}	
 
@@ -498,12 +499,12 @@ function clearAllFields(){
  * then trigger the call to server to get the recirds related to
  * selected id of the course provider
  */
-$(document).on('input','#courseProvider',function(event){	
-	var courseProviderCode = $('#sCourseProviderCode').val();
+$(document).on('input','#advertiser',function(event){	
+	var courseProviderCode = $('#sAdvertiserCode').val();
  if(courseProviderCode !=""||courseProviderCode!=undefined){
 	 //code the ajax call to retrieve the Courseprovider data
 	 // and populate the page.	
-	 var selectedCourseProviderCode = $('#sCourseProviderCode').val();
+	 var selectedCourseProviderCode = $('#sAdvertiserCode').val();
 	 getAdvertiserDetailsLinkedToTheCourseProvider(adminControllerUrl,selectedCourseProviderCode);	 
  }	
 });
@@ -548,7 +549,7 @@ $.ajax({
 function populatePageWithAdvertisersCredential(arrayOfArray){
 	var courseProviderArray = arrayOfArray[0];
 	
-	$('#sCourseProviderCode').val(courseProviderArray[0]);
+	$('#sAdvertiserCode').val(courseProviderArray[0]);
 	$("#advertiserName").val(courseProviderArray[1]);
 	$("#advertiserEmail").val(courseProviderArray[2]);
 	$('#courseProviderDescription').text(courseProviderArray[9]);
@@ -580,7 +581,7 @@ $(document).on("click",'#createAdvertiser',function(event){
 			type:"POST",
 			url:adminControllerUrl,
 			data:{
-				courseProviderCode : $('#sCourseProviderCode').val(),
+				courseProviderCode : $('#sAdvertiserCode').val(),
 				advertiserName :$("#advertiserName").val(),
 				advertiserEmail:$("#advertiserEmail").val(),
 				advertiserDescription:$('#courseProviderDescription').val(),
@@ -637,7 +638,7 @@ function displayLabelMessage(messagePopUpId,labelid,cssColour,message){
  */
 
 $(document).on('click','#clearData',function(event){	
-	$('#courseProvider').val('');
+	$('#advertiser').val('');
 	$('#advertiserName').val('');
 	$('#advertiserEmail').val('');
 	$('#courseProviderDescription').val('');
