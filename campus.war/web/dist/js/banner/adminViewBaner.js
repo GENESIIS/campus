@@ -16,7 +16,7 @@
  * 			Document ready function is changed to navigate to add banners page when the adminAddNewBanner button is clicked.
  * 20170322 DN c83-admin-manage-banner-update-banner-info-dn populateBannerTable() has been added hidden fields to capture 
  * 			the request parameters representing banner records  
- * 20170323 DN c83-admin-manage-banner-update-banner-info-dn add two variables var pageName , pageCode to extract two columns 
+ * 20170323 DN c83-admin-manage-banner-update-banner-info-dn add two variables pageName , pageCode to extract two columns 
  * 			to be passed to the editing jsp and insert analogous hidden input names.
  * 20170403 DN c86-admin-manage-banner-search-banner-dn.The method loadBanners() is added a field for the object to be sent to the server  
  * 			via the ajax call, called bannerCode.
@@ -30,10 +30,15 @@
  * 20170407 DN c83-admin-manage-banner-update-banner-info-dn the error that initially admin view banner doesn't get loaded at first 
  * 			loading resolved using response.successCode === undefined loadBanners().
  * 			When the radio button selection changes the banners with exerted filter condition will be listed- New Requirement by TW
- * 20170418 DN c86-admin-manage-banner-search-banner-dn. The function that selecting / deselecting the check box on 'Select All'check box change has been coded
+ * 20170418 DN c86-admin-manage-banner-search-banner-dn. The function that selecting / de-selecting the check box on 'Select All'check box change has been coded
  * 			Added on click function to activate / deactivate banner records and implemented passSelectedBannersToServer().
  * 20170419 DN c86-admin-manage-banner-search-banner-dn. implemented toggle show of activate and Deactivate banners buttons based on the selected radio button
- * 20170420 DN c86-admin-manage-banner-search-banner-dn. the success property of the method passSelectedBannersToServer() user message has been added. inactiveBanner on click if no records are selected add an exist statement.
+ * 20170420 DN c86-admin-manage-banner-search-banner-dn. the success property of the method passSelectedBannersToServer() user message has been added.
+ * 			inactiveBanner on click if no records are selected add an exist statement.
+ * 20170504 DN c86-admin-manage-banner-search-banner-dn. $(document).on('click','#activeBanner',function(event) included the return null section to give the control
+ * 			to the caller if none of the records exists for activation.
+ * 			The method chcekAndSwitchStatus(checkBoxId) is implemented.$(document).on('click','#inactiveBanner',function(event)) and $(document).on('click','#activeBanner',function(event))
+ * 			has been modified to include the method chcekAndSwitchStatus(checkBoxId).
  */
 
 var theNewScript = document.createElement("script");
@@ -432,10 +437,13 @@ $(document).on('click','#inactiveBanner',function(event){
 		return null;
 	}
 		
+ // chcek the select all check box and unchek it
+	chcekAndSwitchStatus('all-delete');
  // ajax call to transfer the data to server 
 	passSelectedBannersToServer("DACT_BNR",selectedBanners,adminControllerUrl);
-	
 });
+
+
 
 
 /**
@@ -451,12 +459,31 @@ $(document).on('click','#activeBanner',function(event){
 	if(selectedBanners.length===0){
 		var msg = "None of the records have been selected. Please select one or more records ";
 		displayLabelMessage('messagePopUp','displayLabel','red',msg);
+		return null;
 	}
-		
+	
+  // chcek the select all check box and unchek it
+	chcekAndSwitchStatus('all-delete');
  // ajax call to transfer the data to server 
 	passSelectedBannersToServer("ACT_BNR",selectedBanners,adminControllerUrl);
-	
 });
+
+/**
+ * This function is intended to check the status<br>
+ * of the check box of which the id is passed via<br>
+ *  the element id given by parameter: checkBoxId and <br>
+ *  invert what ever the current status to opposit.<br>
+ *  i.e if checked --> unchecked <br>
+ *  if unchecked --> checked.
+ * @param checkBoxId : element id e.g 'all-delete'.
+ */
+function chcekAndSwitchStatus(checkBoxId){
+	var checkBox = $('#'+checkBoxId);
+	var isChcked = checkBox.is(':checked');
+	if(isChcked){
+		checkBox.prop('checked',!isChcked);
+	}
+}
 
 
 
