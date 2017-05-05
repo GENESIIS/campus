@@ -4,6 +4,7 @@ package com.genesiis.campus.command;
 //20170427 JH c135-public-display-tutor-profile created getTutorDetails() method to get tutor basic details from the tutor collection 
 //20170502 JH c135-public-display-tutor-profile added doc comments 
 //20170505 JH c135-public-display-tutor-profile changed the return type of getTutorDetails() to ArrayList<String>, changed tutor initialization  
+//20170505 JH c162-public-display-tutor-full-profile getTutorDetails() method and execute() methods changed to get all required data for tutor profile
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -18,6 +19,7 @@ import org.apache.log4j.Logger;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -38,6 +40,7 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 
 		final ICrud publicTutorDAO = new PublicTutorDAO();
 		SystemMessage message = SystemMessage.UNKNOWN;
+		ArrayList<ArrayList<String>> tutors = new ArrayList<ArrayList<String>>();
 		ArrayList<String> tutor = new ArrayList<String>();
 		
 		try{
@@ -46,7 +49,9 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 				
 				
 				if(tutorCollection.size() > 0){
-					tutor = getTutorDetails(tutorCollection);
+					Map<String, ArrayList<ArrayList<String>>> result = getTutorDetails(tutorCollection);
+					tutors = result.get("tutor");
+					tutor = tutors.get(0);
 				}
 			}
 
@@ -70,17 +75,18 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 	
 	/**
 	 * getTutorDetails() method used to separate different information requirements under different categories of the 
-	 * same tutor. In this stage, only the tutor basic details are extracted from the initial tutor collection. 
-	 * But in future development this method will be changed to 
-	 * extract tutor employment, qualification, experience and etc details.
+	 * same tutor. This method used to extract tutor employment, qualification, experience and etc details.
 	 * 
 	 * @param tutorCollection
-	 * @return String collection of tutor details
+	 * @return Map<String, ArrayList<ArrayList<String>>> map of tutor details
 	 */
-	public static ArrayList<String> getTutorDetails(Collection<Collection<String>> tutorCollection){
+	public static Map<String, ArrayList<ArrayList<String>>> getTutorDetails(Collection<Collection<String>> tutorCollection){
 		
 		Iterator<Collection<String>> tutorIterator = tutorCollection.iterator();
 		ArrayList<String> tutor = new ArrayList<String>();
+		Map<String, ArrayList<ArrayList<String>>> result = new HashMap<String, ArrayList<ArrayList<String>>>();
+		ArrayList<ArrayList<String>> tutorsList = new ArrayList<ArrayList<String>>();
+		
 		
 		int count = 0;
 		
@@ -127,12 +133,14 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 				tutor.add(34, tutorList.get(34));
 				tutor.add(35, tutorList.get(35));
 							
-				
+				tutorsList.add(tutor);
 			}
 			
 			
 		}
-		return tutor;
+		
+		result.put("tutor", tutorsList);
+		return result;
 	}
 
 }
