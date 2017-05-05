@@ -6,6 +6,7 @@
 <!-- 20170306 JH c96 added userMessage div section for alert messages  -->
 <!-- 20170309 JH c96 changed tutor table element id 'example' into 'tutorListTable' -->
 <!-- 20170319 JH c96 added header scripts and header.jsp -->
+<!-- 20170428 JH c135-public-display-tutor-profile display post user messages -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +63,7 @@
         <div class="col-md-12 col-lg-12 col-sm-12">
         
         <div>
-        <div class="alert alert-error" name="userMessage" id="userMessage"></div>
+        <div class="alert alert-error" name="userMessage" id="userMessage">${param.userMessage }</div>
         </div>
             <div class="result-panel">
                 <!-- Panel Header -->
