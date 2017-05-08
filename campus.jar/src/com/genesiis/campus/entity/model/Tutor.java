@@ -44,6 +44,14 @@ public class Tutor extends LoginHistory{
 	private String crtBy;
 	private Date modOn;
 	private String modBy;
+	private String userKey;
+	
+	public String getUserKey() {
+		return userKey;
+	}
+	public void setUserKey(String userKey) {
+		this.userKey = userKey;
+	}
 	/**
 	 * @return the code
 	 */
