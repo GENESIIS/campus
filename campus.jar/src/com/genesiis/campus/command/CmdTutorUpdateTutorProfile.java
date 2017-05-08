@@ -26,6 +26,7 @@ package com.genesiis.campus.command;
 //20170505 CW c37-tutor-update-tutor-profile-cw modify the way updated variable initialized, assign SystemMessage.INCORRECTDATA.message() to the message 
 				//variable initially & modify the code accordingly, removed some un required empty checks in setCompareVariablesBeforeTutorUpdateTutor method
 //20170505 CW c37-tutor-update-tutor-profile-cw modify setCompareVariablesBeforeTutorUpdateTutor method to get the tutor database values at the time of the method running.
+//20170508 CW c37-tutor-update-tutor-profile-cw add modUser from session in setCompareVariablesBeforeTutorUpdateTutor method.
 
 import com.genesiis.campus.entity.CountryDAO;
 import com.genesiis.campus.entity.IView;
@@ -474,9 +475,15 @@ public class CmdTutorUpdateTutorProfile implements ICommand {
 			}else{
 				tutor.setTutorStatus(tutorDets.getTutorStatus());
 			}
-			
+						
 			if(updated){
-				tutor.setModBy("chinthaka");
+				String modUser = (String) helper.getSession(true).getAttribute("user");
+			
+				if(modUser == null){
+					tutor.setModBy("");
+				}else{
+					tutor.setModBy(modUser);
+				}
 			}
 			
 		} catch (Exception e) {
