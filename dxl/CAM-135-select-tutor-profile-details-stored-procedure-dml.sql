@@ -4,6 +4,7 @@
 * 20170427 JH c135-public-display-tutor-profile-MP-jh file renamed as CAM-135-select-tutor-profile-details-stored-procedure-dml and
 * 				added column order when select data from the tables to avoid column data type mismatch when inserting data to the middle table ( here TutorResult table)
 * 20170505 JH c162-public-display-tutor-full-profile-MP-jh added missing DESIGNATION column, select experience code 
+* 20170508 JH c162-public-display-tutor-full-profile-MP-jh changed the tutor left join condition with tutor qualification table to fix the null outputs
 */
 
 
@@ -114,12 +115,12 @@ BEGIN
 	INNER JOIN [CAMPUS].[COUNTRY2] c
 	ON tw.COUNTRY = c.CODE
 	LEFT JOIN (
-		SELECT tq.CODE AS QUALIFICATIONCODE, tq.NAME AS QUALIFICATION, tq.DESCRIPTION AS QDESCRIPTION, l.NAME AS QLEVEL
+		SELECT tq.CODE AS QUALIFICATIONCODE, tq.NAME AS QUALIFICATION, tq.DESCRIPTION AS QDESCRIPTION, l.NAME AS QLEVEL, tq.TUTOR AS QTUTOR
 		FROM [CAMPUS].[TUTORQUALIFICATION] tq 
 		INNER JOIN [CAMPUS].[LEVEL] l
 		ON l.CODE = tq.LEVEL
 		WHERE tq.ISACTIVE = @isActive) AS q
-	ON q.QUALIFICATIONCODE = t.CODE
+	ON q.QTUTOR = t.CODE
 	LEFT JOIN (
 		SELECT e.CODE AS EXPCODE, e.tutor AS TUTOREX, e.ORGANIZATION, m1.NAME AS INDUSTRY, m2.NAME AS JOBCATEGORY, e.DESIGNATION,
 		e.COMMENCEDON, e.COMPLETIONON
