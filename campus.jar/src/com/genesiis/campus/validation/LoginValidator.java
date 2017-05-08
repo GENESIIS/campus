@@ -1,8 +1,10 @@
 package com.genesiis.campus.validation;
 //20161220 as c19-student-login-without-using-third-party-application-as removed unwanted comments and loggers
 //20170317 AS c23-admin-login-logout-function-as validateLogin(Admin data) and dataSeparator(Admin data) methods added
+//20170508 AS c99-tutor-login-function-as-back end validation WIP, dataSeparator(Tutor data) completed
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.entity.model.Student;
+import com.genesiis.campus.entity.model.Tutor;
 
 import org.apache.log4j.Logger;
 
@@ -116,6 +118,29 @@ public class LoginValidator {
 			if (validateEmail(data.getUserKey())) {
 				
 				data.setEmail(data.getUserKey());
+			} else if (!validateEmail(data.getUserKey())) {
+				data.setUsername(data.getUserKey());
+				
+			}
+		} catch (Exception e) {
+			log.error("dataSeparator : " + e);
+
+		}
+
+		return data;
+	}
+	
+	/**
+	 * @author anuradha
+	 * @param data
+	 * @return data object
+	 * @throws ParseException
+	 */
+	public static Tutor dataSeparator(Tutor data) throws Exception {
+		try {
+			if (validateEmail(data.getUserKey())) {
+				
+				data.setEmailAddress(data.getUserKey());
 			} else if (!validateEmail(data.getUserKey())) {
 				data.setUsername(data.getUserKey());
 				
