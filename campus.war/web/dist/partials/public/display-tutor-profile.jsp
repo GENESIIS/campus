@@ -1,7 +1,7 @@
 <!-- 20170330 DK c135 Creating the structure and the layout / UI Integration -->
 <!-- 20170428 JH c135-public-display-tutor-profile added hidden input tutorCode to store post data, add id attributes to assign values wip,
 					removed google+ social media link, removed span tag for tutor-title, added userMessage div to display user message, added tooltips for social media links -->
-<!-- 20170508 JH c162-public-display-tutor-full-profile display tutor qualifications wip -->
+<!-- 20170508 JH c162-public-display-tutor-full-profile display tutor qualifications, experience, employment details dynamically-->
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -110,69 +110,32 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="qualifications-section content-section col-xs-12" id="qualificationDiv">
+			<div class="qualifications-section content-section col-xs-12">
 				<h2 class="section-title">Qualifications</h2>
-				
-				
+								
 				<!-- START - Repeater -->
-				<div class="edu-content repeat-content col-xs-12">
-					<h5>Master of Business Administration</h5>
-					<span class="fa fa-bookmark" aria-hidden="true"></span>
-					<span class="edu-level">Masters Level</span>
-					<p>Nulla et quam vitae dui gravida bibendum. Pellentesque id viverra sapien. Sed ut nisl semper, viverra urna vel, efficitur sapien. Vestibulum nec magna at turpis commodo aliquet eu non sem.</p>
-				</div>
-				<!-- <div class="edu-content repeat-content col-xs-12">
-					<h5>Master of Business Administration</h5>
-					<span class="fa fa-bookmark" aria-hidden="true"></span>
-					<span class="edu-level">Masters Level</span>
-					<p>Nulla et quam vitae dui gravida bibendum. Pellentesque id viverra sapien. Sed ut nisl semper, viverra urna vel, efficitur sapien. Vestibulum nec magna at turpis commodo aliquet eu non sem.</p>
-				</div> -->
+				<div id="qualificationDiv"></div>
 				<!-- END - Repeater -->
 			</div>
 		</div>
 		<div class="row">
 			<div class="experience-section content-section col-xs-12">
 				<h2 class="section-title">Experience</h2>
+				
 				<!-- START - Repeater -->
-				<div class="experience-content repeat-content col-xs-12">
-					<div class="job-title col-sm-4">
-						<h5>Senior Software Engineer - UI</h5>
-					</div>
-					<div class="job-des col-sm-4">
-						<h5>GENESIIS Software (Pvt) Ltd</h5>
-					</div>	
-					<div class="job-duration col-sm-4">
-						<time datetime="2014-06-28">28 June 2014</time> - <time datetime="2014-06-28">28 June 2014</time>
-					</div>							
-				</div>
-				<div class="experience-content repeat-content col-xs-12">
-					<div class="job-title col-sm-4">
-						<h5>Senior Software Engineer - UI</h5>
-					</div>
-					<div class="job-des col-sm-4">
-						<h5>GENESIIS Software (Pvt) Ltd</h5>
-					</div>	
-					<div class="job-duration col-sm-4">
-						<time datetime="2014-06-28">28 June 2014</time> - <time datetime="2014-06-28">28 June 2014</time>
-					</div>							
-				</div>
+				<div id="experienceDiv"></div>
 				<!-- END - Repeater -->
+				
 			</div>
 		</div>
 		<div class="row">
 			<div class="employment-section content-section col-xs-12">
 				<h2 class="section-title">Employment</h2>
+				
 				<!-- START - Repeater -->
-				<div class="experience-content repeat-content col-xs-12">
-					<h5>Genesiis Software (Pvt) Ltd</h5>						
-				</div>
-				<div class="experience-content repeat-content col-xs-12">
-					<h5>Genesiis Software (Pvt) Ltd</h5>						
-				</div>
-				<div class="experience-content repeat-content col-xs-12">
-					<h5>Genesiis Software (Pvt) Ltd</h5>						
-				</div>
+				<div id="employmentDiv"></div>
 				<!-- END - Repeater -->
+				
 			</div>
 		</div>
 		<div class="row">
