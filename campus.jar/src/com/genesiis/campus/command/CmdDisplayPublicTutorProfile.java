@@ -5,6 +5,7 @@ package com.genesiis.campus.command;
 //20170502 JH c135-public-display-tutor-profile added doc comments 
 //20170505 JH c135-public-display-tutor-profile changed the return type of getTutorDetails() to ArrayList<String>, changed tutor initialization  
 //20170505 JH c162-public-display-tutor-full-profile getTutorDetails() method and execute() methods changed to get all required data for tutor profile
+//20170508 JH c162-public-display-tutor-full-profile fixed index out of bound exception and command class coding wip
 
 import com.genesiis.campus.entity.ICrud;
 import com.genesiis.campus.entity.IView;
@@ -55,6 +56,9 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 					
 					helper.setAttribute("qualifications", result.get("qualifications"));
 					helper.setAttribute("experiences", result.get("experiences"));
+					helper.setAttribute("modules", result.get("modules"));
+					helper.setAttribute("employments", result.get("employments"));
+					
 				}
 			}
 
@@ -135,56 +139,59 @@ public class CmdDisplayPublicTutorProfile implements ICommand{
 				tutor.add(29, tutorList.get(29));
 				tutor.add(30, tutorList.get(30));
 				tutor.add(31, tutorList.get(31));
-				tutor.add(32, tutorList.get(32));
-				tutor.add(33, tutorList.get(33));
-				tutor.add(34, tutorList.get(34));
-				tutor.add(35, tutorList.get(35));
-				tutor.add(36, tutorList.get(36));
 							
 				tutorsList.add(tutor);
 			}
 			
-			if(!Validator.isEmptyString(tutorList.get(37))){
+			if(!Validator.isEmptyString(tutorList.get(32))){
 				ArrayList<String> qualification = new ArrayList<String>();
-				qualification.add(tutorList.get(37));
-				qualification.add(tutorList.get(38));
-				qualification.add(tutorList.get(39));
-				qualification.add(tutorList.get(40));
+				qualification.add(tutorList.get(32));
+				qualification.add(tutorList.get(33));
+				qualification.add(tutorList.get(34));
+				qualification.add(tutorList.get(35));
 				
-				qualifications.add(qualification);
+				
+				if(!qualifications.contains(qualification)){
+					qualifications.add(qualification);
+				}
 			}
 			
-			if(!Validator.isEmptyString(tutorList.get(41))){
+			if(!Validator.isEmptyString(tutorList.get(36))){
 				ArrayList<String> experience = new ArrayList<String>();
+				experience.add(tutorList.get(36));
+				experience.add(tutorList.get(38));
+				experience.add(tutorList.get(39));
+				experience.add(tutorList.get(40));
 				experience.add(tutorList.get(41));
+				experience.add(tutorList.get(42));
 				experience.add(tutorList.get(43));
-				experience.add(tutorList.get(44));
-				experience.add(tutorList.get(45));
-				experience.add(tutorList.get(46));
-				experience.add(tutorList.get(47));
-				experience.add(tutorList.get(48));
 				
-				experiences.add(experience);
+				if(!experiences.contains(experience)){
+					experiences.add(experience);
+				}
 				
 			}
 			
-			if(!Validator.isEmptyString(tutorList.get(50))){
+			if(!Validator.isEmptyString(tutorList.get(45))){
 				ArrayList<String> module = new ArrayList<String>();
-				module.add(tutorList.get(50));
-				module.add(tutorList.get(49));
-				module.add(tutorList.get(52));
+				module.add(tutorList.get(45));
+				module.add(tutorList.get(44));
+				module.add(tutorList.get(47));
 				
-				modules.add(module);
+				if(!modules.contains(module)){
+					modules.add(module);
+				}
 				
 			}
 			
-			if(!Validator.isEmptyString(tutorList.get(53))){
+			if(!Validator.isEmptyString(tutorList.get(48))){
 				ArrayList<String> employment = new ArrayList<String>();
-				employment.add(tutorList.get(53));
-				employment.add(tutorList.get(54));
+				employment.add(tutorList.get(48));
+				employment.add(tutorList.get(49));
 				
-				employments.add(employment);
-				
+				if(!employments.contains(employment)){
+					employments.add(employment);
+					}				
 				
 			}
 			
