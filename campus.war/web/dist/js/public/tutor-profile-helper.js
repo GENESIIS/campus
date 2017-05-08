@@ -6,6 +6,7 @@
  * 20170502 JH c135-public-display-tutor-profile fixed default image error, handled empty values in social media information and check optional 
  * 				address lines before concatenating them into a final string
  * 20170505 JH c135-public-display-tutor-profile check if the tutor details are empty before displaying details
+ * 20170508 JH c162-public-display-tutor-full-profile display tutor qualifications wip
  */
 
 $( document ).ready(function() {
@@ -122,6 +123,24 @@ function loadTutor(code){
 					 $('#webLink').text(tutorRecord[15]);
 					 $('#webLink').attr('href', tutorRecord[15]);
 					 $('#tutorDescription').text(tutorRecord[13]);
+					 
+					 
+					 /* display tutor qualfications */
+					 var tutorQualification = response.qualifications;
+					 alert(tutorQualification);
+					 if (tutorQualification !== undefined && tutorQualification !== null && tutorQualification.length > 0) {
+						 alert(tutorQualification);
+						 
+						 var qualificationDiv = $('#qualificationDiv');
+						 $.each( tutorQualification, function(index, value){
+							 
+							 qualificationDiv += '<h5>'+ value[1]+'</h5>';
+							 qualificationDiv += '<span class="fa fa-bookmark" aria-hidden="true"></span>';
+							 qualificationDiv +='<span class="edu-level">' +  + value[3]+ +'</span>';
+							 qualificationDiv +='	<p>' + value[2]+'</p>';
+						 });
+						 $('#qualificationDiv').html(qualificationDiv);
+					 }
 					 
 				 }else{ // if no tutor details are found, redirect the list tutor page
 					  var url = '/dist/partials/public/display-tutors.jsp';
