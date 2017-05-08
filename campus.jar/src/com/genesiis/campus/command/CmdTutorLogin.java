@@ -1,10 +1,11 @@
 package com.genesiis.campus.command;
 //20170505 AS c99-tutor-login-function-as- CmdTutorLogin sample page created
-
+//20170508 AS c99-tutor-login-function-as-back end validation WIP
 import com.genesiis.campus.entity.IView;
 import com.genesiis.campus.entity.model.Admin;
 import com.genesiis.campus.entity.model.Tutor;
 import com.genesiis.campus.util.IDataHelper;
+import com.genesiis.campus.validation.LoginValidator;
 import com.google.gson.Gson;
 
 import org.apache.log4j.Logger;
@@ -35,7 +36,7 @@ public class CmdTutorLogin implements ICommand{
 				String gsonData = helper.getParameter("jsonData");
 				tutorData = getTutordetails(gsonData);
 				
-				
+//				String validateResult = LoginValidator.validateLogin(tutorData);
 				
 			}else{
 				
