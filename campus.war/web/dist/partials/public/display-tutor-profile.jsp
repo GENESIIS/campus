@@ -1,6 +1,8 @@
 <!-- 20170330 DK c135 Creating the structure and the layout / UI Integration -->
 <!-- 20170428 JH c135-public-display-tutor-profile added hidden input tutorCode to store post data, add id attributes to assign values wip,
 					removed google+ social media link, removed span tag for tutor-title, added userMessage div to display user message, added tooltips for social media links -->
+<!-- 20170508 JH c162-public-display-tutor-full-profile display tutor qualifications wip -->
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -108,8 +110,10 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="qualifications-section content-section col-xs-12">
+			<div class="qualifications-section content-section col-xs-12" id="qualificationDiv">
 				<h2 class="section-title">Qualifications</h2>
+				
+				
 				<!-- START - Repeater -->
 				<div class="edu-content repeat-content col-xs-12">
 					<h5>Master of Business Administration</h5>
@@ -117,12 +121,12 @@
 					<span class="edu-level">Masters Level</span>
 					<p>Nulla et quam vitae dui gravida bibendum. Pellentesque id viverra sapien. Sed ut nisl semper, viverra urna vel, efficitur sapien. Vestibulum nec magna at turpis commodo aliquet eu non sem.</p>
 				</div>
-				<div class="edu-content repeat-content col-xs-12">
+				<!-- <div class="edu-content repeat-content col-xs-12">
 					<h5>Master of Business Administration</h5>
 					<span class="fa fa-bookmark" aria-hidden="true"></span>
 					<span class="edu-level">Masters Level</span>
 					<p>Nulla et quam vitae dui gravida bibendum. Pellentesque id viverra sapien. Sed ut nisl semper, viverra urna vel, efficitur sapien. Vestibulum nec magna at turpis commodo aliquet eu non sem.</p>
-				</div>
+				</div> -->
 				<!-- END - Repeater -->
 			</div>
 		</div>
